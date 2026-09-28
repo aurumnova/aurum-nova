@@ -1,0 +1,91 @@
+name: CI mínimo Aurum Nova
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate-site:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validar estructura del sitio
+        run: |
+          python3 -c "
+import os, sys, re
+
+base_dir = '.'
+errors = []
+
+def check_file_not_empty(filepath, description):
+    full_path = os.path.join(base_dir, filepath)
+    if not os.path.exists(full_path):
+        errors.append(f'ERROR: {description} no existe ({filepath})')
+        return False
+    size = os.path.getsize(full_path)
+    if size == 0:
+        errors.append(f'ERROR: {description} está vacío ({filepath})')
+        return False
+    return True
+
+def check_dir_exists(dirpath, description):
+    full_path = os.path.join(base_dir, dirpath)
+    if not os.path.isdir(full_path):
+        errors.append(f'ERROR: {description} no existe ({dirpath}/)')
+        return False
+    return True
+
+check_file_not_empty('index.html', 'index.html')
+check_file_not_empty('aurumpitch.html', 'aurumpitch.html')
+check_dir_exists('assets', 'assets/')
+check_dir_exists('blog', 'blog/')
+
+with open(os.path.join(base_dir, 'index.html'), 'r') as f:
+    index_content = f.read()
+with open(os.path.join(base_dir, 'aurumpitch.html'), 'r') as f:
+    pitch_content = f.read()
+
+href_pattern = re.compile(r'href=\"([^\"]+)\"')
+src_pattern = re.compile(r'src=\"([^\"]+)\"')
+
+all_hrefs = href_pattern.findall(index_content) + href_pattern.findall(pitch_content)
+all_srcs = src_pattern.findall(index_content) + src_pattern.findall(pitch_content)
+
+external_prefixes = ('http://', 'https://', 'mailto:', 'tel:', 'javascript:', '#')
+local_refs = []
+for ref in all_hrefs + all_srcs:
+    if ref.startswith(external_prefixes):
+        continue
+    local_refs.append(ref)
+
+print(f'Encontradas {len(local_refs)} referencias locales a verificar')
+
+missing_files = []
+for ref in local_refs:
+    ref_path = os.path.normpath(os.path.join(base_dir, ref))
+    if not os.path.exists(ref_path):
+        missing_files.append(ref)
+
+if missing_files:
+    errors.append(f'ERROR: {len(missing_files)} archivos referenciados no existen:')
+    for mf in sorted(set(missing_files)):
+        errors.append(f'  - {mf}')
+
+if errors:
+    print('\n'.join(errors))
+    sys.exit(1)
+else:
+    print('✓ Todos los checks pasaron')
+    print('  - index.html: existe y no está vacío')
+    print('  - aurumpitch.html: existe y no está vacío')
+    print('  - assets/: existe')
+    print('  - blog/: existe')
+    print(f'  - Referencias locales: {len(local_refs)} verificadas, 0 faltantes')
+"
