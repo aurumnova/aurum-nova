@@ -19,7 +19,9 @@ jobs:
       - name: Validar estructura del sitio
         run: |
           python3 << 'EOF'
-          import os, sys, re
+          import os
+          import sys
+          import re
 
           base_dir = '.'
           errors = []
@@ -29,10 +31,11 @@ jobs:
               if not os.path.exists(full_path):
                   errors.append(f'ERROR: {description} no existe ({filepath})')
                   return False
-              size = os.path.getsize(full_path)
-              if size == 0:
+
+              if os.path.getsize(full_path) == 0:
                   errors.append(f'ERROR: {description} está vacío ({filepath})')
                   return False
+
               return True
 
           def check_dir_exists(dirpath, description):
@@ -47,45 +50,115 @@ jobs:
           check_dir_exists('assets', 'assets/')
           check_dir_exists('blog', 'blog/')
 
-          with open(os.path.join(base_dir, 'index.html'), 'r') as f:
-              index_content = f.read()
-          with open(os.path.join(base_dir, 'aurumpitch.html'), 'r') as f:
-              pitch_content = f.read()
+          blog_dir = os.path.join(base_dir, 'blog')
+          blog_htmls = []
+
+          if os.path.isdir(blog_dir):
+              blog_htmls = sorted(
+                  f for f in os.listdir(blog_dir)
+                  if f.endswith('.html')
+              )
+
+              if not blog_htmls:
+                  errors.append('ERROR: blog/ no contiene archivos HTML')
+
+              for name in blog_htmls:
+                  check_file_not_empty(
+                      os.path.join('blog', name),
+                      name
+                  )
+
+          html_files = ['index.html', 'aurumpitch.html']
+          html_files += [
+              os.path.join('blog', name)
+              for name in blog_htmls
+          ]
 
           href_pattern = re.compile(r'href="([^"]+)"')
           src_pattern = re.compile(r'src="([^"]+)"')
 
-          all_hrefs = href_pattern.findall(index_content) + href_pattern.findall(pitch_content)
-          all_srcs = src_pattern.findall(index_content) + src_pattern.findall(pitch_content)
+          all_refs = []
 
-          external_prefixes = ('http://', 'https://', 'mailto:', 'tel:', 'javascript:', '#')
+          for rel_path in html_files:
+              full_html_path = os.path.join(base_dir, rel_path)
+
+              with open(full_html_path, encoding='utf-8') as f:
+                  content = f.read()
+
+              all_refs += [
+                  (rel_path, ref)
+                  for ref in href_pattern.findall(content)
+              ]
+
+              all_refs += [
+                  (rel_path, ref)
+                  for ref in src_pattern.findall(content)
+              ]
+
+          external_prefixes = (
+              'http://',
+              'https://',
+              'mailto:',
+              'tel:',
+              'javascript:',
+              '#',
+              '//'
+          )
+
           local_refs = []
-          for ref in all_hrefs + all_srcs:
+
+          for html_file, ref in all_refs:
               if ref.startswith(external_prefixes):
                   continue
-              local_refs.append(ref)
 
-          print(f'Encontradas {len(local_refs)} referencias locales a verificar')
+              if '${' in ref:
+                  continue
+
+              if 'data:' in ref:
+                  continue
+
+              local_refs.append((html_file, ref))
+
+          print(
+              f'Encontradas {len(local_refs)} referencias locales a verificar'
+          )
 
           missing_files = []
-          for ref in local_refs:
-              ref_path = os.path.normpath(os.path.join(base_dir, ref))
+
+          for html_file, ref in local_refs:
+              html_dir = os.path.dirname(
+                  os.path.join(base_dir, html_file)
+              )
+
+              ref_path = os.path.normpath(
+                  os.path.join(html_dir, ref)
+              )
+
               if not os.path.exists(ref_path):
-                  missing_files.append(ref)
+                  missing_files.append((html_file, ref))
 
           if missing_files:
-              errors.append(f'ERROR: {len(missing_files)} archivos referenciados no existen:')
-              for mf in sorted(set(missing_files)):
-                  errors.append(f'  - {mf}')
+              errors.append(
+                  f'ERROR: {len(missing_files)} archivos referenciados no existen:'
+              )
+
+              for html_file, ref in sorted(set(missing_files)):
+                  errors.append(
+                      f'  - {html_file} -> {ref}'
+                  )
 
           if errors:
               print('\n'.join(errors))
               sys.exit(1)
-          else:
-              print('✓ Todos los checks pasaron')
-              print('  - index.html: existe y no está vacío')
-              print('  - aurumpitch.html: existe y no está vacío')
-              print('  - assets/: existe')
-              print('  - blog/: existe')
-              print(f'  - Referencias locales: {len(local_refs)} verificadas, 0 faltantes')
+
+          print('Todos los checks pasaron')
+          print('  - index.html: existe y no está vacío')
+          print('  - aurumpitch.html: existe y no está vacío')
+          print('  - assets/: existe')
+          print('  - blog/: existe')
+          print(f'  - HTML del blog: {len(blog_htmls)} verificados')
+          print(
+              f'  - Referencias locales: {len(local_refs)} verificadas, '
+              f'0 faltantes'
+          )
           EOF
