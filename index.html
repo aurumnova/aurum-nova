@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" href="favicon.ico">
 
 <!-- Security headers -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' assets/ https://images.unsplash.com data:; connect-src 'self' https://formspree.io https://wa.me; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://formspree.io;">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' assets/ https://images.unsplash.com data:; connect-src 'self' https://formspree.io https://wa.me https://aurum-nova-ai-sales-worker.aurum-nova.workers.dev; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://formspree.io;">
 <meta http-equiv="X-Frame-Options" content="DENY">
 <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()">
 <meta property="og:title" content="AURUM NOVA — Angel Santiago Alvarado Rodriguez, CEO">
@@ -916,6 +916,220 @@ footer {
 @media(max-width: 380px) { .wa-float { bottom: 12px; right: 12px; width: 46px; height: 46px; } }
 .wa-float svg { width: 26px; }
 @media(max-width: 380px) { .wa-float svg { width: 22px; } }
+
+/* ---------- AI Chat Widget ---------- */
+.ai-chat-widget {
+  position: fixed;
+  bottom: 96px;
+  right: 24px;
+  z-index: 250;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+.ai-chat-toggle {
+  position: relative;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, var(--gold-2) 0%, var(--gold-3) 100%);
+  color: #050509;
+  box-shadow: 0 6px 24px -4px rgba(212, 175, 55, 0.5), 0 0 0 4px rgba(5, 5, 9, 0.85);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: transform .25s cubic-bezier(.2, .7, .2, 1), box-shadow .25s ease;
+}
+.ai-chat-toggle:hover {
+  transform: scale(1.08) translateY(-2px);
+  box-shadow: 0 10px 32px -4px rgba(212, 175, 55, 0.65), 0 0 0 4px rgba(5, 5, 9, 0.85);
+}
+.ai-chat-toggle:active {
+  transform: scale(0.96);
+}
+.ai-chat-pulse {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2px solid rgba(212, 175, 55, 0.35);
+  animation: wa-ring 2.4s ease-out infinite;
+  pointer-events: none;
+}
+.ai-chat-box {
+  position: absolute;
+  bottom: 70px;
+  right: 0;
+  width: 360px;
+  max-width: calc(100vw - 32px);
+  height: 480px;
+  max-height: calc(100vh - 120px);
+  background: var(--bg-card);
+  border: 1px solid var(--border-strong);
+  border-radius: 16px;
+  box-shadow: 0 16px 48px -8px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(212, 175, 55, 0.15);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  backdrop-filter: blur(16px);
+}
+.ai-chat-header {
+  padding: 14px 16px;
+  background: rgba(212, 175, 55, 0.08);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.ai-chat-header-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.ai-chat-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 8px #10b981;
+}
+.ai-chat-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.ai-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: var(--gold-soft-2);
+  color: var(--gold);
+  border: 1px solid var(--border);
+  letter-spacing: 0.5px;
+}
+.ai-chat-subtitle {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+.ai-chat-close-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: color .15s, background .15s;
+}
+.ai-chat-close-btn:hover {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.05);
+}
+.ai-chat-messages {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.ai-msg {
+  display: flex;
+  max-width: 85%;
+  font-size: 13.5px;
+  line-height: 1.45;
+  word-break: break-word;
+}
+.ai-msg-bot {
+  align-self: flex-start;
+}
+.ai-msg-user {
+  align-self: flex-end;
+}
+.ai-msg-bubble {
+  padding: 10px 14px;
+  border-radius: 12px;
+}
+.ai-msg-bot .ai-msg-bubble {
+  background: var(--bg-card-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 4px;
+}
+.ai-msg-user .ai-msg-bubble {
+  background: linear-gradient(135deg, var(--gold-2) 0%, var(--gold-3) 100%);
+  color: #050509;
+  font-weight: 500;
+  border-bottom-right-radius: 4px;
+}
+.ai-msg-loading {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  padding: 10px 14px;
+}
+.ai-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  animation: aiPulse 1.2s infinite ease-in-out;
+}
+.ai-dot:nth-child(2) { animation-delay: 0.2s; }
+.ai-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes aiPulse {
+  0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+  40% { transform: scale(1.1); opacity: 1; }
+}
+.ai-chat-input-row {
+  padding: 12px;
+  border-top: 1px solid var(--border);
+  background: var(--bg-card);
+  display: flex;
+  gap: 8px;
+}
+.ai-chat-input-row input {
+  flex: 1;
+  background: var(--bg-card-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 13px;
+  color: var(--text);
+  outline: none;
+  transition: border-color .15s;
+}
+.ai-chat-input-row input:focus {
+  border-color: var(--gold);
+}
+.ai-chat-send-btn {
+  background: linear-gradient(135deg, var(--gold-2) 0%, var(--gold-3) 100%);
+  color: #050509;
+  border: none;
+  border-radius: 8px;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: transform .15s, opacity .15s;
+}
+.ai-chat-send-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+@media(max-width: 480px) {
+  .ai-chat-widget { bottom: 76px; right: 16px; }
+  .ai-chat-toggle { width: 52px; height: 52px; }
+  .ai-chat-box { width: calc(100vw - 32px); height: 420px; }
+}
+@media(max-width: 380px) {
+  .ai-chat-widget { bottom: 66px; right: 12px; }
+  .ai-chat-toggle { width: 46px; height: 46px; }
+}
 
 /* =============================================
    SCROLL REVEAL
@@ -2080,10 +2294,29 @@ if (menuToggle && mobileMenu) {
   });
 }
 
-/* ---------- Form handler — envía a Formspree (API JSON) ---------- */
+/* ---------- Helper: Session ID persistente (UUIDv4) para Chat y Leads ---------- */
+const WORKER_BASE_URL = 'https://aurum-nova-ai-sales-worker.aurum-nova.workers.dev';
+
+function getSessionId() {
+  const KEY = 'aurum_nova_session_id';
+  let sid = localStorage.getItem(KEY);
+  const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+  if (!sid || !uuidPattern.test(sid)) {
+    sid = (typeof crypto !== 'undefined' && crypto.randomUUID)
+      ? crypto.randomUUID()
+      : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+          const r = Math.random() * 16 | 0;
+          const v = c === 'x' ? r : (r & 0x3 | 0x8);
+          return v.toString(16);
+        });
+    localStorage.setItem(KEY, sid);
+  }
+  return sid;
+}
+
+/* ---------- Form handler — envía al Cloudflare Worker (D1 Leads) ---------- */
 const contactForm = document.getElementById('contactForm');
-const FORMSPREE_URL = contactForm ? contactForm.action : '';
-if (contactForm && FORMSPREE_URL) {
+if (contactForm) {
   contactForm.addEventListener('submit', async function(e) {
     e.preventDefault();
     const btn = this.querySelector('button[type=submit]');
@@ -2102,34 +2335,40 @@ if (contactForm && FORMSPREE_URL) {
     note.textContent = '';
     try {
       const payload = {
+        sessionId: getSessionId(),
         name: name,
         email: email,
-        message: msg,
         company: company || undefined,
-        phone: phone || undefined,
-        topic: topic || undefined,
-        _subject: 'Nuevo mensaje de contacto — AURUM NOVA',
-        _replyto: email
+        need: msg,
+        source: 'contact-form',
+        metadata: {
+          phone: phone || '',
+          topic: topic || ''
+        }
       };
-      const res = await fetch(FORMSPREE_URL, {
+      const res = await fetch(WORKER_BASE_URL + '/api/v1/leads', {
         method: 'POST',
-        headers: { 'Accept': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
         body: JSON.stringify(payload)
       });
       const data = await res.json().catch(function() { return {}; });
-      if (res.ok && (data.ok === true || data.next)) {
-        note.textContent = '✓ Gracias, ' + name.split(' ')[0] + '. Te respondo en menos de 24 h hábiles a ' + email;
+      if (res.ok && (data.status === 'created' || data.status === 'updated' || data.leadId)) {
+        note.textContent = '✓ Gracias, ' + name.split(' ')[0] + '. Tu consulta fue registrada con éxito. Te respondo en menos de 24 h hábiles a ' + email;
         note.style.color = 'var(--gold)';
         btn.textContent = 'Enviado — gracias';
         setTimeout(function() {
           btn.textContent = 'Enviar — Plaza una reunión';
           note.style.color = '';
-          note.textContent = '∓ tus datos no se comparten. Respuesta en < 24 h hábiles.';
+          note.textContent = '↓ tus datos no se comparten. Respuesta en < 24 h hábiles.';
           contactForm.reset();
+          btn.disabled = false;
         }, 4500);
       } else {
-        console.error('Formspree error:', data);
-        alert('No pude enviar el mensaje. Intentá nuevamente o escribime por WhatsApp.');
+        console.error('Worker leads error:', data);
+        alert('Hubo un inconveniente al enviar tu consulta. Podés intentar nuevamente o escribirnos por WhatsApp.');
         btn.disabled = false;
         btn.textContent = 'Enviar — Plaza una reunión';
       }
@@ -2141,6 +2380,133 @@ if (contactForm && FORMSPREE_URL) {
     }
   });
 }
+
+/* ---------- AI Sales Chat Widget Handler ---------- */
+(function initAIChatWidget() {
+  const toggleBtn = document.getElementById('aiChatToggle');
+  const chatBox = document.getElementById('aiChatBox');
+  const closeBtn = document.getElementById('aiChatCloseBtn');
+  const chatForm = document.getElementById('aiChatForm');
+  const chatInput = document.getElementById('aiChatInput');
+  const sendBtn = document.getElementById('aiChatSendBtn');
+  const messagesContainer = document.getElementById('aiChatMessages');
+  const iconOpen = document.getElementById('aiChatIconOpen');
+  const iconClose = document.getElementById('aiChatIconClose');
+
+  if (!toggleBtn || !chatBox || !chatForm || !chatInput || !messagesContainer) return;
+
+  function scrollToBottom() {
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  }
+
+  function toggleChat(open) {
+    const isCurrentlyOpen = chatBox.style.display !== 'none';
+    const shouldOpen = typeof open === 'boolean' ? open : !isCurrentlyOpen;
+    if (shouldOpen) {
+      chatBox.style.display = 'flex';
+      chatBox.setAttribute('aria-hidden', 'false');
+      if (iconOpen) iconOpen.style.display = 'none';
+      if (iconClose) iconClose.style.display = 'block';
+      setTimeout(function() {
+        chatInput.focus();
+        scrollToBottom();
+      }, 50);
+    } else {
+      chatBox.style.display = 'none';
+      chatBox.setAttribute('aria-hidden', 'true');
+      if (iconOpen) iconOpen.style.display = 'block';
+      if (iconClose) iconClose.style.display = 'none';
+    }
+  }
+
+  toggleBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    toggleChat();
+  });
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      toggleChat(false);
+    });
+  }
+
+  function appendMessage(text, role) {
+    const msgDiv = document.createElement('div');
+    msgDiv.className = 'ai-msg ' + (role === 'user' ? 'ai-msg-user' : 'ai-msg-bot');
+    const bubble = document.createElement('div');
+    bubble.className = 'ai-msg-bubble';
+    bubble.textContent = text;
+    msgDiv.appendChild(bubble);
+    messagesContainer.appendChild(msgDiv);
+    scrollToBottom();
+    return msgDiv;
+  }
+
+  let loadingEl = null;
+  function showLoading() {
+    if (loadingEl) return;
+    loadingEl = document.createElement('div');
+    loadingEl.className = 'ai-msg ai-msg-bot';
+    const bubble = document.createElement('div');
+    bubble.className = 'ai-msg-bubble ai-msg-loading';
+    bubble.innerHTML = '<span class="ai-dot"></span><span class="ai-dot"></span><span class="ai-dot"></span>';
+    loadingEl.appendChild(bubble);
+    messagesContainer.appendChild(loadingEl);
+    scrollToBottom();
+  }
+
+  function hideLoading() {
+    if (loadingEl && loadingEl.parentNode) {
+      loadingEl.parentNode.removeChild(loadingEl);
+    }
+    loadingEl = null;
+  }
+
+  chatForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const text = chatInput.value.trim();
+    if (!text) return;
+
+    appendMessage(text, 'user');
+    chatInput.value = '';
+    chatInput.disabled = true;
+    if (sendBtn) sendBtn.disabled = true;
+    showLoading();
+
+    try {
+      const res = await fetch(WORKER_BASE_URL + '/api/v1/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          sessionId: getSessionId(),
+          message: text
+        })
+      });
+      const data = await res.json().catch(function() { return {}; });
+      hideLoading();
+      if (res.ok && data.response) {
+        appendMessage(data.response, 'bot');
+      } else {
+        console.error('Chat worker error:', data);
+        const errText = data.error || 'Disculpa, no pude procesar tu mensaje en este momento. Puedes intentar nuevamente o contactarnos por WhatsApp.';
+        appendMessage(errText, 'bot');
+      }
+    } catch (err) {
+      hideLoading();
+      console.error('Chat network error:', err);
+      appendMessage('Disculpa, ocurrió un error de conexión. Por favor reintenta en unos instantes o escríbenos a WhatsApp.', 'bot');
+    } finally {
+      chatInput.disabled = false;
+      if (sendBtn) sendBtn.disabled = false;
+      chatInput.focus();
+      scrollToBottom();
+    }
+  });
+})();
 
 /* ---------- Smooth anchor navigation — ROBUSTO ---------- */
 document.querySelectorAll('a[href^="#"]').forEach(function(a) {
@@ -2188,6 +2554,53 @@ themeToggle.addEventListener("click", () => {
   }
 });
 </script>
+
+<!-- AI CHAT WIDGET -->
+<div id="aiChatWidget" class="ai-chat-widget">
+  <button id="aiChatToggle" class="ai-chat-toggle" aria-label="Abrir asistente de ventas IA" title="Chatear con el Asistente IA">
+    <span class="ai-chat-pulse" aria-hidden="true"></span>
+    <svg id="aiChatIconOpen" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+      <path d="M8 9h8"></path>
+      <path d="M8 13h6"></path>
+    </svg>
+    <svg id="aiChatIconClose" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+      <line x1="18" y1="6" x2="6" y2="18"></line>
+      <line x1="6" y1="6" x2="18" y2="18"></line>
+    </svg>
+  </button>
+
+  <div id="aiChatBox" class="ai-chat-box" style="display:none;" aria-hidden="true">
+    <div class="ai-chat-header">
+      <div class="ai-chat-header-info">
+        <div class="ai-chat-status-dot"></div>
+        <div>
+          <div class="ai-chat-title">AURUM NOVA <span class="ai-badge">IA</span></div>
+          <div class="ai-chat-subtitle">Asistente comercial en línea</div>
+        </div>
+      </div>
+      <button id="aiChatCloseBtn" class="ai-chat-close-btn" aria-label="Cerrar chat">✕</button>
+    </div>
+
+    <div id="aiChatMessages" class="ai-chat-messages">
+      <div class="ai-msg ai-msg-bot">
+        <div class="ai-msg-bubble">
+          Hola, soy el asistente comercial de Aurum Nova. ¿En qué podemos ayudarte para potenciar y automatizar las ventas de tu empresa con IA?
+        </div>
+      </div>
+    </div>
+
+    <form id="aiChatForm" class="ai-chat-input-row" novalidate>
+      <input id="aiChatInput" type="text" placeholder="Escribe tu consulta aquí..." autocomplete="off" required maxlength="500">
+      <button id="aiChatSendBtn" type="submit" class="ai-chat-send-btn" aria-label="Enviar mensaje">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"></line>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        </svg>
+      </button>
+    </form>
+  </div>
+</div>
 
 <!-- WHATSAPP FLOATING BUTTON -->
 <a href="https://wa.me/593994195932?text=Hola%20Angel%2C%20me%20interesa%20tu%20servicio"
