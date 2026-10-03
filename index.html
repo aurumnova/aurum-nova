@@ -38,7 +38,7 @@
    ============================================= */
 
 :root {
-  --bg-dark: #050509;
+  --bg-dark: #020203;
   --bg-light: #ffffff;
   --bg: var(--bg-dark, #050509);
   --bg-light: #ffffff;
@@ -56,13 +56,13 @@
   --text-muted-light: #495057;
   --text-dim-light: #6c757d;
   --text-faint-light: #adb5bd;
-  --bg-2-dark: #080810;
+  --bg-2-dark: #0a0a0c;
   --bg-2-light: #f8f9fa;
   --bg-2: var(--bg-2-dark, #080810);
-  --bg-3-dark: #0b0b14;
+  --bg-3-dark: #0f0f12;
   --bg-3-light: #f1f3f5;
   --bg-3: var(--bg-3-dark, #0b0b14);
-  --bg-card-dark: #0d0d1a;
+  --bg-card-dark: #121216;
   --bg-card-light: #ffffff;
   --bg-card: var(--bg-card-dark, #0d0d1a);
   --bg-card-2-dark: #111123;
@@ -88,10 +88,10 @@
   --gold-3: var(--gold-3-dark, #b8962e);
   --gold-soft: rgba(212, 175, 55, 0.08);
   --gold-soft-2: rgba(212, 175, 55, 0.14);
-  --gold-glow: rgba(212, 175, 55, 0.55);
+  --gold-glow: rgba(212, 175, 55, 0.25);
   --cyan: #4fd6e0;
   --cyan-soft: rgba(79, 214, 224, 0.10);
-  --text-dark: #efe9de;
+  --text-dark: #fcfbf9;
   --text-light: #212529;
   --text: var(--text-dark, #efe9de);
   --text-muted-dark: #a09c93;
@@ -204,19 +204,7 @@ body::after {
   clip-path: inset(40% 0 0 0);
 }
 
-.cyan.glitch {
-  position: relative;
-  display: inline-block;
-  animation: none;
-  background: none;
-  -webkit-background-clip: unset;
-  background-clip: unset;
-  -webkit-text-fill-color: var(--cyan);
-  color: var(--cyan);
-  text-shadow:
-    0 0 12px rgba(79, 214, 224, 0.35),
-    0 0 35px rgba(79, 214, 224, 0.15);
-}
+.cyan
 
 .cyan:not(.glitch) {
   text-shadow: 0 0 16px rgba(212, 175, 55, 0.18);
@@ -288,21 +276,13 @@ a:hover { border-bottom-color: var(--gold); }
   font-family: var(--sans); text-decoration: none;
 }
 
-.btn-primary {
-  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-3) 100%);
-  color: #050509;
-  box-shadow: 0 8px 28px -8px var(--gold-glow), inset 0 1px 0 rgba(255,255,255,0.15);
-  position: relative; overflow: hidden;
-}
+.btn-primary { background: var(--gold-2); color: #000 !important; font-weight: 600; box-shadow: 0 4px 12px rgba(212,175,55,0.1); border: none; transition: transform 0.2s, box-shadow 0.2s; }
 .btn-primary::after {
   content: ""; position: absolute; inset: 0;
   background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.32), transparent 50%);
   opacity: 0; transition: opacity .3s;
 }
-.btn-primary:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 36px -8px var(--gold-glow), inset 0 1px 0 rgba(255,255,255,0.2);
-}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: inset 0 0 0 100px rgba(0,0,0,0.1), 0 8px 24px -4px rgba(212,175,55,0.3); filter: none; }
 .btn-primary:hover::after { opacity: 1; }
 .btn-primary:active { transform: translateY(-1px); }
 
@@ -438,8 +418,8 @@ nav {
    ============================================= */
 
 .hero { padding: 140px 0 80px; position: relative; overflow: hidden; }
-.hero-grid { display: grid; grid-template-columns: 1fr; gap: 64px; align-items: center; }
-@media(min-width: 1040px) { .hero-grid { grid-template-columns: 1fr 1fr; gap: 88px; } }
+.hero-grid { display: grid; grid-template-columns: 1fr; gap: 32px; align-items: center; }
+@media(min-width: 1100px) { .hero-grid { grid-template-columns: 1fr 1fr; gap: 64px; } }
 
 .hero-copy.reveal { max-width: 580px; }
 
@@ -1405,18 +1385,13 @@ footer {
 
 [data-theme="light"] .hero-meta span:hover { background: rgba(212, 175, 55, 0.06); }
 
-[data-theme="light"] .btn-primary {
-  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-3) 100%);
-  color: #050509;
-}
+[data-theme="light"] .btn-primary { background: var(--gold-2); color: #000 !important; font-weight: 600; box-shadow: 0 4px 12px rgba(212,175,55,0.1); border: none; transition: transform 0.2s, box-shadow 0.2s; }
 
 [data-theme="light"] .btn-primary::after {
   background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.32), transparent 50%);
 }
 
-[data-theme="light"] .btn-primary:hover {
-  box-shadow: 0 12px 36px -8px var(--gold-glow), inset 0 1px 0 rgba(255,255,255,0.2);
-}
+[data-theme="light"] .btn-primary:hover { transform: translateY(-2px); box-shadow: inset 0 0 0 100px rgba(0,0,0,0.1), 0 8px 24px -4px rgba(212,175,55,0.3); filter: none; }
 
 [data-theme="light"] .btn-ghost {
   background: rgba(212, 175, 55, 0.04);
@@ -1566,18 +1541,261 @@ footer {
 [data-theme="light"] #mobileMenu {
   background: rgba(255, 255, 255, 0.98);
 }
-</style>
+
+.text-gradient {
+  background: linear-gradient(135deg, #fff 0%, #a09c93 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+[data-theme="light"] .text-gradient {
+  background: linear-gradient(135deg, #111 0%, #5c5952 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.text-gradient-gold { color: var(--gold);
+  background: linear-gradient(135deg, var(--gold-2) 0%, var(--gold-3) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.serif-italic {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+.hero-title {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  margin-bottom: 24px;
+}
+.hero-subtitle {
+  font-size: clamp(1.1rem, 2vw, 1.25rem);
+  color: var(--text-muted);
+  max-width: 60ch;
+  line-height: 1.6;
+  margin-bottom: 40px;
+}
+.premium-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.03), 0 8px 32px -8px rgba(0,0,0,0.3);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s;
+  overflow: hidden;
+  position: relative;
+  padding: 32px;
+}
+[data-theme="light"] .premium-card {
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 8px 32px -8px rgba(0,0,0,0.06);
+}
+.premium-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-strong);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 16px 48px -12px rgba(0,0,0,0.4);
+}
+
+
+
+.section-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 0.75rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.1em; color: var(--gold);
+  margin-bottom: 24px;
+}
+.section-tag::before {
+  content: ""; display: block; width: 24px; height: 1px; background: var(--gold);
+}
+.section-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  letter-spacing: -0.03em;
+  margin-bottom: 24px;
+  line-height: 1.1;
+}
+.section-desc {
+  font-size: 1.1rem; color: var(--text-muted); max-width: 54ch; line-height: 1.6;
+}
+
+/* Enhancing Buttons */
+.btn-primary { background: var(--gold-2); color: #000 !important; font-weight: 600; box-shadow: 0 4px 12px rgba(212,175,55,0.1); border: none; transition: transform 0.2s, box-shadow 0.2s; }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: inset 0 0 0 100px rgba(0,0,0,0.1), 0 8px 24px -4px rgba(212,175,55,0.3); filter: none; }
+.btn-secondary {
+  background: var(--bg-card);
+  color: var(--text) !important;
+  border: 1px solid var(--border-strong);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.03), 0 2px 8px rgba(0,0,0,0.2);
+  transition: transform 0.2s, border-color 0.2s, background 0.2s;
+}
+[data-theme="light"] .btn-secondary {
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 2px 8px rgba(0,0,0,0.05);
+}
+.btn-secondary:hover {
+  border-color: var(--gold);
+  background: var(--bg-card-2);
+  transform: translateY(-2px);
+}
+
+
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); letter-spacing: -0.015em; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+/* Microinteractions for links */
+a { transition: color 0.2s ease, opacity 0.2s ease; }
+.nav-links a { position: relative; }
+.nav-links a::after { content: ''; position: absolute; width: 0%; height: 2px; bottom: -4px; left: 0; background-color: var(--gold); transition: width 0.3s ease; }
+.nav-links a:hover::after { width: 100%; }
+
+/* Refined Form UI */
+.form-card {
+  padding: 40px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.03), 0 16px 40px -12px rgba(0,0,0,0.4);
+}
+input, select, textarea {
+  background: rgba(255, 255, 255, 0.02) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 8px !important;
+  padding: 14px 16px !important;
+  color: var(--text) !important;
+  transition: border-color 0.3s, box-shadow 0.3s, background 0.3s !important;
+  font-family: var(--sans) !important;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--gold) !important;
+  box-shadow: 0 0 0 3px var(--gold-soft) !important;
+  outline: none !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+}
+label { font-weight: 600 !important; font-size: 0.9rem !important; letter-spacing: 0.02em !important; color: var(--text-dim) !important; margin-bottom: 8px !important; display: block; }
+.form-group { margin-bottom: 24px !important; }
+
+/* Refined AI Chat UI */
+.chat-panel {
+  border-radius: 16px;
+  border: 1px solid var(--border-glass);
+  box-shadow: 0 24px 64px -16px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05);
+  background: var(--bg-2);
+  overflow: hidden;
+}
+.chat-header {
+  background: rgba(0,0,0,0.2);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 20px;
+}
+.chat-messages { padding: 20px; }
+.msg.ai { background: rgba(212,175,55,0.05); border: 1px solid var(--border-glass); color: var(--text); }
+.msg.user { background: var(--bg-3); border: 1px solid var(--border); color: var(--text); }
+.chat-input { padding: 16px; border-top: 1px solid var(--border); background: rgba(0,0,0,0.2); }
+.chat-input input { border-radius: 999px !important; padding: 12px 20px !important; }
+
+/* Timeline refinement */
+.timeline-item { position: relative; padding-left: 40px; margin-bottom: 48px; }
+.timeline-item::before { content: ''; position: absolute; left: 11px; top: 0; bottom: -48px; width: 2px; background: var(--border); }
+.timeline-item:last-child::before { display: none; }
+.timeline-dot {
+  position: absolute; left: 0; top: 4px; width: 24px; height: 24px; border-radius: 50%;
+  background: var(--bg); border: 2px solid var(--gold); display: grid; place-items: center;
+  box-shadow: 0 0 12px var(--gold-glow);
+}
+.timeline-dot::after { content: ''; width: 8px; height: 8px; background: var(--gold); border-radius: 50%; }
+
+[data-theme="light"] input,
+[data-theme="light"] select,
+[data-theme="light"] textarea {
+  background: #f1f3f5 !important;
+  color: #000 !important;
+  border-color: rgba(0,0,0,0.2) !important;
+}
+[data-theme="light"] input:focus,
+[data-theme="light"] select:focus,
+[data-theme="light"] textarea:focus {
+  background: #fff !important;
+  border-color: var(--gold) !important;
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2) !important;
+}
+[data-theme="light"] label {
+  color: #444 !important;
+}
+[data-theme="light"] .chat-header,
+[data-theme="light"] .chat-input {
+  background: rgba(0,0,0,0.03);
+}
+[data-theme="light"] .msg.ai {
+  background: rgba(212,175,55,0.08);
+}
+[data-theme="light"] .msg.user {
+  background: #fff;
+  border-color: rgba(0,0,0,0.1);
+}
+
+@media (max-width: 768px) {
+  .hero { padding: 90px 0 60px; }
+  .hero-visual .portrait-frame { max-width: 280px; aspect-ratio: 1/1 !important; margin: 0 auto; box-shadow: none; border: 1px solid var(--border-glass); }
+}
+
+.premium-card::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(circle at top right, rgba(255,255,255,0.06), transparent 50%);
+  opacity: 0; transition: opacity 0.4s;
+}
+[data-theme="light"] .premium-card::after {
+  background: radial-gradient(circle at top right, rgba(0,0,0,0.02), transparent 50%);
+}
+.premium-card:hover::after { opacity: 1; }
+
+[data-theme="light"] input::placeholder, [data-theme="light"] textarea::placeholder { color: #666 !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.chat-panel { background: #050505; border: 1px solid #1c1c24; box-shadow: 0 16px 32px rgba(0,0,0,0.4); }
+[data-theme="light"] .chat-panel { background: #151520; border: 1px solid #2a2a35; color: #fff; }
+[data-theme="light"] .chat-header { background: #111; color: #fff; border-bottom: 1px solid #333; }
+[data-theme="light"] .chat-header h3, [data-theme="light"] .chat-header p { color: #fff; }
+[data-theme="light"] .chat-messages { background: #151520; }
+[data-theme="light"] .msg.ai { background: rgba(212,175,55,0.15); color: #fff; border: 1px solid rgba(212,175,55,0.2); }
+[data-theme="light"] .msg.user { background: #2a2a35; color: #fff; border: 1px solid #444; }
+[data-theme="light"] .chat-input { background: #111; border-top: 1px solid #333; }
+[data-theme="light"] .chat-input input { background: #222 !important; color: #fff !important; border-color: #333 !important; }
+
+section { padding: 120px 0; }
+@media (max-width: 768px) { section { padding: 80px 0; } }
+.section-tag { margin-bottom: 16px; }
+.section-title { margin-bottom: 40px; }
+
+.editorial-card {
+  border-bottom: 1px solid var(--border-glass);
+  padding-bottom: 40px;
+  margin-bottom: 40px;
+  transition: border-color 0.3s;
+}
+.editorial-card:hover { border-color: var(--gold); }
+.project-card.editorial-card, .post-card.editorial-card { background: transparent; box-shadow: none; border-radius: 0; padding: 0; border: none; }
+.project-card.editorial-card .project-content, .post-card.editorial-card .post-content { padding: 24px 0 0 0; }
+.project-card.editorial-card img, .post-card.editorial-card img { border-radius: 4px; border: 1px solid var(--border-glass); }
+section { position: relative; overflow: hidden; }</style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav role="navigation" aria-label="Navegación principal">
-  <div class="nav-inner">
+  <div class="wrap nav-inner">
     <a href="#top" class="brand" aria-label="AURUM NOVA">
       <span class="mark">
         <picture>
           <source srcset="assets/logo-a.webp" type="image/webp">
-          <img src="assets/logo-a.png" alt="AURUM NOVA" width="24" height="24" style="width:24px;height:24px;display:block;object-fit:contain">
+          <img src="ChatGPT Image 17 sept 2026, 13_45_33.png" alt="AURUM NOVA" width="24" height="24" style="width:24px;height:24px;display:block;object-fit:contain;aspect-ratio:1/1">
         </picture>
       </span>
       <span class="name">AURUM</span> NOVA
@@ -1622,73 +1840,47 @@ footer {
 <main id="top">
 
 <!-- HERO -->
-<section class="hero">
+<section class="hero" id="top">
   <div class="wrap">
     <div class="hero-grid">
       <div class="hero-copy reveal">
         <span class="hero-badge">
           <span class="dot"></span>
-          CEO · Fundador · IA · Global
+          CEO · Strategic AI Consulting
         </span>
-        <h1>
-          Inteligencia <span class="cyan glitch" data-text="Artificial">Artificial</span> al servicio de tu crecimiento.<br>
-          <span class="gold">Angel Santiago Alvarado</span>
+        <h1 class="hero-title">
+          Sistemas Inteligentes de<br>
+          <span class="text-gradient-gold">Crecimiento Corporativo</span>
         </h1>
-        <p class="lead">
-          Ayudo a empresas y microempresas a dejar de perder tiempo en lo que no funciona, y empezar a vender más con inteligencia artificial, estrategia y ejecución real.
-        </p>
-        <p style="font-size:0.98rem;color:var(--text-dim);margin-bottom:24px;max-width:48ch">
-          Especialmente: automatización de procesos que hoy consumen horas de tu equipo, y sistemas de captación de leads que funcionan sin que vos tengas que estar atento 24/7.
+        <p class="hero-subtitle">
+          Ingeniería de IA, automatización y estrategia ejecutiva por <span class="gold">Angel Santiago Alvarado</span>. Transformamos horas operativas en ventaja competitiva real.
         </p>
         <div class="hero-cta">
-          <a href="#contact" class="btn btn-primary">Agenda tu diagnóstico gratuito de 15 min</a>
-          <a href="https://wa.me/593994195932?text=Hola%20Angel%2C%20me%20interesa%20tu%20servicio" class="btn btn-ghost" target="_blank" rel="noopener">Habla por WhatsApp →</a>
+          <a href="#contact" class="btn btn-primary" aria-label="Plaza una reunión">Plaza una reunión estratégica</a>
+          <a href="#portfolio" class="btn btn-secondary">Ver casos de éxito</a>
         </div>
         <div class="hero-meta">
-          <span class="badge-phone">
-            <span class="phone-icon">
-                          <svg height="24" width="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M5.586 13.333c-1.171 2.47-2.693 4.592-4.224 5.78a10.43 10.43 0 005.704 2.78c3.04 0 5.386-.798 5.386-3.962 0-2.2-1.348-3.962-3.972-3.962-.885 0-1.803.387-2.626.99a3.656 3.656 0 00-1.415-.943C5.094 6.5 6.657 4.5 9.28 4.5c3.623 0 6.074 2.028 6.657 4.131.196.708.956.682 1.152.66a1.17 1.17 0 01.882 1.456c-.024.651-.196 1.576-.596 2.413a3.676 3.676 0 01-.733 1.304c-.408.523-1.141.556-1.684.384-2.353-.701-4.596-1.762-6.022-4.306a8.42 8.42 0 01-1.92-5.154c.707-3.74 3.529-7.214 7.463-7.214 3.272 0 5.872 2.193 6.907 4.412.194.448.802.476 1.052.428a1.23 1.23 0 01.494.676" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-              </svg>
-            </span>
+          <span class="badge-phone" onclick="window.open('https://wa.me/593994195932','_blank')">
+            <div class="phone-icon">
+              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347" fill="#000"/></svg>
+            </div>
             <b>+593 99 419 5932</b>
-            <span style="font-family:var(--sans);font-size:0.72rem;color:var(--text-dim);font-weight:500;margin-left:2px">WhatsApp</span>
           </span>
-          <span class="sep">·</span>
-          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=aurum.nova.business@gmail.com&su=&body=" style="cursor:pointer;border-bottom:none">
-            <span style="color:var(--text)"><b>aurum.nova.business@gmail.com</b></span>
-          </a>
-          <span class="sep">·</span>
-          <span style="cursor:pointer">Trabajo global — clientes en cualquier país</span>
+          <span class="sep">|</span>
+          <span onclick="window.location.href='mailto:aurum.nova.business@gmail.com'">aurum.nova.business@gmail.com</span>
         </div>
       </div>
-
-      <div class="hero-visual reveal">
-        <div class="portrait-frame">
+      <div class="hero-visual reveal" style="transition-delay: 0.2s">
+        <div class="portrait-frame" style="width:100%; max-width:480px; aspect-ratio:4/5; border-radius:16px; overflow:hidden; position:relative; box-shadow:0 24px 64px -16px rgba(0,0,0,0.4); border:1px solid var(--border-glass);">
           <picture>
             <source srcset="assets/portrait.webp" type="image/webp">
-            <img
-              class="portrait-img"
-              src="assets/portrait.png"
-              alt="Angel Santiago Alvarado Rodriguez — CEO de AURUM NOVA"
-              width="500"
-              height="625"
-              loading="eager"
-              fetchpriority="high"
-              style="background:var(--bg-2)"
-            >
+            <img class="portrait-img" src="assets/portrait.png" alt="Angel Santiago Alvarado Rodriguez · CEO de AURUM NOVA" width="500" height="625" style="width:100%;height:100%;object-fit:cover;display:block;">
           </picture>
-          <span class="corner-ornament tl">AURUM NOVA</span>
-          <span class="corner-ornament tr">CEO · 2026</span>
-          <div class="portrait-caption">
-            <span>Angel Santiago Alvarado Rodriguez</span>
-            <span class="badge">CEO · Fundador</span>
-          </div>
         </div>
       </div>
     </div>
-    <div class="hero-sweep"></div>
   </div>
+  <div class="hero-sweep"></div>
 </section>
 
 <!-- ABOUT / CEO — REESCRITO PREMIUM GLOBAL -->
@@ -1812,7 +2004,7 @@ footer {
     <div class="services-grid">
 
       <!-- Programa 1: IA Growth Audit -->
-      <article class="service-card reveal">
+      <article class="service-card premium-card reveal">
         <span class="badge-new">ENTRADA</span>
         <div class="icon-wrap">
           <svg height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -1834,7 +2026,7 @@ footer {
       </article>
 
       <!-- Programa 2: Pipeline IA -->
-      <article class="service-card reveal">
+      <article class="service-card premium-card reveal">
         <span class="badge-new">CORE</span>
         <div class="icon-wrap">
           <svg height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -1855,7 +2047,7 @@ footer {
       </article>
 
       <!-- Programa 3: Content Engine IA -->
-      <article class="service-card reveal">
+      <article class="service-card premium-card reveal">
         <span class="badge-new">MENSUAL</span>
         <div class="icon-wrap">
           <svg height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -1878,7 +2070,7 @@ footer {
       </article>
 
       <!-- Programa 4: Consultoría estratégica -->
-      <article class="service-card reveal">
+      <article class="service-card premium-card reveal">
         <span class="badge-new">SESIÓN</span>
         <div class="icon-wrap">
           <svg height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -2141,7 +2333,7 @@ footer {
         <span class="mark">
           <picture>
             <source srcset="assets/logo-a.webp" type="image/webp">
-            <img src="assets/logo-a.png" alt="AURUM NOVA" width="18" height="18" style="width:18px;height:18px;display:block;object-fit:contain">
+            <img src="ChatGPT Image 17 sept 2026, 13_45_33.png" alt="AURUM NOVA" width="18" height="18" style="width:18px;height:18px;display:block;object-fit:contain;aspect-ratio:1/1">
           </picture>
         </span>
         <span class="name">AURUM</span> NOVA
@@ -2211,7 +2403,7 @@ if (portfolioGrid) {
   } else {
     portfolioGrid.innerHTML = PROJECTS.map(function(p) {
       return `
-        <article class="project-card">
+        <article class="project-card editorial-card">
           <div class="project-thumb" style="background:${p.img ? 'url('+p.img+') center/cover' : 'linear-gradient(135deg,#191930,#060610)'}">
             ${p.img ? '' : '<svg height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>'}
             <span class="thumb-label">${p.category || 'PROYECTO'}</span>
