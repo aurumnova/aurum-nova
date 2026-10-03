@@ -205,15 +205,17 @@ body::after {
 }
 
 .cyan.glitch {
+  position: relative;
+  display: inline-block;
   animation: none;
   background: none;
   -webkit-background-clip: unset;
   background-clip: unset;
-  -webkit-text-fill-color: var(--gold);
+  -webkit-text-fill-color: var(--cyan);
+  color: var(--cyan);
   text-shadow:
-    0 0 12px rgba(212, 175, 55, 0.20),
-    0 0 35px rgba(212, 175, 55, 0.08),
-    0 0 60px rgba(212, 175, 55, 0.04);
+    0 0 12px rgba(79, 214, 224, 0.35),
+    0 0 35px rgba(79, 214, 224, 0.15);
 }
 
 .cyan:not(.glitch) {
@@ -364,7 +366,7 @@ nav {
 .brand .name-sub { color: var(--text-muted); font-weight: 500; margin-left: 2px; }
 
 .nav-links { display: flex; align-items: center; gap: 32px; }
-@media(max-width: 760px) { .nav-links { display: none; } }
+@media(max-width: 900px) { .nav-links { display: none; } }
 
 .nav-links a {
   color: var(--text-muted); font-size: 0.86rem; font-weight: 500;
@@ -378,24 +380,58 @@ nav {
 .nav-links a:hover::after { width: 100%; }
 
 .nav-cta { margin-left: 6px; }
-@media(max-width: 760px) {
-  .nav-cta { display: block; text-align: center; padding: 14px 0; border-top: 1px solid var(--border); }
-  .nav-inner { flex-direction: column; }
+@media(max-width: 900px) { .nav-cta { display: none; } }
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.nav-links a:focus-visible {
-  outline: 2px solid var(--gold);
-  outline-offset: 4px;
-  border-radius: 2px;
-  color: var(--text);
+.theme-toggle-btn {
+  background: rgba(212, 175, 55, 0.05);
+  border: 1px solid var(--border);
+  color: var(--gold);
+  border-radius: 8px;
+  width: 38px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all .2s;
 }
-.menu-toggle:focus-visible {
+.theme-toggle-btn:hover {
+  background: rgba(212, 175, 55, 0.12);
+  border-color: var(--border-strong);
+}
+
+.menu-toggle {
+  display: none;
+  background: rgba(212, 175, 55, 0.05);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 8px;
+  width: 38px;
+  height: 38px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all .2s;
+}
+.menu-toggle:hover {
+  background: rgba(212, 175, 55, 0.12);
+  border-color: var(--border-strong);
+  color: var(--gold);
+}
+.menu-toggle:focus-visible, .theme-toggle-btn:focus-visible {
   outline: 2px solid var(--gold);
   outline-offset: 2px;
   border-color: var(--gold);
 }
-.menu-toggle:hover { border-color: var(--border-strong); }
-@media(max-width: 760px) { .menu-toggle { display: block; } }
+@media(max-width: 900px) {
+  .menu-toggle { display: flex; }
+}
 
 /* =============================================
    HERO
@@ -495,6 +531,7 @@ nav {
   color: var(--gold); opacity: 0.6; letter-spacing: 0.15em; z-index: 3;
 }
 .portrait-frame .corner-ornament.tl { top: 10px; left: 10px; border-top: 1px solid rgba(212, 175, 55, 0.25); border-left: 1px solid rgba(212, 175, 55, 0.25); padding: 2px 4px; }
+.portrait-frame .corner-ornament.tr { top: 10px; right: 10px; border-top: 1px solid rgba(212, 175, 55, 0.25); border-right: 1px solid rgba(212, 175, 55, 0.25); padding: 2px 4px; }
 .portrait-frame .corner-ornament.br { bottom: 10px; right: 10px; border-bottom: 1px solid rgba(212, 175, 55, 0.25); border-right: 1px solid rgba(212, 175, 55, 0.25); padding: 2px 4px; }
 .portrait-caption {
   position: absolute; left: 0; right: 0; bottom: 0;
@@ -1124,11 +1161,26 @@ footer {
 @media(max-width: 480px) {
   .ai-chat-widget { bottom: 76px; right: 16px; }
   .ai-chat-toggle { width: 52px; height: 52px; }
-  .ai-chat-box { width: calc(100vw - 32px); height: 420px; }
+  .ai-chat-box {
+    position: fixed;
+    bottom: 80px;
+    left: 12px;
+    right: 12px;
+    width: auto;
+    max-width: none;
+    height: auto;
+    max-height: calc(100dvh - 96px);
+  }
 }
 @media(max-width: 380px) {
   .ai-chat-widget { bottom: 66px; right: 12px; }
   .ai-chat-toggle { width: 46px; height: 46px; }
+  .ai-chat-box {
+    bottom: 70px;
+    left: 8px;
+    right: 8px;
+    max-height: calc(100dvh - 84px);
+  }
 }
 
 /* =============================================
@@ -1165,7 +1217,7 @@ footer {
 .vision-bg {
   position: absolute;
   inset: 0;
-  background-image: url('aurum-nova-banner.png');
+  background-image: url('aurum-nova-banner.webp');
   background-size: contain;
   background-position: center center;
   background-repeat: no-repeat;
@@ -1507,47 +1559,13 @@ footer {
   box-shadow: 0 10px 32px -4px rgba(212, 175, 55, 0.65), 0 0 0 4px rgba(5, 5, 9, 0.85);
 }
 
-[data-theme="light"] .glow-corner.tl { background: radial-gradient(circle, rgba(212, 175, 55, 0.09), transparent 70%); }
-
-[data-theme="light"] .glow-corner.br { background: radial-gradient(circle, rgba(212, 175, 55, 0.07), transparent 70%); }
-
-[data-theme="light"] .reveal { opacity: 1; transform: none; }
-[data-theme="light"] .hero-badge .dot { animation: none; }
-[data-theme="light"] html { scroll-behavior: auto; }
-
-[data-theme="light"] {
-  --bg: #ffffff;
-  --bg-2: #f8f9fa;
-  --bg-3: #f1f3f5;
-  --bg-card: #ffffff;
-  --bg-card-2: #f8f9fa;
-  --border: rgba(212, 175, 55, 0.1);
-  --border-strong: rgba(212, 175, 55, 0.3);
-  --border-glass: rgba(212, 175, 55, 0.05);
-  --gold: #b8860b;
-  --gold-2: #d4af37;
-  --gold-3: #b8962e;
-  --text: #212529;
-  --text-muted: #495057;
-  --text-dim: #6c757d;
-  --text-faint: #adb5bd;
-  --bg-card: #ffffff;
-  --bg-card-2: #f8f9fa;
+[data-theme="light"] nav {
+  background: rgba(255, 255, 255, 0.92);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.18);
 }
-
-[data-theme="light"] body { background: var(--bg); color: var(--text); }
-
-[data-theme="light"] body::before {
-  background-image:
-    radial-gradient(ellipse 80% 60% at 50% -10%, rgba(212, 175, 55, 0.045) 0%, transparent 70%),
-    url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.028'/%3E%3C/svg%3E");
+[data-theme="light"] #mobileMenu {
+  background: rgba(255, 255, 255, 0.98);
 }
-
-[data-theme="light"] body::after {
-  background: radial-gradient(ellipse 60% 40% at 80% 0%, rgba(79, 214, 224, 0.03) 0%, transparent 60%);
-}
-
-[data-theme="light"] ::selection { background: var(--gold); color: #ffffff; }
 </style>
 </head>
 <body>
@@ -1555,16 +1573,13 @@ footer {
 <!-- NAV -->
 <nav role="navigation" aria-label="Navegación principal">
   <div class="nav-inner">
-    <button id="themeToggle" class="btn btn-ghost" aria-label="Cambiar tema" title="Cambiar entre tema oscuro y claro">
-      <svg xmlns="http://www.w3.org/2000/svg"  width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path id="themeIconMoon" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
-        <path id="themeIconSun" d="M12 3a1 1 0 000 2h6a4 4 0 010 8H6a4 4 0 010-8h6a1 1 0 100-2zM13 19h-1a2 2 0 01-1.433-.83l-.83-1.433A2 2 0 015 11V8a2 2 0 012-2h1a2 2 0 012 2v2a2 2 0 01-1 1.433L12 16l-1.166 1.166A2 2 0 0110 15v2a2 2 0 01-2 2H8a2 2 0 01-2-2v-2a2 2 0 01-2-2v-2a2 2 0 011-1.433l1.166-1.166A2 2 0 0111 9h1a2 2 0 012 2v2z" style="display:none"></path>
-      </svg>
-    </button>
     <a href="#top" class="brand" aria-label="AURUM NOVA">
       <span class="mark">
-                <img src="ChatGPT Image 17 sept 2026, 13_45_33.png" alt="AURUM NOVA" style="width:24px;height:24px;display:block;object-fit:contain;aspect-ratio:1/1">
-              </span>
+        <picture>
+          <source srcset="assets/logo-a.webp" type="image/webp">
+          <img src="assets/logo-a.png" alt="AURUM NOVA" width="24" height="24" style="width:24px;height:24px;display:block;object-fit:contain">
+        </picture>
+      </span>
       <span class="name">AURUM</span> NOVA
       <span class="name-sub">· CEO</span>
     </a>
@@ -1575,15 +1590,23 @@ footer {
       <a href="#progress" data-target="progress">Avances</a>
       <a href="#blog" data-target="blog">Blog</a>
       <a href="#contact" data-target="contact">Contacto</a>
-      <a href="#contact" class="btn btn-primary nav-cta" style="padding:10px 22px;font-size:0.82rem">Agenda tu diagnóstico <span style="opacity:0.7;font-size:0.75rem">↓</span></a>
     </div>
-    <button class="menu-toggle" aria-label="Abrir menú" id="menuToggle">
-      <svg xmlns="http://www.w3.org/2000/svg"  width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-        <line x1="3" y1="6" x2="21" y2="6"></line>
-        <line x1="3" y1="12" x2="21" y2="12"></line>
-        <line x1="3" y1="18" x2="21" y2="18"></line>
-      </svg>
-    </button>
+    <div class="nav-actions">
+      <button id="themeToggle" class="theme-toggle-btn" aria-label="Cambiar tema" title="Cambiar entre tema oscuro y claro">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path id="themeIconMoon" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+          <circle id="themeIconSun" cx="12" cy="12" r="5" style="display:none"></circle>
+        </svg>
+      </button>
+      <a href="#contact" class="btn btn-primary nav-cta" style="padding:10px 20px;font-size:0.82rem">Agenda tu diagnóstico <span style="opacity:0.7;font-size:0.75rem">↓</span></a>
+      <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false" id="menuToggle">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </div>
   </div>
   <div id="mobileMenu">
     <a href="#about" data-target="about">Sobre mí</a>
@@ -1592,6 +1615,7 @@ footer {
     <a href="#progress" data-target="progress">Avances</a>
     <a href="#blog" data-target="blog">Blog</a>
     <a href="#contact" data-target="contact">Contacto</a>
+    <a href="#contact" class="btn btn-primary" style="margin-top:12px;text-align:center;padding:12px 18px;font-size:0.86rem;display:block;">Agenda tu diagnóstico de 15 min →</a>
   </div>
 </nav>
 
@@ -1641,14 +1665,21 @@ footer {
 
       <div class="hero-visual reveal">
         <div class="portrait-frame">
-          <img
-            class="portrait-img"
-            src="assets/portrait.png"
-            alt="Angel Santiago Alvarado Rodriguez — CEO de AURUM NOVA"
-            style="background:var(--bg-2)"
-          >
+          <picture>
+            <source srcset="assets/portrait.webp" type="image/webp">
+            <img
+              class="portrait-img"
+              src="assets/portrait.png"
+              alt="Angel Santiago Alvarado Rodriguez — CEO de AURUM NOVA"
+              width="500"
+              height="625"
+              loading="eager"
+              fetchpriority="high"
+              style="background:var(--bg-2)"
+            >
+          </picture>
           <span class="corner-ornament tl">AURUM NOVA</span>
-          <span class="corner-ornament br">CEO · 2026</span>
+          <span class="corner-ornament tr">CEO · 2026</span>
           <div class="portrait-caption">
             <span>Angel Santiago Alvarado Rodriguez</span>
             <span class="badge">CEO · Fundador</span>
@@ -1720,7 +1751,7 @@ footer {
   <div class="wrap">
     <div class="vision-bg"></div>
     <div class="vision-overlay"></div>
-    <div class="vision-content container">
+    <div class="vision-content">
       <div class="vision-header reveal">
         <div class="gold-line"></div>
         <div class="eyebrow">Visión</div>
@@ -1778,7 +1809,7 @@ footer {
       <div class="eyebrow">Qué ofrezco</div>
       <h2>Programas <span class="cyan glitch" data-text="— servicios con alcance y precio definido">— servicios con alcance y precio definido</span></h2>
     </div>
-    <div class="services-grid container">
+    <div class="services-grid">
 
       <!-- Programa 1: IA Growth Audit -->
       <article class="service-card reveal">
@@ -1848,7 +1879,7 @@ footer {
 
       <!-- Programa 4: Consultoría estratégica -->
       <article class="service-card reveal">
-        <span class="badge-new">SESión</span>
+        <span class="badge-new">SESIÓN</span>
         <div class="icon-wrap">
           <svg height="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
             <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path>
@@ -1885,7 +1916,7 @@ footer {
       <div class="eyebrow">Casos</div>
       <h2>Casos <span class="cyan glitch" data-text="— resultados reales">— resultados reales</span></h2>
     </div>
-    <div class="portfolio-grid container" id="portfolioGrid"></div>
+    <div class="portfolio-grid" id="portfolioGrid"></div>
     <div style="text-align:center;margin-top:38px" class="reveal">
       <a href="#contact" class="btn btn-ghost">Quiero un caso así →</a>
     </div>
@@ -1902,7 +1933,7 @@ footer {
       <div class="eyebrow">Avances</div>
       <h2>Progreso <span class="cyan glitch" data-text="— la empresa crece">— la empresa crece</span></h2>
     </div>
-    <div class="timeline-wrap container" id="timelineWrap">
+    <div class="timeline-wrap" id="timelineWrap">
       <div class="timeline-line" id="timelineLine"></div>
       <div class="timeline-line-done" id="timelineLineDone" style="display:none"></div>
     </div>
@@ -1918,7 +1949,7 @@ footer {
       <div class="eyebrow">Blog y publicaciones</div>
       <h2>Avances y pensamiento <span class="cyan glitch" data-text="— lo que estoy escribiendo">— lo que estoy escribiendo</span></h2>
     </div>
-    <div class="blog-list container" id="blogList"></div>
+    <div class="blog-list" id="blogList"></div>
     <div style="text-align:center;margin-top:38px" class="reveal">
       <a href="#contact" class="btn btn-ghost">Sugerir tema →</a>
     </div>
@@ -1933,7 +1964,7 @@ footer {
       <div class="eyebrow">Preguntas frecuentes</div>
       <h2>Antes de escribir — leé esto</h2>
     </div>
-    <div class="container" style="grid-template-columns:1fr;gap:16px">
+    <div class="faq-list" style="display:grid;grid-template-columns:1fr;gap:16px;max-width:760px;margin:0 auto">
       <div class="faq-item reveal" style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:24px">
         <h3 style="margin-bottom:8px;font-size:1.05rem">No tengo claro qué necesito automatizar — ¿podemos empezar con algo pequeño?</h3>
         <p style="color:var(--text-muted);font-size:0.92rem;line-height:1.65">Sí. El diagnóstico es el punto de entrada recomendado. Identificamos juntos qué proceso tiene mayor impacto si lo automatizamos, y empezamos ahí. No hace falta que sepas tecnología ni que tengas las herramientas claras.</p>
@@ -1966,7 +1997,7 @@ footer {
     </div>
 
     <!-- Cómo funciona -->
-    <div class="container" style="grid-template-columns:1fr;gap:0;margin-bottom:48px">
+    <div style="display:grid;grid-template-columns:1fr;gap:0;margin-bottom:48px">
       <div class="reveal" style="max-width:640px;margin:0 auto;text-align:center">
         <h3 style="font-size:1.3rem;margin-bottom:18px;color:var(--text)">Cómo funciona — de la primera conversación al resultado</h3>
         <ol style="font-size:0.92rem;color:var(--text-muted);line-height:2;margin-bottom:0;display:grid;gap:6px">
@@ -1978,7 +2009,7 @@ footer {
       </div>
     </div>
 
-    <div class="contact-grid container">
+    <div class="contact-grid">
       <div class="contact-info reveal">
         <div class="contact-item">
           <div class="ic">
@@ -2093,13 +2124,14 @@ footer {
             <label for="f-hp">Website</label>
             <input id="f-hp" name="_gotcha" type="text" tabindex="-1" autocomplete="off">
           </div>
-          <button type="submit" class="btn btn-primary form-submit">Enviar — Plaza una reunión</button>
+          <button type="submit" class="btn btn-primary form-submit">Enviar — Agendar una reunión</button>
           <div class="form-note">↓ tus datos no se comparten. Respuesta en &lt; 24 h hábiles.</div>
         </form>
       </div>
     </div>
   </div>
 </section>
+</main>
 
 <!-- FOOTER — REESCRITO GLOBAL -->
 <footer>
@@ -2107,8 +2139,11 @@ footer {
     <div class="footer-inner">
       <a href="#top" class="footer-brand">
         <span class="mark">
-                  <img src="ChatGPT Image 17 sept 2026, 13_45_33.png" alt="AURUM NOVA" style="width:18px;height:18px;display:block;object-fit:contain;aspect-ratio:1/1">
-                </span>
+          <picture>
+            <source srcset="assets/logo-a.webp" type="image/webp">
+            <img src="assets/logo-a.png" alt="AURUM NOVA" width="18" height="18" style="width:18px;height:18px;display:block;object-fit:contain">
+          </picture>
+        </span>
         <span class="name">AURUM</span> NOVA
       </a>
       <div class="footer-copy">© 2026 Angel Santiago Alvarado Rodriguez · CEO · AURUM NOVA <span style="opacity:0.4;margin:0 6px">·</span> Trabajo global con clientes hispanos e ingleses <span style="opacity:0.4;margin:0 6px">·</span> <a href="LICENSE" class="license-badge">MIT License</a></div>
@@ -2280,6 +2315,7 @@ if (menuToggle && mobileMenu) {
   menuToggle.addEventListener('click', function() {
     const open = mobileMenu.style.display === 'flex';
     mobileMenu.style.display = open ? 'none' : 'flex';
+    menuToggle.setAttribute('aria-expanded', open ? 'false' : 'true');
     if (open) {
       menuToggle.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg"  width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
     } else {
@@ -2289,6 +2325,7 @@ if (menuToggle && mobileMenu) {
   mobileMenu.querySelectorAll('a').forEach(function(a) {
     a.addEventListener('click', function() {
       mobileMenu.style.display = 'none';
+      menuToggle.setAttribute('aria-expanded', 'false');
       menuToggle.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg"  width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
     });
   });
@@ -2321,18 +2358,38 @@ if (contactForm) {
     e.preventDefault();
     const btn = this.querySelector('button[type=submit]');
     const note = this.querySelector('.form-note');
-    const name = this.querySelector('#f-name').value.trim();
-    const email = this.querySelector('#f-email').value.trim();
-    const msg = this.querySelector('#f-msg').value.trim();
-    const company = this.querySelector('#f-company').value.trim();
-    const phone = this.querySelector('#f-phone').value.trim();
-    const topic = this.querySelector('#f-topic').value;
-    if (!name) { alert('Por favor escribe tu nombre.'); return; }
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert('Por favor escribe un email válido.'); return; }
-    if (!msg) { alert('Escribe un mensaje, aunque sea breve.'); return; }
+    const nameInput = this.querySelector('#f-name');
+    const emailInput = this.querySelector('#f-email');
+    const msgInput = this.querySelector('#f-msg');
+    const name = nameInput ? nameInput.value.trim() : '';
+    const email = emailInput ? emailInput.value.trim() : '';
+    const msg = msgInput ? msgInput.value.trim() : '';
+    const company = (this.querySelector('#f-company')?.value || '').trim();
+    const phone = (this.querySelector('#f-phone')?.value || '').trim();
+    const topic = this.querySelector('#f-topic')?.value || '';
+
+    function showFormError(message, inputToFocus) {
+      if (note) {
+        note.textContent = '⚠ ' + message;
+        note.style.color = '#ff6b6b';
+      }
+      if (inputToFocus) {
+        inputToFocus.focus();
+        inputToFocus.style.borderColor = '#ff6b6b';
+        setTimeout(function() {
+          inputToFocus.style.borderColor = '';
+        }, 3500);
+      }
+    }
+
+    if (!name) { showFormError('Por favor escribe tu nombre.', nameInput); return; }
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showFormError('Por favor escribe un email válido.', emailInput); return; }
+    if (!msg) { showFormError('Escribe un mensaje, aunque sea breve.', msgInput); return; }
+
     btn.disabled = true;
     btn.textContent = 'Enviando…';
     note.textContent = '';
+    note.style.color = '';
     try {
       const payload = {
         sessionId: getSessionId(),
@@ -2360,7 +2417,7 @@ if (contactForm) {
         note.style.color = 'var(--gold)';
         btn.textContent = 'Enviado — gracias';
         setTimeout(function() {
-          btn.textContent = 'Enviar — Plaza una reunión';
+          btn.textContent = 'Enviar — Agendar una reunión';
           note.style.color = '';
           note.textContent = '↓ tus datos no se comparten. Respuesta en < 24 h hábiles.';
           contactForm.reset();
@@ -2368,15 +2425,15 @@ if (contactForm) {
         }, 4500);
       } else {
         console.error('Worker leads error:', data);
-        alert('Hubo un inconveniente al enviar tu consulta. Podés intentar nuevamente o escribirnos por WhatsApp.');
+        showFormError('Hubo un inconveniente al registrar la consulta. Intenta nuevamente o contáctanos por WhatsApp.');
         btn.disabled = false;
-        btn.textContent = 'Enviar — Plaza una reunión';
+        btn.textContent = 'Enviar — Agendar una reunión';
       }
     } catch (err) {
       console.error('Form submit error:', err);
-      alert('Error de conexión. Volvé a intentarlo o contactame por WhatsApp.');
+      showFormError('Error de conexión. Intenta de nuevo o escríbenos directamente a WhatsApp.');
       btn.disabled = false;
-      btn.textContent = 'Enviar — Plaza una reunión';
+      btn.textContent = 'Enviar — Agendar una reunión';
     }
   });
 }
@@ -2511,12 +2568,17 @@ if (contactForm) {
 /* ---------- Smooth anchor navigation — ROBUSTO ---------- */
 document.querySelectorAll('a[href^="#"]').forEach(function(a) {
   a.addEventListener('click', function(e) {
-    const targetId = a.getAttribute('data-target') || a.getAttribute('href');
-    if (targetId && targetId.length > 1) {
-      const el = document.querySelector(targetId);
-      if (el) {
-        e.preventDefault();
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    let target = a.getAttribute('data-target') || a.getAttribute('href');
+    if (target && target.length > 1) {
+      if (!target.startsWith('#')) target = '#' + target;
+      try {
+        const el = document.querySelector(target);
+        if (el) {
+          e.preventDefault();
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      } catch (err) {
+        // Fallback for non-standard selector
       }
     }
   });
@@ -2530,6 +2592,17 @@ const currentTheme = localStorage.getItem("theme");
 const setTheme = (theme) => {
   document.documentElement.setAttribute("data-theme", theme);
   localStorage.setItem("theme", theme);
+  const moonIcon = document.getElementById("themeIconMoon");
+  const sunIcon = document.getElementById("themeIconSun");
+  if (moonIcon && sunIcon) {
+    if (theme === "dark") {
+      moonIcon.style.display = "";
+      sunIcon.style.display = "none";
+    } else {
+      moonIcon.style.display = "none";
+      sunIcon.style.display = "";
+    }
+  }
 };
 
 if (currentTheme) {
@@ -2538,21 +2611,13 @@ if (currentTheme) {
   setTheme(prefersDark.matches ? "dark" : "light");
 }
 
-themeToggle.addEventListener("click", () => {
-  const current = document.documentElement.getAttribute("data-theme");
-  const newTheme = current === "dark" ? "light" : "dark";
-  setTheme(newTheme);
-
-  const moonIcon = document.getElementById("themeIconMoon");
-  const sunIcon = document.getElementById("themeIconSun");
-  if (newTheme === "dark") {
-    moonIcon.style.display = "";
-    sunIcon.style.display = "none";
-  } else {
-    moonIcon.style.display = "none";
-    sunIcon.style.display = "";
-  }
-});
+if (themeToggle) {
+  themeToggle.addEventListener("click", () => {
+    const current = document.documentElement.getAttribute("data-theme");
+    const newTheme = current === "dark" ? "light" : "dark";
+    setTheme(newTheme);
+  });
+}
 </script>
 
 <!-- AI CHAT WIDGET -->
@@ -2591,7 +2656,7 @@ themeToggle.addEventListener("click", () => {
     </div>
 
     <form id="aiChatForm" class="ai-chat-input-row" novalidate>
-      <input id="aiChatInput" type="text" placeholder="Escribe tu consulta aquí..." autocomplete="off" required maxlength="500">
+      <input id="aiChatInput" type="text" placeholder="Escribe tu consulta aquí..." aria-label="Escribe tu consulta para el asistente de ventas IA" autocomplete="off" required maxlength="500">
       <button id="aiChatSendBtn" type="submit" class="ai-chat-send-btn" aria-label="Enviar mensaje">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="22" y1="2" x2="11" y2="13"></line>
