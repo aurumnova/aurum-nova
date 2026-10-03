@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AURUM NOVA — Angel Santiago Alvarado Rodriguez | CEO</title>
-<meta name="description" content="Angel Santiago Alvarado Rodriguez — CEO de AURUM NOVA. Inteligencia Artificial aplicada a ventas, crecimiento y transformación de empresas y microempresas. Trabajo global con clientes en español e inglés.">
+<title>AURUM NOVA — Angel Alvarado | CEO</title>
+<meta name="description" content="Angel Alvarado — CEO de AURUM NOVA. Inteligencia Artificial aplicada a ventas, crecimiento y transformación de empresas y microempresas. Trabajo global con clientes en español e inglés.">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#050509">
 <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -16,14 +16,14 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' assets/ https://images.unsplash.com data:; connect-src 'self' https://formspree.io https://wa.me https://aurum-nova-ai-sales-worker.aurum-nova.workers.dev; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://formspree.io;">
 <meta http-equiv="X-Frame-Options" content="DENY">
 <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()">
-<meta property="og:title" content="AURUM NOVA — Angel Santiago Alvarado Rodriguez, CEO">
+<meta property="og:title" content="AURUM NOVA — Angel Alvarado, CEO">
 <meta property="og:description" content="IA aplicada a ventas y crecimiento empresarial. Socio colaborador para empresas y microempresas. Trabajo global — clientes en español e inglés.">
 <meta property="og:image" content="https://aurum-ceo.github.io/aurum-nova/assets/portrait.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="AURUM NOVA — Angel Santiago Alvarado Rodriguez, CEO">
+<meta name="twitter:title" content="AURUM NOVA — Angel Alvarado, CEO">
 <meta name="twitter:description" content="IA aplicada a ventas y crecimiento empresarial. Socio colaborador para empresas y microempresas. Trabajo global.">
 
 <!-- Fonts -->
@@ -1940,9 +1940,1003 @@ section { position: relative; overflow: hidden; }
     border-radius: 999px;
   }
 }
+
+
+/* =============================================
+   COMPACT & DENSE EXECUTIVE HERO
+   ============================================= */
+
+.hero {
+  padding: 110px 0 50px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 36px;
+  align-items: center;
+}
+
+@media(min-width: 1040px) {
+  .hero-grid {
+    grid-template-columns: 1.25fr 0.75fr;
+    gap: 52px;
+  }
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px;
+  background: rgba(212, 175, 55, 0.06);
+  border: 1px solid rgba(212, 175, 55, 0.22);
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  color: var(--gold);
+  margin-bottom: 16px;
+  text-transform: uppercase;
+}
+
+.hero-title {
+  font-size: clamp(2rem, 3.4vw, 3.1rem);
+  font-weight: 700;
+  line-height: 1.14;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+.hero-title .serif-italic {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 500;
+  display: inline-block;
+  background: linear-gradient(135deg, var(--gold-2) 0%, var(--gold) 50%, var(--gold-3) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-subtitle {
+  font-size: clamp(0.95rem, 1.15vw, 1.05rem);
+  line-height: 1.6;
+  color: var(--text-muted);
+  max-width: 54ch;
+  margin-bottom: 24px;
+}
+
+/* CTAs - Dominant hierarchy */
+.hero-cta {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 22px;
+}
+
+.hero-cta .btn {
+  padding: 13px 26px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 10px;
+}
+
+.hero-cta .btn-primary {
+  box-shadow: 0 4px 18px rgba(212, 175, 55, 0.18);
+}
+
+.hero-cta .btn-primary svg {
+  transition: transform 0.2s ease;
+}
+
+.hero-cta .btn-primary:hover svg {
+  transform: translateX(3px);
+}
+
+.hero-cta .btn-secondary {
+  background: transparent;
+  color: var(--text-dim) !important;
+  border: 1px solid var(--border-glass);
+}
+
+.hero-cta .btn-secondary:hover {
+  color: var(--text) !important;
+  border-color: var(--gold);
+}
+
+/* Meta Trust */
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--text-dim);
+}
+
+.hero-meta .meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hero-meta .meta-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--gold);
+  display: inline-block;
+  opacity: 0.8;
+}
+
+.hero-meta strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.hero-meta .meta-sep {
+  opacity: 0.4;
+}
+
+/* Hero Visual: clean, compact portrait frame without fake tech widgets */
+.hero-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-visual .portrait-frame {
+  width: 100%;
+  max-width: 330px;
+  aspect-ratio: 4/5;
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+  background: #090910;
+  border: 1px solid var(--border-glass);
+  box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.45);
+}
+
+[data-theme="light"] .hero-visual .portrait-frame {
+  border-color: rgba(0, 0, 0, 0.12);
+  box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.08);
+}
+
+.portrait-overlay {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 24px 14px 12px;
+  background: linear-gradient(180deg, transparent 0%, rgba(5, 5, 9, 0.88) 100%);
+  display: flex;
+  align-items: flex-end;
+  pointer-events: none;
+}
+
+[data-theme="light"] .portrait-overlay {
+  background: linear-gradient(180deg, transparent 0%, rgba(10, 10, 18, 0.82) 100%);
+}
+
+.portrait-badge {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.portrait-badge .role-title {
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+}
+
+.portrait-badge .role-desc {
+  font-family: var(--mono);
+  font-size: 0.63rem;
+  letter-spacing: 0.05em;
+  color: var(--gold);
+}
+
+/* Responsive Compaction */
+@media (max-width: 1039px) and (min-width: 768px) {
+  .hero {
+    padding: 100px 0 45px;
+  }
+  .hero-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    text-align: center;
+  }
+  .hero-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+  }
+  .hero-title {
+    font-size: 2.3rem;
+  }
+  .hero-cta {
+    justify-content: center;
+  }
+  .hero-meta {
+    justify-content: center;
+  }
+  .hero-visual .portrait-frame {
+    max-width: 250px;
+    aspect-ratio: 1/1;
+  }
+}
+
+@media (max-width: 767px) {
+  .hero {
+    padding: 85px 0 40px;
+  }
+  .hero-grid {
+    gap: 24px;
+  }
+  .hero-title {
+    font-size: 1.85rem;
+    line-height: 1.16;
+    margin-bottom: 12px;
+  }
+  .hero-subtitle {
+    font-size: 0.9rem;
+    line-height: 1.55;
+    margin-bottom: 18px;
+  }
+  .hero-cta {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .hero-cta .btn {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 20px;
+  }
+  .hero-visual .portrait-frame {
+    max-width: 220px;
+    aspect-ratio: 1/1;
+    margin: 0 auto;
+  }
+  .hero-meta {
+    font-size: 0.66rem;
+    gap: 6px;
+  }
+}
+
+/* =============================================
+   1. SURFACE HARDWARE LIGHTING & DEPTH
+   ============================================= */
+
+.premium-card,
+.service-card,
+.vision-card,
+.form-card,
+.hero-visual-card {
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.08),
+    0 16px 36px -12px rgba(0, 0, 0, 0.55);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s ease;
+}
+
+.premium-card:hover,
+.service-card:hover,
+.vision-card:hover {
+  border-top-color: var(--gold);
+  box-shadow:
+    inset 0 1px 0 0 rgba(212, 175, 55, 0.28),
+    0 24px 52px -16px rgba(0, 0, 0, 0.72);
+}
+
+.faq-item {
+  border: 1px solid rgba(255, 255, 255, 0.07) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.16) !important;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.06), 0 8px 24px -8px rgba(0, 0, 0, 0.4) !important;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease !important;
+}
+
+.faq-item:hover {
+  border-top-color: var(--gold) !important;
+  box-shadow: inset 0 1px 0 0 rgba(212, 175, 55, 0.25), 0 14px 30px -8px rgba(0, 0, 0, 0.55) !important;
+}
+
+[data-theme="light"] .premium-card,
+[data-theme="light"] .service-card,
+[data-theme="light"] .vision-card,
+[data-theme="light"] .form-card,
+[data-theme="light"] .hero-visual-card {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-top: 1px solid rgba(0, 0, 0, 0.16);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.8),
+    0 12px 32px -10px rgba(0, 0, 0, 0.07);
+}
+
+[data-theme="light"] .premium-card:hover,
+[data-theme="light"] .service-card:hover,
+[data-theme="light"] .vision-card:hover {
+  border-top-color: var(--gold);
+  box-shadow:
+    inset 0 1px 0 0 rgba(212, 175, 55, 0.35),
+    0 18px 40px -12px rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="light"] .faq-item {
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.14) !important;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.8), 0 8px 20px -8px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* =============================================
+   2. FLOATING ISLAND NAVIGATION WITH SCROLL COMPRESSION
+   ============================================= */
+
+nav {
+  position: fixed;
+  top: 16px;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 0 24px;
+  background: transparent !important;
+  border-bottom: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  pointer-events: none;
+  transition: top 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-inner {
+  pointer-events: auto;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 10px 24px;
+  background: rgba(8, 8, 14, 0.74);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.20);
+  border-radius: 999px;
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.1),
+    0 16px 38px -10px rgba(0, 0, 0, 0.65);
+  transition: padding 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              background 0.3s ease,
+              box-shadow 0.3s ease,
+              border-color 0.3s ease;
+}
+
+nav.scrolled .nav-inner {
+  padding: 7px 22px;
+  background: rgba(6, 6, 11, 0.90);
+  border-color: rgba(212, 175, 55, 0.18);
+  border-top-color: rgba(212, 175, 55, 0.35);
+  box-shadow:
+    inset 0 1px 0 0 rgba(212, 175, 55, 0.15),
+    0 20px 44px -12px rgba(0, 0, 0, 0.85);
+}
+
+[data-theme="light"] nav {
+  background: transparent !important;
+  border-bottom: none !important;
+}
+
+[data-theme="light"] .nav-inner {
+  background: rgba(255, 255, 255, 0.84);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-top: 1px solid rgba(0, 0, 0, 0.16);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.95),
+    0 12px 32px -10px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] nav.scrolled .nav-inner {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(212, 175, 55, 0.28);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.95),
+    0 16px 36px -10px rgba(0, 0, 0, 0.12);
+}
+
+@media (max-width: 767px) {
+  nav {
+    top: 10px;
+    padding: 0 12px;
+  }
+  .nav-inner {
+    border-radius: 14px;
+    padding: 8px 14px;
+  }
+  #mobileMenu {
+    pointer-events: auto;
+    margin-top: 8px;
+    border-radius: 14px;
+    border: 1px solid var(--border-glass);
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(7, 7, 12, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 16px 20px;
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.1),
+      0 20px 48px rgba(0, 0, 0, 0.75);
+  }
+  [data-theme="light"] #mobileMenu {
+    background: rgba(255, 255, 255, 0.97);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-top: 1px solid rgba(0, 0, 0, 0.18);
+    box-shadow:
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.9),
+      0 16px 40px rgba(0, 0, 0, 0.12);
+  }
+}
+
+/* =============================================
+   PREMIUM EXECUTIVE BACKGROUND SYSTEM
+   ============================================= */
+
+.ambient-glow-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.ambient-glow-layer::before {
+  content: "";
+  position: absolute;
+  top: -200px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 600px;
+  background: radial-gradient(ellipse at center, rgba(212, 175, 55, 0.04) 0%, rgba(212, 175, 55, 0.01) 45%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(80px);
+}
+
+.ambient-glow-layer::after {
+  content: "";
+  position: absolute;
+  top: 45%;
+  right: -150px;
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.02) 0%, transparent 65%);
+  border-radius: 50%;
+  filter: blur(100px);
+}
+
+[data-theme="light"] .ambient-glow-layer::before {
+  background: radial-gradient(ellipse at center, rgba(212, 175, 55, 0.06) 0%, rgba(212, 175, 55, 0.015) 50%, transparent 75%);
+}
+
+.precision-grid-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 36px 36px;
+  background-position: 0 0;
+  mask-image: radial-gradient(ellipse 85% 65% at 50% 25%, black 20%, transparent 85%);
+  -webkit-mask-image: radial-gradient(ellipse 85% 65% at 50% 25%, black 20%, transparent 85%);
+  opacity: 0.65;
+}
+
+[data-theme="light"] .precision-grid-bg {
+  background-image: radial-gradient(rgba(0, 0, 0, 0.07) 1px, transparent 1px);
+  opacity: 0.45;
+}
+
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.022;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+[data-theme="light"] .noise-overlay {
+  opacity: 0.016;
+}
+
+/* =============================================
+   SENSORY REFINEMENT: MOTION, ROUNDED CORNERS & SCALE
+   ============================================= */
+
+/* Ambient & Motion Keyframes */
+@keyframes ambient-float {
+  0% { transform: translate(-50%, 0) scale(1); opacity: 0.85; }
+  50% { transform: translate(-48%, 28px) scale(1.08); opacity: 1; }
+  100% { transform: translate(-52%, -18px) scale(0.96); opacity: 0.85; }
+}
+
+@keyframes portrait-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+
+.ambient-glow-layer::before {
+  animation: ambient-float 16s ease-in-out infinite alternate;
+}
+
+/* Rounded Brand Mark with Luxury Squircle & Hover Animation */
+.brand .mark {
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 12px !important;
+  background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.30) 0%, transparent 50%),
+              linear-gradient(135deg, var(--gold-2) 0%, var(--gold) 45%, var(--gold-3) 100%) !important;
+  box-shadow: 0 6px 20px -4px var(--gold-glow), inset 0 0 0 1px rgba(255,255,255,0.25) !important;
+  padding: 3px !important;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s !important;
+}
+
+.brand:hover .mark {
+  transform: scale(1.06) rotate(-2deg);
+  box-shadow: 0 8px 26px -2px var(--gold-glow), inset 0 0 0 1px rgba(255,255,255,0.4) !important;
+}
+
+.brand .mark img {
+  border-radius: 8px !important;
+}
+
+/* Portrait Frame: Generous, Highly Rounded, Floating with Luxury Bezel */
+.hero-visual .portrait-frame {
+  width: 100%;
+  max-width: 390px !important; /* Generous executive stature */
+  aspect-ratio: 4/5 !important;
+  border-radius: 24px !important; /* Highly rounded luxury corners */
+  overflow: hidden;
+  position: relative;
+  background: #090910;
+  border: 1px solid rgba(255, 255, 255, 0.09) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.28) !important;
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.12),
+    0 28px 68px -18px rgba(0, 0, 0, 0.70),
+    0 0 0 1px rgba(212, 175, 55, 0.12) !important;
+  animation: portrait-float 7s ease-in-out infinite;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease !important;
+}
+
+.hero-visual .portrait-frame:hover {
+  transform: translateY(-5px) scale(1.015);
+  box-shadow:
+    inset 0 1px 0 0 rgba(212, 175, 55, 0.35),
+    0 36px 80px -16px rgba(0, 0, 0, 0.85),
+    0 0 0 1px rgba(212, 175, 55, 0.30) !important;
+}
+
+.hero-visual .portrait-frame .portrait-img {
+  border-radius: 22px;
+}
+
+[data-theme="light"] .hero-visual .portrait-frame {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  border-top: 1px solid rgba(0, 0, 0, 0.18) !important;
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.95),
+    0 20px 48px -12px rgba(0, 0, 0, 0.12),
+    0 0 0 1px rgba(212, 175, 55, 0.15) !important;
+}
+
+/* Portrait Badge Typography */
+.portrait-overlay {
+  padding: 30px 18px 16px !important;
+  border-bottom-left-radius: 24px;
+  border-bottom-right-radius: 24px;
+}
+
+.portrait-badge .role-title {
+  font-size: 0.88rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.03em !important;
+}
+
+.portrait-badge .role-desc {
+  font-size: 0.68rem !important;
+  letter-spacing: 0.08em !important;
+}
+
+/* Generous Hero Scale (No Longer Cramped) */
+.hero {
+  padding: 125px 0 65px !important;
+}
+
+.hero-title {
+  font-size: clamp(2.3rem, 3.8vw, 3.5rem) !important;
+  font-weight: 700 !important;
+  line-height: 1.15 !important;
+  margin-bottom: 22px !important;
+}
+
+.hero-subtitle {
+  font-size: clamp(1.02rem, 1.25vw, 1.15rem) !important;
+  line-height: 1.68 !important;
+  max-width: 58ch !important;
+  margin-bottom: 28px !important;
+}
+
+.hero-badge {
+  font-size: 0.72rem !important;
+  letter-spacing: 0.12em !important;
+  padding: 7px 16px !important;
+  margin-bottom: 20px !important;
+}
+
+.hero-meta {
+  font-size: 0.74rem !important;
+  gap: 10px !important;
+}
+
+/* Buttons: Tactile Haptic Press & Elegant Rounded Corners */
+.hero-cta .btn,
+.btn {
+  border-radius: 12px !important;
+  font-size: 0.92rem !important;
+  font-weight: 600 !important;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.25s ease,
+              background 0.25s ease !important;
+}
+
+.hero-cta .btn {
+  padding: 14px 28px !important;
+}
+
+.btn:active,
+.theme-toggle-btn:active,
+.menu-toggle:active {
+  transform: scale(0.97) translateY(1px) !important;
+}
+
+/* Rounded Cards Across the Entire Experience */
+.premium-card,
+.service-card,
+.vision-card,
+.form-card {
+  border-radius: 20px !important;
+}
+
+.ai-chat-box {
+  border-radius: 20px !important;
+}
+
+/* Tablet & Mobile Scale adjustments */
+@media (max-width: 1039px) and (min-width: 768px) {
+  .hero-visual .portrait-frame {
+    max-width: 290px !important;
+    aspect-ratio: 1/1 !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .hero {
+    padding: 95px 0 45px !important;
+  }
+  .hero-title {
+    font-size: 2.1rem !important;
+    line-height: 1.18 !important;
+  }
+  .hero-subtitle {
+    font-size: 0.95rem !important;
+  }
+  .hero-visual .portrait-frame {
+    max-width: 250px !important;
+    border-radius: 20px !important;
+  }
+}
+
+/* Mobile Nav Actions Ergonomics */
+@media (max-width: 480px) {
+  .brand .name-sub { display: none !important; }
+  .nav-inner { padding: 6px 12px !important; gap: 8px !important; }
+  .nav-actions { gap: 6px !important; }
+  .theme-toggle-btn, .menu-toggle { width: 34px !important; height: 34px !important; }
+}
+
+/* =============================================
+   FULL-BLEED FLANKS & PERIPHERAL ATMOSPHERE SYSTEM
+   ============================================= */
+
+/* 1. Full-Bleed Grid covering 100% of widescreen */
+.precision-grid-bg {
+  position: fixed !important;
+  inset: 0 !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.065) 1px, transparent 1px) !important;
+  background-size: 36px 36px !important;
+  background-position: center top !important;
+  mask-image: linear-gradient(180deg, transparent 0%, black 6%, black 94%, transparent 100%) !important;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, black 6%, black 94%, transparent 100%) !important;
+  opacity: 0.9 !important;
+}
+
+[data-theme="light"] .precision-grid-bg {
+  background-image: radial-gradient(rgba(0, 0, 0, 0.08) 1px, transparent 1px) !important;
+  opacity: 0.55 !important;
+}
+
+/* 2. Peripheral Lateral Ambient Lights (Auras en los extremos) */
+@keyframes lateral-drift-left {
+  0% { transform: translateY(0) scale(1); opacity: 0.8; }
+  50% { transform: translateY(50px) scale(1.1); opacity: 1; }
+  100% { transform: translateY(-30px) scale(0.95); opacity: 0.8; }
+}
+
+@keyframes lateral-drift-right {
+  0% { transform: translateY(0) scale(1); opacity: 0.75; }
+  50% { transform: translateY(-60px) scale(1.12); opacity: 1; }
+  100% { transform: translateY(40px) scale(0.9); opacity: 0.75; }
+}
+
+.ambient-aura-left {
+  position: fixed;
+  left: -160px;
+  top: 25%;
+  width: 600px;
+  height: 800px;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.045) 0%, rgba(212, 175, 55, 0.01) 50%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+  z-index: 0;
+  animation: lateral-drift-left 20s ease-in-out infinite alternate;
+}
+
+.ambient-aura-right {
+  position: fixed;
+  right: -160px;
+  top: 55%;
+  width: 600px;
+  height: 800px;
+  background: radial-gradient(circle, rgba(79, 214, 224, 0.028) 0%, rgba(212, 175, 55, 0.012) 45%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(100px);
+  pointer-events: none;
+  z-index: 0;
+  animation: lateral-drift-right 24s ease-in-out infinite alternate;
+}
+
+[data-theme="light"] .ambient-aura-left {
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.06) 0%, transparent 65%);
+}
+
+[data-theme="light"] .ambient-aura-right {
+  background: radial-gradient(circle, rgba(79, 214, 224, 0.04) 0%, transparent 65%);
+}
+
+/* 3. Architectural Flank Blueprint Guide Lines */
+.flank-guides {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(var(--maxw), 100vw);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.flank-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.04) 10%, rgba(212, 175, 55, 0.12) 35%, rgba(255, 255, 255, 0.05) 70%, transparent 100%);
+}
+
+.flank-line.left {
+  left: 0;
+}
+
+.flank-line.right {
+  right: 0;
+}
+
+[data-theme="light"] .flank-line {
+  background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.04) 10%, rgba(212, 175, 55, 0.20) 35%, rgba(0, 0, 0, 0.04) 70%, transparent 100%);
+}
+
+@media (max-width: 1240px) {
+  .flank-guides { display: none; }
+}
+
+/* 4. Minimalist Executive Side Scroll Progress Indicator (Only on Widescreen) */
+.side-scroll-tracker {
+  position: fixed;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 180px;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 999px;
+  pointer-events: none;
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+}
+
+.side-scroll-bar {
+  width: 100%;
+  height: 0%;
+  background: linear-gradient(180deg, var(--gold-2), var(--gold));
+  border-radius: 999px;
+  box-shadow: 0 0 10px var(--gold-glow);
+  transition: height 0.1s linear;
+}
+
+[data-theme="light"] .side-scroll-tracker {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+@media (max-width: 1380px) {
+  .side-scroll-tracker { display: none; }
+}
+
+/* =============================================
+   VISIBLE YET SUBTLE LIVING AMBIENT LIGHT MOTION
+   ============================================= */
+
+.ambient-glow-layer {
+  position: fixed !important;
+  inset: 0 !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Orb 1: Upper Golden Core (Breathes and slowly orbits) */
+.ambient-orb-1 {
+  position: absolute;
+  top: -80px;
+  left: 20%;
+  width: 650px;
+  height: 520px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.13) 0%, rgba(212, 175, 55, 0.04) 45%, transparent 70%);
+  filter: blur(75px);
+  will-change: transform;
+  animation: orb-drift-1 18s ease-in-out infinite alternate;
+}
+
+/* Orb 2: Left Flank Amber Warmth (Drifts vertically and horizontally) */
+.ambient-orb-2 {
+  position: absolute;
+  top: 35%;
+  left: -120px;
+  width: 580px;
+  height: 680px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.10) 0%, rgba(180, 140, 40, 0.03) 50%, transparent 70%);
+  filter: blur(85px);
+  will-change: transform;
+  animation: orb-drift-2 24s ease-in-out infinite alternate;
+}
+
+/* Orb 3: Right Flank Twilight / Deep Indigo-Cyan Glow (Balances the gold) */
+.ambient-orb-3 {
+  position: absolute;
+  top: 58%;
+  right: -100px;
+  width: 620px;
+  height: 700px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(79, 214, 224, 0.075) 0%, rgba(50, 100, 180, 0.025) 45%, transparent 70%);
+  filter: blur(90px);
+  will-change: transform;
+  animation: orb-drift-3 28s ease-in-out infinite alternate;
+}
+
+/* Keyframes with noticeable, fluid multi-axis displacement */
+@keyframes orb-drift-1 {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  35% {
+    transform: translate(140px, 90px) scale(1.18);
+  }
+  70% {
+    transform: translate(-90px, 130px) scale(0.92);
+  }
+  100% {
+    transform: translate(60px, -40px) scale(1.08);
+  }
+}
+
+@keyframes orb-drift-2 {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  45% {
+    transform: translate(90px, -110px) scale(1.15);
+  }
+  80% {
+    transform: translate(30px, 120px) scale(0.95);
+  }
+  100% {
+    transform: translate(110px, 20px) scale(1.05);
+  }
+}
+
+@keyframes orb-drift-3 {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  40% {
+    transform: translate(-120px, -80px) scale(1.12);
+  }
+  75% {
+    transform: translate(-40px, 130px) scale(0.94);
+  }
+  100% {
+    transform: translate(-100px, 40px) scale(1.06);
+  }
+}
+
+/* Light Theme: tuned opacities for clean white contrast */
+[data-theme="light"] .ambient-orb-1 {
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.12) 0%, rgba(212, 175, 55, 0.03) 50%, transparent 75%);
+}
+
+[data-theme="light"] .ambient-orb-2 {
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.09) 0%, transparent 65%);
+}
+
+[data-theme="light"] .ambient-orb-3 {
+  background: radial-gradient(circle, rgba(79, 214, 224, 0.07) 0%, transparent 65%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient-orb-1, .ambient-orb-2, .ambient-orb-3 {
+    animation: none !important;
+  }
+}
 </style>
 </head>
 <body>
+  <div class="ambient-glow-layer" aria-hidden="true">
+    <div class="ambient-orb-1"></div>
+    <div class="ambient-orb-2"></div>
+    <div class="ambient-orb-3"></div>
+  </div>
+  <div class="precision-grid-bg" aria-hidden="true"></div>
+  <div class="noise-overlay" aria-hidden="true"></div>
+  <div class="flank-guides" aria-hidden="true">
+    <div class="flank-line left"></div>
+    <div class="flank-line right"></div>
+  </div>
+  <div class="side-scroll-tracker" aria-hidden="true">
+    <div class="side-scroll-bar" id="sideScrollBar"></div>
+  </div>
 
 <!-- NAV -->
 <nav role="navigation" aria-label="Navegación principal">
@@ -1966,6 +2960,19 @@ section { position: relative; overflow: hidden; }
       <a href="#contact" data-target="contact">Contacto</a>
     </div>
     <div class="nav-actions">
+
+      <button id="soundToggle" class="theme-toggle-btn" aria-label="Activar o desactivar sonido táctil" title="Sonido táctil interactivo">
+        <svg id="soundIconOn" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+        </svg>
+        <svg id="soundIconOff" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <line x1="23" y1="9" x2="17" y2="15"></line>
+          <line x1="17" y1="9" x2="23" y2="15"></line>
+        </svg>
+      </button>
       <button id="themeToggle" class="theme-toggle-btn" aria-label="Cambiar tema" title="Cambiar entre tema oscuro y claro">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path id="themeIconMoon" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
@@ -2000,46 +3007,60 @@ section { position: relative; overflow: hidden; }
   <div class="wrap">
     <div class="hero-grid">
       <div class="hero-copy reveal">
-        <span class="hero-badge">
+        <div class="hero-badge">
           <span class="dot"></span>
-          CEO · Strategic AI Consulting
-        </span>
-        <h1 class="hero-title">
-          Sistemas Inteligentes de<br>
-          <span class="text-gradient-gold">Crecimiento Corporativo</span>
-        </h1>
-        <p class="hero-subtitle">
-          Ingeniería de IA, automatización y estrategia ejecutiva por <span class="gold">Angel Santiago Alvarado</span>. Transformamos horas operativas en ventaja competitiva real.
-        </p>
-        <div class="hero-cta">
-          <a href="#contact" class="btn btn-primary" aria-label="Plaza una reunión">Plaza una reunión estratégica</a>
-          <a href="#portfolio" class="btn btn-secondary">Ver casos de éxito</a>
+          <span>AURUM NOVA &middot; CONSULTOR&Iacute;A &amp; INGENIER&Iacute;A DE IA</span>
         </div>
+
+        <h1 class="hero-title">
+          Automatizaci&oacute;n inteligente y sistemas de captaci&oacute;n para<br>
+          <span class="text-gradient-gold serif-italic">empresas en expansi&oacute;n</span>
+        </h1>
+
+        <p class="hero-subtitle">
+          Dise&ntilde;amos e implementamos infraestructura de IA que califica leads, optimiza la conversi&oacute;n comercial y reduce horas operativas sin fricci&oacute;n manual.
+        </p>
+
+        <div class="hero-cta">
+          <a href="#contact" class="btn btn-primary" aria-label="Agendar diagnóstico estratégico">
+            <span>Agendar diagn&oacute;stico estrat&eacute;gico</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+          <a href="#services" class="btn btn-secondary">
+            <span>Explorar programas &amp; alcance</span>
+          </a>
+        </div>
+
         <div class="hero-meta">
-          <span class="badge-phone" onclick="window.open('https://wa.me/593994195932','_blank')">
-            <div class="phone-icon">
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347" fill="#000"/></svg>
-            </div>
-            <b>+593 99 419 5932</b>
-          </span>
-          <span class="sep">|</span>
-          <span onclick="window.location.href='mailto:aurum.nova.business@gmail.com'">aurum.nova.business@gmail.com</span>
+          <div class="meta-item">
+            <span class="meta-dot"></span>
+            <span>Atenci&oacute;n ejecutiva directa por <strong>Angel Alvarado</strong> (Fundador)</span>
+          </div>
+          <div class="meta-sep">&middot;</div>
+          <div class="meta-item">
+            <span>Hispanoam&eacute;rica &amp; Clientes Globales</span>
+          </div>
         </div>
       </div>
-      <div class="hero-visual reveal" style="transition-delay: 0.2s">
-        <div class="portrait-frame" style="width:100%; max-width:480px; aspect-ratio:4/5; border-radius:16px; overflow:hidden; position:relative; box-shadow:0 24px 64px -16px rgba(0,0,0,0.4); border:1px solid var(--border-glass);">
+
+      <div class="hero-visual reveal" style="transition-delay: 0.15s">
+        <div class="portrait-frame">
           <picture>
             <source srcset="assets/portrait.webp" type="image/webp">
-            <img class="portrait-img" src="assets/portrait.png" alt="Angel Santiago Alvarado Rodriguez · CEO de AURUM NOVA" width="500" height="625" style="width:100%;height:100%;object-fit:cover;display:block;">
+            <img class="portrait-img" src="assets/portrait.png" alt="Angel Alvarado - Fundador de AURUM NOVA" width="500" height="625">
           </picture>
+          <div class="portrait-overlay">
+            <div class="portrait-badge">
+              <span class="role-title">Angel Alvarado</span>
+              <span class="role-desc">Fundador &middot; Estrategia e Ingenier&iacute;a de IA</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
   <div class="hero-sweep"></div>
-</section>
-
-<!-- ABOUT / CEO — REESCRITO PREMIUM GLOBAL -->
+</section><!-- ABOUT / CEO — REESCRITO PREMIUM GLOBAL -->
 <section id="about">
   <div class="wrap">
     <div class="glow-corner tl"></div>
@@ -2050,7 +3071,7 @@ section { position: relative; overflow: hidden; }
     </div>
     <div class="about-block container">
       <div class="about-text reveal">
-        <p>Hola, soy <strong>Angel Santiago Alvarado Rodriguez</strong>, CEO y fundador de <strong class="gold">AURUM NOVA</strong>.</p>
+        <p>Hola, soy <strong>Angel Alvarado</strong>, CEO y fundador de <strong class="gold">AURUM NOVA</strong>.</p>
 
         <p>No soy una agencia con relleno. Trabajo como <strong>socio colaborador directo</strong>: tú entras con un problema — ventas, procesos, datos, automatización, crecimiento — y yo aporto la pieza concreta que te permite avanzar. No vendo horas: entrego resultados medibles en lo que me pides.</p>
 
@@ -2065,7 +3086,7 @@ section { position: relative; overflow: hidden; }
         <div class="about-signature">
           <div class="sig-mark">A</div>
           <div>
-            <div class="sig-text">Angel Santiago Alvarado Rodriguez</div>
+            <div class="sig-text">Angel Alvarado</div>
             <div class="sig-sub">CEO · Fundador · AURUM NOVA · 2026</div>
           </div>
         </div>
@@ -2494,7 +3515,7 @@ section { position: relative; overflow: hidden; }
         </span>
         <span class="name">AURUM</span> NOVA
       </a>
-      <div class="footer-copy">© 2026 Angel Santiago Alvarado Rodriguez · CEO · AURUM NOVA <span style="opacity:0.4;margin:0 6px">·</span> Trabajo global con clientes hispanos e ingleses <span style="opacity:0.4;margin:0 6px">·</span> <a href="LICENSE" class="license-badge">MIT License</a></div>
+      <div class="footer-copy">© 2026 Angel Alvarado · CEO · AURUM NOVA <span style="opacity:0.4;margin:0 6px">·</span> Trabajo global con clientes hispanos e ingleses <span style="opacity:0.4;margin:0 6px">·</span> <a href="LICENSE" class="license-badge">MIT License</a></div>
       <div class="footer-links">
         <a href="https://mail.google.com/mail/?view=cm&fs=1&to=aurum.nova.business@gmail.com&su=&body=">Email</a>
         <a href="https://wa.me/593994195932" target="_blank" rel="noopener">WhatsApp</a>
@@ -2966,6 +3987,157 @@ if (themeToggle) {
     setTheme(newTheme);
   });
 }
+
+/* ---------- Floating Nav Scroll Compression ---------- */
+(function initNavScroll() {
+  const nav = document.querySelector('nav');
+  if (!nav) return;
+  let ticking = false;
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      window.requestAnimationFrame(function() {
+        if (window.scrollY > 30) {
+          nav.classList.add('scrolled');
+        } else {
+          nav.classList.remove('scrolled');
+        }
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
+})();
+
+/* =============================================
+   TACTILE MICRO-AUDIO ENGINE (Web Audio API)
+   Generates pure synthetic tactile clicks - 0 external files
+   ============================================= */
+
+(function initTactileAudio() {
+  let audioCtx = null;
+  let soundEnabled = true;
+
+  try {
+    const saved = localStorage.getItem('aurum_sound_enabled');
+    if (saved !== null) soundEnabled = saved === 'true';
+  } catch(e) {}
+
+  const soundBtn = document.getElementById('soundToggle');
+  const iconOn = document.getElementById('soundIconOn');
+  const iconOff = document.getElementById('soundIconOff');
+
+  function updateIcons() {
+    if (iconOn && iconOff) {
+      iconOn.style.display = soundEnabled ? 'block' : 'none';
+      iconOff.style.display = soundEnabled ? 'none' : 'block';
+    }
+    if (soundBtn) {
+      soundBtn.setAttribute('title', soundEnabled ? 'Sonido táctil activado (clic para silenciar)' : 'Sonido silenciado (clic para activar)');
+      soundBtn.setAttribute('aria-label', soundEnabled ? 'Silenciar sonidos táctiles' : 'Activar sonidos táctiles');
+    }
+  }
+  updateIcons();
+
+  if (soundBtn) {
+    soundBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      soundEnabled = !soundEnabled;
+      try { localStorage.setItem('aurum_sound_enabled', soundEnabled); } catch(e) {}
+      updateIcons();
+      if (soundEnabled) playClickSound();
+    });
+  }
+
+  function getAudioContext() {
+    if (!audioCtx) {
+      const AudioClass = window.AudioContext || window.webkitAudioContext;
+      if (AudioClass) {
+        audioCtx = new AudioClass();
+      }
+    }
+    if (audioCtx && audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+    return audioCtx;
+  }
+
+  // Soft mechanical click (sine tone dropping 850Hz -> 300Hz in 15ms)
+  function playClickSound() {
+    if (!soundEnabled) return;
+    try {
+      const ctx = getAudioContext();
+      if (!ctx) return;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(850, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(300, ctx.currentTime + 0.015);
+
+      gain.gain.setValueAtTime(0.045, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.018);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.02);
+    } catch(e) {}
+  }
+
+  // Quiet tactile whisper on hover (triangle chirp 1400Hz -> 1800Hz in 10ms at 0.012 volume)
+  function playHoverSound() {
+    if (!soundEnabled) return;
+    try {
+      const ctx = getAudioContext();
+      if (!ctx) return;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(1400, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(1800, ctx.currentTime + 0.01);
+
+      gain.gain.setValueAtTime(0.012, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.012);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.014);
+    } catch(e) {}
+  }
+
+  // Attach tactile audio to interactive buttons and links
+  function bindAudioListeners() {
+    const targets = document.querySelectorAll('button:not(#soundToggle), .btn, .theme-toggle-btn:not(#soundToggle), .menu-toggle, .nav-links a, .hero-cta a');
+    targets.forEach(function(el) {
+      el.addEventListener('click', playClickSound, { passive: true });
+      el.addEventListener('mouseenter', playHoverSound, { passive: true });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bindAudioListeners);
+  } else {
+    bindAudioListeners();
+  }
+})();
+
+/* ---------- Side Scroll Progress Indicator ---------- */
+(function initSideScrollTracker() {
+  const bar = document.getElementById('sideScrollBar');
+  if (!bar) return;
+  function updateProgress() {
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    if (total <= 0) return;
+    const progress = Math.min(100, Math.max(0, (window.scrollY / total) * 100));
+    bar.style.height = progress + '%';
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+})();
 </script>
 
 <!-- AI CHAT WIDGET -->
