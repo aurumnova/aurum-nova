@@ -1784,7 +1784,163 @@ section { padding: 120px 0; }
 .project-card.editorial-card, .post-card.editorial-card { background: transparent; box-shadow: none; border-radius: 0; padding: 0; border: none; border-bottom: 1px solid var(--border-glass); }
 .project-card.editorial-card .project-content, .post-card.editorial-card .post-content { padding: 24px 0 0 0; }
 .project-card.editorial-card img, .post-card.editorial-card img { border-radius: 4px; border: 1px solid var(--border-glass); }
-section { position: relative; overflow: hidden; }</style>
+section { position: relative; overflow: hidden; }
+/* =============================================
+   ROADMAP TIMELINE OVERRIDE (EXECUTIVE)
+   ============================================= */
+
+/* Reset base wrap */
+.timeline-wrap {
+  position: relative;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0;
+  display: grid;
+  gap: 32px;
+}
+/* Hide the old vertical global lines */
+#timelineLine, #timelineLineDone { display: none !important; }
+
+/* Desktop: 4 columns */
+@media (min-width: 1100px) {
+  .timeline-wrap {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+  }
+}
+
+/* Tablet: 2x2 grid */
+@media (min-width: 768px) and (max-width: 1099px) {
+  .timeline-wrap {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 48px 40px;
+  }
+}
+
+/* Desktop & Tablet: Horizontal / Block layout */
+@media (min-width: 768px) {
+  .timeline-item {
+    display: flex;
+    flex-direction: column;
+    padding: 0 !important;
+    margin-bottom: 0 !important;
+    position: relative;
+  }
+
+  /* Horizontal connecting line */
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    top: 7px; /* Align with center of 14px dot */
+    left: 24px;
+    width: calc(100% + 40px - 24px); /* reach across gap */
+    height: 1px !important;
+    background: var(--border-glass) !important;
+    bottom: auto !important;
+  }
+  .timeline-item:last-child::before { display: none; }
+  @media (max-width: 1099px) {
+    .timeline-item:nth-child(2n)::before { display: none; }
+  }
+
+  /* The dot on top */
+  .timeline-item .timeline-dot {
+    position: relative !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 14px !important;
+    height: 14px !important;
+    margin-bottom: 24px;
+    z-index: 2;
+  }
+
+  /* Content formatting */
+  .timeline-date {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--gold);
+    margin-bottom: 12px;
+    letter-spacing: 0.1em;
+  }
+  .timeline-item h3 {
+    font-size: 1.05rem;
+    line-height: 1.4;
+    margin-bottom: 12px;
+  }
+  .timeline-item p {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    margin-bottom: 20px;
+    flex-grow: 1;
+  }
+  .timeline-item .status {
+    align-self: flex-start;
+    padding: 4px 10px;
+    border: 1px solid var(--border-glass);
+    border-radius: 999px;
+    background: var(--bg-card);
+  }
+  [data-theme="light"] .timeline-item .status { background: #fff; }
+}
+
+/* Mobile: Compact vertical layout */
+@media (max-width: 767px) {
+  .timeline-wrap {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding-left: 8px;
+  }
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 32px 1fr; /* tighter than before */
+    gap: 16px;
+    padding: 0 0 32px 0 !important; /* compact padding */
+    margin-bottom: 0 !important;
+    position: relative;
+    align-items: start;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 18px;
+    bottom: 0;
+    width: 1px !important;
+    background: var(--border-glass) !important;
+  }
+  .timeline-item:last-child::before { display: none; }
+  .timeline-item .timeline-dot {
+    position: relative !important;
+    top: 4px !important;
+    left: 0 !important;
+    width: 12px !important;
+    height: 12px !important;
+    margin: 0 !important;
+    z-index: 2;
+  }
+  .timeline-date {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+  .timeline-item h3 {
+    font-size: 1rem;
+    margin-bottom: 8px;
+  }
+  .timeline-item p {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    margin-bottom: 16px;
+  }
+  .timeline-item .status {
+    display: inline-flex;
+    padding: 4px 10px;
+    border: 1px solid var(--border-glass);
+    border-radius: 999px;
+  }
+}
+</style>
 </head>
 <body>
 
