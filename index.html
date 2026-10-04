@@ -2920,6 +2920,45 @@ nav.scrolled .nav-inner {
     animation: none !important;
   }
 }
+
+/* =============================================
+   SURGICAL MOBILE HERO COMPACTION
+   ============================================= */
+@media (max-width: 767px) {
+  .hero {
+    padding: 78px 0 32px !important;
+  }
+  .hero-badge {
+    margin-bottom: 14px !important;
+    padding: 5px 12px !important;
+  }
+  .hero-title {
+    font-size: clamp(1.85rem, 6.2vw, 2.15rem) !important;
+    margin-bottom: 14px !important;
+    line-height: 1.16 !important;
+  }
+  .hero-subtitle {
+    font-size: 0.92rem !important;
+    line-height: 1.55 !important;
+    margin-bottom: 20px !important;
+  }
+  .hero-cta {
+    margin-bottom: 18px !important;
+    gap: 10px !important;
+  }
+  .hero-cta .btn {
+    padding: 12px 20px !important;
+    font-size: 0.86rem !important;
+  }
+  .hero-meta {
+    margin-bottom: 20px !important;
+    font-size: 0.68rem !important;
+  }
+  .hero-visual .portrait-frame {
+    max-width: 210px !important;
+    border-radius: 18px !important;
+  }
+}
 </style>
 </head>
 <body>
@@ -3009,7 +3048,7 @@ nav.scrolled .nav-inner {
       <div class="hero-copy reveal">
         <div class="hero-badge">
           <span class="dot"></span>
-          <span>AURUM NOVA &middot; CONSULTOR&Iacute;A &amp; INGENIER&Iacute;A DE IA</span>
+          <span>AURUM NOVA &middot; INGENIER&Iacute;A &amp; ESTRATEGIA DE IA</span>
         </div>
 
         <h1 class="hero-title">
@@ -3067,7 +3106,7 @@ nav.scrolled .nav-inner {
     <div class="section-header">
       <div class="gold-line"></div>
       <div class="eyebrow">Sobre mí</div>
-      <h2>CEO, fundador <span class="cyan glitch" data-text="— tu socio de IA estratégico">— tu socio de IA estratégico</span></h2>
+      <h2>CEO, fundador <span class="serif-italic" style="color:var(--gold);font-family:var(--serif);font-style:italic">— tu socio de IA estratégico</span></h2>
     </div>
     <div class="about-block container">
       <div class="about-text reveal">
@@ -3176,7 +3215,7 @@ nav.scrolled .nav-inner {
     <div class="section-header">
       <div class="gold-line"></div>
       <div class="eyebrow">Qué ofrezco</div>
-      <h2>Programas <span class="cyan glitch" data-text="— servicios con alcance y precio definido">— servicios con alcance y precio definido</span></h2>
+      <h2>Programas <span class="serif-italic" style="color:var(--gold);font-family:var(--serif);font-style:italic">— servicios con alcance y precio definido</span></h2>
     </div>
     <div class="services-grid">
 
@@ -3556,9 +3595,9 @@ const PROJECTS = [
 
 const TIMELINE = [
   { date: "2026", title: "Inicio de AURUM NOVA", desc: "Fundación de la empresa. CEO / fundador. Trabajo solo, modelo escalable a equipo. Posicionamiento global — mercado hispano + clientes en inglés.", done: true, status: "live" },
-  { date: "2026", title: "[Próximo — primer proyecto piloto global]", desc: "Primera implementación con empresa/microempresa. Aceptando proyectos piloto de casos de estudio con condición especial. Enfocado en chatbot/automatización de leads y auditoría IA.", done: false, status: "planned" },
-  { date: "2026", title: "[Próximo — casos en español e inglés]", desc: "Primeros case studies publicados — clientes en mercado hispano y en inglés. Construyendo prueba social para escalar a más clientes globales.", done: false, status: "planned" },
-  { date: "2026", title: "[Próximo — formación de equipo]", desc: "Cuando el volumen lo pida, incorporación de socios/equipo para escalar servicios a más clientes simultáneos.", done: false, status: "planned" }
+  { date: "2026", title: "Primer proyecto piloto global", desc: "Primera implementación con empresa/microempresa. Aceptando proyectos piloto de casos de estudio con condición especial. Enfocado en chatbot/automatización de leads y auditoría IA.", done: false, status: "planned" },
+  { date: "2026", title: "Casos en español e inglés", desc: "Primeros case studies publicados — clientes en mercado hispano y en inglés. Construyendo prueba social para escalar a más clientes globales.", done: false, status: "planned" },
+  { date: "2026", title: "Formación de equipo", desc: "Cuando el volumen lo pida, incorporación de socios/equipo para escalar servicios a más clientes simultáneos.", done: false, status: "planned" }
 ];
 
 const BLOG = [
@@ -3808,7 +3847,7 @@ if (contactForm) {
 }
 
 /* ---------- AI Sales Chat Widget Handler ---------- */
-(function initAIChatWidget() {
+function initAIChatWidget() {
   const toggleBtn = document.getElementById('aiChatToggle');
   const chatBox = document.getElementById('aiChatBox');
   const closeBtn = document.getElementById('aiChatCloseBtn');
@@ -3932,7 +3971,12 @@ if (contactForm) {
       scrollToBottom();
     }
   });
-})();
+}
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initAIChatWidget);
+} else {
+  initAIChatWidget();
+}
 
 /* ---------- Smooth anchor navigation — ROBUSTO ---------- */
 document.querySelectorAll('a[href^="#"]').forEach(function(a) {
