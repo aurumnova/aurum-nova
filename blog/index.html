@@ -210,6 +210,13 @@ footer {
   .nav-links { display: none; }
   .menu-toggle { display: flex; }
 }
+@media(prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto !important; }
+  .article-card,
+  .wa-float { transition: none !important; }
+  .article-card:hover,
+  .wa-float:hover { transform: none !important; transition: none !important; }
+}
 </style>
 </head>
 <body>
