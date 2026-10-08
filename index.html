@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" href="favicon.ico">
 
 <!-- Security headers -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' assets/ https://images.unsplash.com data:; connect-src 'self' https://formspree.io https://wa.me https://aurum-nova-ai-sales-worker.aurum-nova.workers.dev; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://formspree.io;">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' assets/ https://images.unsplash.com data:; connect-src 'self' https://wa.me https://aurum-nova-ai-sales-worker.aurum-nova.workers.dev; frame-ancestors 'none'; base-uri 'self'; form-action 'self';">
 <meta http-equiv="X-Frame-Options" content="DENY">
 <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()">
 <meta property="og:title" content="AURUM NOVA — Angel Alvarado, CEO">
@@ -3831,7 +3831,7 @@ nav.scrolled .nav-inner {
       </div>
 
       <div class="form-card reveal">
-        <form id="contactForm" novalidate action="https://formspree.io/f/mgavvbka" method="POST">
+        <form id="contactForm" novalidate action="#" method="POST">
           <div class="form-row">
             <div class="form-group">
               <label for="f-name">Nombre <span class="req">*</span></label>
@@ -4082,8 +4082,8 @@ const WORKER_BASE_URL = 'https://aurum-nova-ai-sales-worker.aurum-nova.workers.d
 function getSessionId() {
   const KEY = 'aurum_nova_session_id';
   let sid = localStorage.getItem(KEY);
-  const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-  if (!sid || !uuidPattern.test(sid)) {
+  const uuidV4Pattern = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+  if (!sid || !uuidV4Pattern.test(sid)) {
     sid = (typeof crypto !== 'undefined' && crypto.randomUUID)
       ? crypto.randomUUID()
       : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -4099,19 +4099,36 @@ function getSessionId() {
 /* ---------- Form handler — envía al Cloudflare Worker (D1 Leads) ---------- */
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
+  // Rate limit por sesión: 1 submit / 30s
+  const SUBMIT_COOLDOWN_MS = 30000;
+  let lastSubmitTs = 0;
+
   contactForm.addEventListener('submit', async function(e) {
     e.preventDefault();
+    const now = Date.now();
+    if (now - lastSubmitTs < SUBMIT_COOLDOWN_MS) {
+      showFormError('Por favor espera unos segundos antes de reintentar.');
+      return;
+    }
+
     const btn = this.querySelector('button[type=submit]');
     const note = this.querySelector('.form-note');
     const nameInput = this.querySelector('#f-name');
     const emailInput = this.querySelector('#f-email');
     const msgInput = this.querySelector('#f-msg');
+    const hpInput = this.querySelector('#f-hp');
     const name = nameInput ? nameInput.value.trim() : '';
     const email = emailInput ? emailInput.value.trim() : '';
     const msg = msgInput ? msgInput.value.trim() : '';
     const company = (this.querySelector('#f-company')?.value || '').trim();
     const phone = (this.querySelector('#f-phone')?.value || '').trim();
     const topic = this.querySelector('#f-topic')?.value || '';
+
+    // Honeypot check — abort silently if filled (bot)
+    if (hpInput && hpInput.value !== '') {
+      console.debug('Honeypot triggered');
+      return;
+    }
 
     function showFormError(message, inputToFocus) {
       if (note) {
@@ -4121,32 +4138,41 @@ if (contactForm) {
       if (inputToFocus) {
         inputToFocus.focus();
         inputToFocus.style.borderColor = '#ff6b6b';
-        setTimeout(function() {
-          inputToFocus.style.borderColor = '';
-        }, 3500);
+        setTimeout(() => inputToFocus.style.borderColor = '', 3500);
       }
     }
 
-    if (!name) { showFormError('Por favor escribe tu nombre.', nameInput); return; }
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showFormError('Por favor escribe un email válido.', emailInput); return; }
-    if (!msg) { showFormError('Escribe un mensaje, aunque sea breve.', msgInput); return; }
+    // Validación robusta
+    if (!name || name.length > 120) { showFormError('Nombre requerido (máx 120 caracteres).', nameInput); return; }
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254) { showFormError('Email inválido.', emailInput); return; }
+    if (!msg || msg.length > 5000) { showFormError('Mensaje requerido (máx 5000 caracteres).', msgInput); return; }
+    if (phone && !/^\+?[1-9]\d{6,14}$/.test(phone.replace(/[\s-]/g, ''))) { showFormError('Teléfono en formato E.164 (ej: +593994195932).', this.querySelector('#f-phone')); return; }
+    const allowedTopics = ['audit', 'pipeline', 'content', 'consulting', 'other', ''];
+    if (!allowedTopics.includes(topic)) { showFormError('Tema no válido.'); return; }
+
+    // Sanitización básica (escape HTML para reflejo seguro)
+    const escapeHtml = s => s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+    const safeName = escapeHtml(name);
+    const safeEmail = escapeHtml(email);
+    const safeMsg = escapeHtml(msg);
+    const safeCompany = escapeHtml(company);
+    const safePhone = escapeHtml(phone);
+    const safeTopic = escapeHtml(topic);
 
     btn.disabled = true;
     btn.textContent = 'Enviando…';
     note.textContent = '';
     note.style.color = '';
+
     try {
       const payload = {
         sessionId: getSessionId(),
-        name: name,
-        email: email,
-        company: company || undefined,
-        need: msg,
+        name: safeName,
+        email: safeEmail,
+        company: safeCompany || undefined,
+        need: safeMsg,
         source: 'contact-form',
-        metadata: {
-          phone: phone || '',
-          topic: topic || ''
-        }
+        metadata: { phone: safePhone, topic: safeTopic }
       };
       const res = await fetch(WORKER_BASE_URL + '/api/v1/leads', {
         method: 'POST',
@@ -4156,12 +4182,14 @@ if (contactForm) {
         },
         body: JSON.stringify(payload)
       });
-      const data = await res.json().catch(function() { return {}; });
+      // No loggear data en producción
+      const data = await res.json().catch(() => ({}));
       if (res.ok && (data.status === 'created' || data.status === 'updated' || data.leadId)) {
-        note.textContent = '✓ Gracias, ' + name.split(' ')[0] + '. Tu consulta fue registrada con éxito. Te respondo en menos de 24 h hábiles a ' + email;
+        lastSubmitTs = now;
+        note.textContent = `✓ Gracias, ${safeName.split(' ')[0]}. Tu consulta fue registrada. Te respondo en < 24 h a ${safeEmail}`;
         note.style.color = 'var(--gold)';
         btn.textContent = 'Enviado — gracias';
-        setTimeout(function() {
+        setTimeout(() => {
           btn.textContent = 'Enviar — Agendar una reunión';
           note.style.color = '';
           note.textContent = '↓ tus datos no se comparten. Respuesta en < 24 h hábiles.';
@@ -4169,14 +4197,13 @@ if (contactForm) {
           btn.disabled = false;
         }, 4500);
       } else {
-        console.error('Worker leads error:', data);
-        showFormError('Hubo un inconveniente al registrar la consulta. Intenta nuevamente o contáctanos por WhatsApp.');
+        showFormError('Hubo un inconveniente. Intenta de nuevo o contáctanos por WhatsApp.');
         btn.disabled = false;
         btn.textContent = 'Enviar — Agendar una reunión';
       }
     } catch (err) {
-      console.error('Form submit error:', err);
-      showFormError('Error de conexión. Intenta de nuevo o escríbenos directamente a WhatsApp.');
+      // Silenciar detalles internos
+      showFormError('Error de conexión. Intenta de nuevo o escríbenos a WhatsApp.');
       btn.disabled = false;
       btn.textContent = 'Enviar — Agendar una reunión';
     }
@@ -4267,16 +4294,35 @@ function initAIChatWidget() {
 
   chatForm.addEventListener('submit', async function(e) {
     e.preventDefault();
+    const now = Date.now();
+    const CHAT_COOLDOWN_MS = 10000;
+    if (window.__lastChatTs && now - window.__lastChatTs < CHAT_COOLDOWN_MS) {
+      appendMessage('Por favor espera unos segundos antes de enviar otro mensaje.', 'bot');
+      return;
+    }
+
     const text = chatInput.value.trim();
     if (!text) return;
+    if (text.length > 500) { appendMessage('Mensaje muy largo (máx 500 caracteres).', 'bot'); return; }
 
-    appendMessage(text, 'user');
+    // Sanitizar
+    const escapeHtml = s => s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+    const safeText = escapeHtml(text);
+
+    appendMessage(safeText, 'user');
     chatInput.value = '';
     chatInput.disabled = true;
     if (sendBtn) sendBtn.disabled = true;
     showLoading();
 
     try {
+      const sid = getSessionId();
+      // Validar UUIDv4 estricto antes de enviar
+      const uuidV4Pattern = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+      if (!uuidV4Pattern.test(sid)) {
+        throw new Error('Invalid session');
+      }
+
       const res = await fetch(WORKER_BASE_URL + '/api/v1/chat', {
         method: 'POST',
         headers: {
@@ -4284,23 +4330,21 @@ function initAIChatWidget() {
           'Accept': 'application/json'
         },
         body: JSON.stringify({
-          sessionId: getSessionId(),
-          message: text
+          sessionId: sid,
+          message: safeText
         })
       });
-      const data = await res.json().catch(function() { return {}; });
+      const data = await res.json().catch(() => ({}));
       hideLoading();
+      window.__lastChatTs = now;
       if (res.ok && data.response) {
         appendMessage(data.response, 'bot');
       } else {
-        console.error('Chat worker error:', data);
-        const errText = data.error || 'Disculpa, no pude procesar tu mensaje en este momento. Puedes intentar nuevamente o contactarnos por WhatsApp.';
-        appendMessage(errText, 'bot');
+        appendMessage('Disculpa, no pude procesar tu mensaje. Reintenta o contáctanos por WhatsApp.', 'bot');
       }
     } catch (err) {
       hideLoading();
-      console.error('Chat network error:', err);
-      appendMessage('Disculpa, ocurrió un error de conexión. Por favor reintenta en unos instantes o escríbenos a WhatsApp.', 'bot');
+      appendMessage('Error de conexión. Reintenta en unos instantes o escríbenos a WhatsApp.', 'bot');
     } finally {
       chatInput.disabled = false;
       if (sendBtn) sendBtn.disabled = false;
