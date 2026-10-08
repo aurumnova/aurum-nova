@@ -1,0 +1,35 @@
+# ==============================================================================
+# AURUM NOVA â€” REPOSITORY GITIGNORE
+# Operational boundary & security protection for aurum-nova frontend
+# ==============================================================================
+
+# Local Agent Tooling & Memory (MUST NEVER ENTER GIT)
+.claude/
+.remember/
+
+# Environment Variables & Secrets
+.env
+.env.*
+*.env
+*.pem
+*.key
+
+# Dependencies & Build Artifacts
+node_modules/
+dist/
+build/
+out/
+
+# Temporary / Scratch Files & Test Artifacts
+scratch/
+tmp/
+.tmp/
+*.log
+*.tmp
+test-results/
+playwright-report/
+
+# OS Metadata
+.DS_Store
+Thumbs.db
+Desktop.ini
