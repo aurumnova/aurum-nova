@@ -50,12 +50,29 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 12px 0;
 .brand .mark { width: 30px; height: 30px; border-radius: 6px; background: linear-gradient(135deg, var(--gold-2), var(--gold-3)); display: grid; place-items: center; color: #050509; font-weight: 900; font-size: 0.95rem; box-shadow: 0 3px 10px -2px var(--gold-glow); font-family: var(--serif); }
 .brand .name { color: var(--gold); }
 .brand-sub { color: var(--text-muted); font-weight: 500; font-size: 0.78rem; margin-left: 2px; }
-.nav-links { display: flex; gap: 24px; }
-@media(max-width:640px){.nav-links{display:none;}}
-.nav-links a { color: var(--text-muted); font-size: 0.82rem; transition: color .2s; }
+.nav-links { display: flex; gap: 24px; align-items: center; }
+.nav-links a { color: var(--text-muted); font-size: 0.82rem; transition: color .2s; text-decoration: none; }
 .nav-links a:hover { color: var(--gold); }
-.menu-toggle { display: none; background: none; border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 1.3rem; cursor: pointer; padding: 6px 10px; }
-@media(max-width:640px){.menu-toggle{display:block;}}
+.menu-toggle {
+  display: none; background: none; border: 1px solid var(--border); border-radius: 8px;
+  color: var(--text); cursor: pointer; padding: 6px 8px; align-items: center; justify-content: center;
+}
+.menu-toggle:hover { border-color: var(--gold); }
+#mobileMenu {
+  display: none; flex-direction: column; padding: 12px 18px; margin-top: 8px;
+  border-radius: 12px; border: 1px solid var(--border); background: rgba(7, 7, 12, 0.96);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); pointer-events: auto;
+}
+#mobileMenu a {
+  padding: 10px 0; color: var(--text-muted); font-size: 0.9rem; font-weight: 500;
+  text-decoration: none; border-bottom: 1px solid rgba(212, 175, 55, 0.08); transition: color .2s;
+}
+#mobileMenu a:last-child { border-bottom: none; }
+#mobileMenu a:hover { color: var(--gold); }
+@media(max-width: 640px) {
+  .nav-links { display: none; }
+  .menu-toggle { display: flex; }
+}
 
 .article-header { padding: 120px 0 32px; }
 .article-header .meta { font-family: var(--mono); font-size: 0.68rem; color: var(--text-dim); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 20px; display: flex; gap: 16px; flex-wrap: wrap; }
@@ -107,17 +124,30 @@ footer { padding: 32px 0 24px; border-top: 1px solid var(--border); position: re
 
 <nav>
   <div class="nav-inner">
-    <a href="https://aurum-ceo.github.io/aurum-nova/" class="brand">
+    <a href="../" class="brand">
       <span class="mark">A</span>
       <span class="name">AURUM</span> NOVA<span class="brand-sub">· CEO</span>
     </a>
     <div class="nav-links">
-      <a href="https://aurum-ceo.github.io/aurum-nova/#about">Sobre mí</a>
-      <a href="https://aurum-ceo.github.io/aurum-nova/#services">Servicios</a>
-      <a href="https://aurum-ceo.github.io/aurum-nova/#portfolio">Portafolio</a>
-      <a href="https://aurum-ceo.github.io/aurum-nova/#contact">Contacto</a>
+      <a href="../#about">Sobre mí</a>
+      <a href="../#services">Servicios</a>
+      <a href="../#portfolio">Portafolio</a>
+      <a href="../#contact">Contacto</a>
     </div>
-    <button class="menu-toggle" aria-label="Abrir menú" style="display:none">☰</button>
+    <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false" id="menuToggle">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+  <div id="mobileMenu" class="wrap">
+    <a href="../">Inicio</a>
+    <a href="../#about">Sobre mí</a>
+    <a href="../#services">Servicios</a>
+    <a href="../#portfolio">Portafolio</a>
+    <a href="../#contact">Contacto</a>
   </div>
 </nav>
 
@@ -303,7 +333,7 @@ footer { padding: 32px 0 24px; border-top: 1px solid var(--border); position: re
   </div>
 
   <div class="article-back">
-    <a href="https://aurum-ceo.github.io/aurum-nova/">← Volver al inicio</a>
+    <a href="../">← Volver al inicio</a>
     <span class="sep">·</span>
     <span>© 2026 AURUM NOVA · Angel Santiago Alvarado Rodriguez</span>
   </div>
@@ -311,11 +341,11 @@ footer { padding: 32px 0 24px; border-top: 1px solid var(--border); position: re
 
 <footer>
   <div class="wrap footer-inner">
-    <a href="https://aurum-ceo.github.io/aurum-nova/" class="brand" style="font-size:0.95rem">AURUM NOVA</a>
+    <a href="../" class="brand" style="font-size:0.95rem">AURUM NOVA</a>
     <div class="footer-links">
-      <a href="https://aurum-ceo.github.io/aurum-nova/#about">Sobre mí</a>
-      <a href="https://aurum-ceo.github.io/aurum-nova/#services">Servicios</a>
-      <a href="https://aurum-ceo.github.io/aurum-nova/#contact">Contacto</a>
+      <a href="../#about">Sobre mí</a>
+      <a href="../#services">Servicios</a>
+      <a href="../#contact">Contacto</a>
     </div>
     <div class="footer-copy">© 2026 Angel Santiago Alvarado Rodriguez · CEO · AURUM NOVA</div>
   </div>
@@ -332,6 +362,31 @@ footer { padding: 32px 0 24px; border-top: 1px solid var(--border); position: re
 (function(){
   document.getElementById('articleTitle').textContent = 'Cómo usar inteligencia artificial para segmentar leads sin depender de un CRM caro';
   document.getElementById('articleLead').textContent = 'Tres formas prácticas de segmentar y priorizar leads usando herramientas de IA accesibles — para empresas y microempresas que no quieren (o no pueden) pagar un CRM enterprise todavía.';
+})();
+
+/* ---------- Mobile menu ---------- */
+(function() {
+  var menuToggle = document.getElementById('menuToggle');
+  var mobileMenu = document.getElementById('mobileMenu');
+  if (menuToggle && mobileMenu) {
+    menuToggle.addEventListener('click', function() {
+      var open = mobileMenu.style.display === 'flex';
+      mobileMenu.style.display = open ? 'none' : 'flex';
+      menuToggle.setAttribute('aria-expanded', open ? 'false' : 'true');
+      if (open) {
+        menuToggle.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
+      } else {
+        menuToggle.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+      }
+    });
+    mobileMenu.querySelectorAll('a').forEach(function(a) {
+      a.addEventListener('click', function() {
+        mobileMenu.style.display = 'none';
+        menuToggle.setAttribute('aria-expanded', 'false');
+        menuToggle.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
+      });
+    });
+  }
 })();
 </script>
 

@@ -147,7 +147,27 @@ nav {
 .brand .name-small { color: var(--text-muted); font-weight: 500; font-size: 0.75rem; margin-left: 2px; }
 
 .nav-links { display: flex; align-items: center; gap: 28px; }
-@media(max-width: 760px) { .nav-links { display: none; } }
+.menu-toggle {
+  display: none; background: none; border: 1px solid var(--border); border-radius: 8px;
+  color: var(--text); cursor: pointer; padding: 6px 8px; align-items: center; justify-content: center;
+}
+.menu-toggle:hover { border-color: var(--gold); }
+#mobileMenu {
+  display: none; flex-direction: column; padding: 12px 18px; margin-top: 8px;
+  border-radius: 12px; border: 1px solid var(--border); background: rgba(7, 7, 12, 0.96);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); pointer-events: auto;
+}
+#mobileMenu a {
+  padding: 10px 0; color: var(--text-muted); font-size: 0.9rem; font-weight: 500;
+  text-decoration: none; border-bottom: 1px solid rgba(212, 175, 55, 0.08); transition: color .2s;
+}
+#mobileMenu a:last-child { border-bottom: none; }
+#mobileMenu a:hover { color: var(--gold); }
+
+@media(max-width: 760px) {
+  .nav-links { display: none; }
+  .menu-toggle { display: flex; }
+}
 
 .nav-links a {
   color: var(--text-muted); font-size: 0.82rem; font-weight: 500;
@@ -660,9 +680,10 @@ footer {
    DECORATIVE GLOW CORNERS
    ============================================= */
 
+section { overflow: hidden; }
 .glow-corner { position: absolute; width: 200px; height: 200px; pointer-events: none; z-index: 0; }
 .glow-corner.tl { top: -80px; left: -80px; border-radius: 50%; background: radial-gradient(circle, rgba(212, 175, 55, 0.08), transparent 70%); }
-.glow-corner.br { bottom: -100px; right: -100px; border-radius: 50%; background: radial-gradient(circle, rgba(79, 214, 224, 0.05), transparent 70%); }
+.glow-corner.br { bottom: -100px; right: 0; border-radius: 50%; background: radial-gradient(circle, rgba(79, 214, 224, 0.05), transparent 70%); }
 </style>
 </head>
 <body>
@@ -670,18 +691,32 @@ footer {
 <!-- NAV -->
 <nav>
   <div class="wrap nav-inner">
-    <a href="https://aurum-ceo.github.io/aurum-nova/" class="brand">
+    <a href="./" class="brand">
       <span class="mark">A</span>
       <span class="name">AURUM</span> NOVA
       <span class="name-small">CEO · Fundador</span>
     </a>
     <div class="nav-links">
-      <a href="https://aurum-ceo.github.io/aurum-nova/">Inicio</a>
-      <a href="https://aurum-ceo.github.io/aurum-nova/#about">Sobre mí</a>
-      <a href="https://aurum-ceo.github.io/aurum-nova/#services">Servicios</a>
-      <a href="https://aurum-ceo.github.io/aurum-nova/#blog">Blog</a>
-      <a href="https://aurum-ceo.github.io/aurum-nova/#contact">Contacto</a>
+      <a href="./">Inicio</a>
+      <a href="./#about">Sobre mí</a>
+      <a href="./#services">Servicios</a>
+      <a href="./#blog">Blog</a>
+      <a href="./#contact">Contacto</a>
     </div>
+    <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false" id="menuToggle">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+  <div id="mobileMenu" class="wrap">
+    <a href="./">Inicio</a>
+    <a href="./#about">Sobre mí</a>
+    <a href="./#services">Servicios</a>
+    <a href="./#blog">Blog</a>
+    <a href="./#contact">Contacto</a>
   </div>
 </nav>
 
@@ -917,18 +952,18 @@ footer {
 <footer>
   <div class="wrap">
     <div class="footer-inner">
-      <a href="https://aurum-ceo.github.io/aurum-nova/" class="footer-brand">
+      <a href="./" class="footer-brand">
         <span class="mark">A</span>
         <span class="name">AURUM</span> NOVA
         <span style="color:var(--text-muted);font-weight:500;font-size:0.72rem;margin-left:2px">CEO · Fundador</span>
       </a>
       <div class="footer-copy">© 2026 Angel Santiago Alvarado Rodriguez · CEO · AURUM NOVA · AURUM PITCH v1.0</div>
       <div class="footer-links">
-        <a href="https://aurum-ceo.github.io/aurum-nova/">Inicio</a>
-        <a href="https://aurum-ceo.github.io/aurum-nova/#about">Sobre mí</a>
-        <a href="https://aurum-ceo.github.io/aurum-nova/#services">Servicios</a>
-        <a href="https://aurum-ceo.github.io/aurum-nova/#blog">Blog</a>
-        <a href="https://aurum-ceo.github.io/aurum-nova/#contact">Contacto</a>
+        <a href="./">Inicio</a>
+        <a href="./#about">Sobre mí</a>
+        <a href="./#services">Servicios</a>
+        <a href="./#blog">Blog</a>
+        <a href="./#contact">Contacto</a>
         <a href="LICENSE" class="license-badge">MIT License</a>
       </div>
     </div>
@@ -1785,6 +1820,31 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a) {
 // ---------- INIT: RENDER HISTORY ----------
 
 renderHistory();
+
+/* ---------- Mobile menu ---------- */
+(function() {
+  var menuToggle = document.getElementById('menuToggle');
+  var mobileMenu = document.getElementById('mobileMenu');
+  if (menuToggle && mobileMenu) {
+    menuToggle.addEventListener('click', function() {
+      var open = mobileMenu.style.display === 'flex';
+      mobileMenu.style.display = open ? 'none' : 'flex';
+      menuToggle.setAttribute('aria-expanded', open ? 'false' : 'true');
+      if (open) {
+        menuToggle.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
+      } else {
+        menuToggle.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+      }
+    });
+    mobileMenu.querySelectorAll('a').forEach(function(a) {
+      a.addEventListener('click', function() {
+        mobileMenu.style.display = 'none';
+        menuToggle.setAttribute('aria-expanded', 'false');
+        menuToggle.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
+      });
+    });
+  }
+})();
 </script>
 
 </body>
