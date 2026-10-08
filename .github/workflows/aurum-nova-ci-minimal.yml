@@ -22,9 +22,24 @@ jobs:
           import os
           import sys
           import re
+          from html.parser import HTMLParser
+          from urllib.parse import unquote, urlsplit
 
           base_dir = '.'
+          site_base_path = '/aurum-nova'
           errors = []
+
+          class AnchorParser(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.anchors = set()
+
+              def handle_starttag(self, tag, attrs):
+                  attrs = dict(attrs)
+                  if attrs.get('id'):
+                      self.anchors.add(attrs['id'])
+                  if tag.lower() == 'a' and attrs.get('name'):
+                      self.anchors.add(attrs['name'])
 
           def check_file_not_empty(filepath, description):
               full_path = os.path.join(base_dir, filepath)
@@ -78,12 +93,17 @@ jobs:
           src_pattern = re.compile(r'src="([^"]+)"')
 
           all_refs = []
+          anchors_by_file = {}
 
           for rel_path in html_files:
               full_html_path = os.path.join(base_dir, rel_path)
 
               with open(full_html_path, encoding='utf-8') as f:
                   content = f.read()
+
+              anchor_parser = AnchorParser()
+              anchor_parser.feed(content)
+              anchors_by_file[os.path.normpath(rel_path)] = anchor_parser.anchors
 
               all_refs += [
                   (rel_path, ref)
@@ -101,7 +121,6 @@ jobs:
               'mailto:',
               'tel:',
               'javascript:',
-              '#',
               '//'
           )
 
@@ -124,18 +143,67 @@ jobs:
           )
 
           missing_files = []
+          missing_anchors = []
+          checked_anchors = 0
 
           for html_file, ref in local_refs:
-              html_dir = os.path.dirname(
-                  os.path.join(base_dir, html_file)
-              )
+              parsed_ref = urlsplit(ref)
+              ref_path = unquote(parsed_ref.path)
+              query = parsed_ref.query  # Query strings do not change the filesystem path.
+              fragment = unquote(parsed_ref.fragment)
 
-              ref_path = os.path.normpath(
-                  os.path.join(html_dir, ref)
-              )
+              if ref_path.startswith('/'):
+                  if ref_path == site_base_path or ref_path == site_base_path + '/':
+                      relative_path = 'index.html'
+                  elif ref_path.startswith(site_base_path + '/'):
+                      relative_path = ref_path[len(site_base_path) + 1:]
+                  else:
+                      missing_files.append((html_file, ref))
+                      continue
+                  resolved_path = os.path.normpath(
+                      os.path.join(base_dir, relative_path)
+                  )
+              elif ref_path:
+                  html_dir = os.path.dirname(
+                      os.path.join(base_dir, html_file)
+                  )
+                  resolved_path = os.path.normpath(
+                      os.path.join(html_dir, ref_path)
+                  )
+              else:
+                  resolved_path = os.path.normpath(
+                      os.path.join(base_dir, html_file)
+                  )
 
-              if not os.path.exists(ref_path):
+              if not os.path.exists(resolved_path):
                   missing_files.append((html_file, ref))
+                  continue
+
+              if fragment:
+                  anchor_path = resolved_path
+                  if os.path.isdir(anchor_path):
+                      anchor_path = os.path.join(anchor_path, 'index.html')
+
+                  if anchor_path.lower().endswith(('.html', '.htm')):
+                      if not os.path.isfile(anchor_path):
+                          missing_anchors.append(
+                              (html_file, ref, fragment, anchor_path)
+                          )
+                          continue
+
+                      anchor_key = os.path.normpath(anchor_path)
+                      if anchor_key not in anchors_by_file:
+                          with open(anchor_path, encoding='utf-8') as f:
+                              target_content = f.read()
+                          target_parser = AnchorParser()
+                          target_parser.feed(target_content)
+                          anchors_by_file[anchor_key] = target_parser.anchors
+
+                      checked_anchors += 1
+                      if fragment not in anchors_by_file[anchor_key]:
+                          missing_anchors.append(
+                              (html_file, ref, fragment, anchor_path)
+                          )
 
           if missing_files:
               errors.append(
@@ -145,6 +213,17 @@ jobs:
               for html_file, ref in sorted(set(missing_files)):
                   errors.append(
                       f'  - {html_file} -> {ref}'
+                  )
+
+          if missing_anchors:
+              errors.append(
+                  f'ERROR: {len(missing_anchors)} anchors internos no existen:'
+              )
+
+              for html_file, ref, fragment, target in sorted(set(missing_anchors)):
+                  errors.append(
+                      f'  - {html_file} -> {ref} '
+                      f'(#{fragment} no existe en {target})'
                   )
 
           if errors:
@@ -161,4 +240,5 @@ jobs:
               f'  - Referencias locales: {len(local_refs)} verificadas, '
               f'0 faltantes'
           )
+          print(f'  - Fragments HTML: {checked_anchors} verificados')
           EOF
