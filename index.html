@@ -4106,13 +4106,12 @@ if (contactForm) {
   contactForm.addEventListener('submit', async function(e) {
     e.preventDefault();
     const now = Date.now();
+    const btn = this.querySelector('button[type=submit]');
+    const note = this.querySelector('.form-note');
     if (now - lastSubmitTs < SUBMIT_COOLDOWN_MS) {
       showFormError('Por favor espera unos segundos antes de reintentar.');
       return;
     }
-
-    const btn = this.querySelector('button[type=submit]');
-    const note = this.querySelector('.form-note');
     const nameInput = this.querySelector('#f-name');
     const emailInput = this.querySelector('#f-email');
     const msgInput = this.querySelector('#f-msg');
