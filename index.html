@@ -3574,8 +3574,9 @@ nav.scrolled .nav-inner {
         <span class="tag">Diagnóstico · Hoja de ruta · Quick win</span>
         <p style="font-size:0.82rem;color:var(--text-dim);margin-top:10px;font-family:var(--mono);letter-spacing:0.03em">
           Alcance típico: diagnóstico del funnel actual → recomendaciones de automatización → implementación de 1-2 flujos → seguimiento de resultados en 30 días.<br>
-          Pricing: consulta bajo medida — surgido de diagnóstico previo.
+          Entrega: diagnóstico ejecutivo + flujo rápido implementado en 7 días.
         </p>
+        <a href="#contact" class="btn btn-ghost" data-select-topic="audit" style="margin-top: 16px; width: 100%; justify-content: center; font-size: 0.82rem; padding: 10px 18px;">Solicitar IA Growth Audit →</a>
       </article>
 
       <!-- Programa 2: Pipeline IA -->
@@ -3595,8 +3596,9 @@ nav.scrolled .nav-inner {
         <span class="tag">Chatbot · Auto-seguimiento · Agenda · Reportes</span>
         <p style="font-size:0.82rem;color:var(--text-dim);margin-top:10px;font-family:var(--mono);letter-spacing:0.03em">
           Alcance típico: mapeo de procesos manuales → diseño del flujo automatizado → integración con tus herramientas actuales → entrenamiento del equipo → manual de uso.<br>
-          Pricing: por proyecto — definido después de diagnóstico.
+          Implementación: lista en 1–2 semanas con entrenamiento y soporte.
         </p>
+        <a href="#contact" class="btn btn-ghost" data-select-topic="pipeline" style="margin-top: 16px; width: 100%; justify-content: center; font-size: 0.82rem; padding: 10px 18px;">Solicitar Pipeline IA →</a>
       </article>
 
       <!-- Programa 3: Content Engine IA -->
@@ -3620,6 +3622,7 @@ nav.scrolled .nav-inner {
           Alcance típico: generación de 12-20 posts/mes → copy adaptado a tu tono de marca → calendario semanal programado → 1 revisión/mes para ajustes.<br>
           Pricing: mensual — sin contrato largo, cancela cuando quieras.
         </p>
+        <a href="#contact" class="btn btn-ghost" data-select-topic="content" style="margin-top: 16px; width: 100%; justify-content: center; font-size: 0.82rem; padding: 10px 18px;">Solicitar Content Engine →</a>
       </article>
 
       <!-- Programa 4: Consultoría estratégica -->
@@ -3640,8 +3643,9 @@ nav.scrolled .nav-inner {
         <span class="tag">Diagnóstico estratégico · Hoja de ruta IA</span>
         <p style="font-size:0.82rem;color:var(--text-dim);margin-top:10px;font-family:var(--mono);letter-spacing:0.03em">
           Alcance típico: sesión de diagnóstico → análisis de oportunidades de IA en tu empresa → recomendaciones priorizadas → hoja de ruta de implementación.<br>
-          Pricing: por sesión o paquete — definido conjuntamente.
+          Incluye: sesión intensiva 1 a 1 + hoja de ruta accionable a 6 meses.
         </p>
+        <a href="#contact" class="btn btn-ghost" data-select-topic="consulting" style="margin-top: 16px; width: 100%; justify-content: center; font-size: 0.82rem; padding: 10px 18px;">Agendar Consultoría →</a>
       </article>
 
     </div>
@@ -4185,7 +4189,20 @@ if (contactForm) {
       const data = await res.json().catch(() => ({}));
       if (res.ok && (data.status === 'created' || data.status === 'updated' || data.leadId)) {
         lastSubmitTs = now;
-        note.textContent = `✓ Gracias, ${safeName.split(' ')[0]}. Tu consulta fue registrada. Te respondo en < 24 h a ${safeEmail}`;
+        const topicLabels = {
+          audit: 'IA Growth Audit',
+          pipeline: 'Pipeline IA',
+          content: 'Content Engine IA',
+          consulting: 'Consultoría estratégica IA',
+          other: 'Otro servicio'
+        };
+        const programName = topicLabels[topic] || (topic ? topic : 'un servicio de IA');
+        let waText = `Hola Angel, soy ${name}`;
+        if (company) waText += ` de ${company}`;
+        waText += `. Acabo de enviar el formulario para ${programName} y me gustaría confirmar mi prioridad.`;
+        const waUrl = `https://wa.me/593994195932?text=${encodeURIComponent(waText)}`;
+
+        note.innerHTML = `✓ Gracias, ${safeName.split(' ')[0]}. Tu consulta fue registrada.<br><a href="${waUrl}" target="_blank" rel="noopener" style="color: var(--gold); text-decoration: underline; font-weight: 600; display: inline-block; margin-top: 6px;">→ ¿Quieres acelerar tu diagnóstico? Haz clic aquí para confirmar tu prioridad por WhatsApp ahora mismo</a>`;
         note.style.color = 'var(--gold)';
         btn.textContent = 'Enviado — gracias';
         setTimeout(() => {
@@ -4194,7 +4211,7 @@ if (contactForm) {
           note.textContent = '↓ tus datos no se comparten. Respuesta en < 24 h hábiles.';
           contactForm.reset();
           btn.disabled = false;
-        }, 4500);
+        }, 15000);
       } else {
         showFormError('Hubo un inconveniente. Intenta de nuevo o contáctanos por WhatsApp.');
         btn.disabled = false;
@@ -4373,6 +4390,29 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a) {
       } catch (err) {
         // Fallback for non-standard selector
       }
+    }
+  });
+});
+
+/* ---------- Auto-selección de programa en formulario de contacto ---------- */
+document.querySelectorAll('a[data-select-topic]').forEach(function(link) {
+  link.addEventListener('click', function(e) {
+    const topic = link.getAttribute('data-select-topic');
+    const topicSelect = document.getElementById('f-topic');
+    if (topicSelect && topic) {
+      topicSelect.value = topic;
+      topicSelect.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      e.preventDefault();
+      contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    const nameInput = document.getElementById('f-name');
+    if (nameInput) {
+      setTimeout(function() {
+        nameInput.focus();
+      }, 450);
     }
   });
 });

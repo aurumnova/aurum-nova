@@ -45,7 +45,7 @@
   --cyan: #4fd6e0;
   --text: #efe9de;
   --text-muted: #a09c93;
-  --text-dim: #5c5952;
+  --text-dim: #8a867d;
   --maxw: 860px;
   --radius: 16px;
   --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -134,19 +134,15 @@ main.wrap { flex: 1; padding-top: 110px; padding-bottom: 80px; }
   transform: translateY(-2px);
   box-shadow: 0 12px 32px -10px rgba(0, 0, 0, 0.7);
 }
-.article-card::before {
-  content: ""; position: absolute; top: 0; left: 0; width: 3px; height: 100%;
-  background: linear-gradient(180deg, var(--gold), transparent);
-}
 .article-card .card-meta {
-  font-family: var(--mono); font-size: 0.7rem; color: var(--text-dim);
+  font-family: var(--mono); font-size: 0.8125rem; color: var(--text-dim);
   letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 12px;
   display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
 }
 .article-card .card-meta .tag {
   color: var(--gold); background: var(--gold-soft);
   border: 1px solid rgba(212, 175, 55, 0.2);
-  padding: 2px 8px; border-radius: 4px; font-size: 0.65rem;
+  padding: 2px 8px; border-radius: 4px; font-size: 0.75rem;
 }
 .article-card h2 {
   font-size: 1.35rem; font-weight: 600; line-height: 1.3; margin-bottom: 12px;
