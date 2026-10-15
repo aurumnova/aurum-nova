@@ -842,6 +842,7 @@ nav {
   background: rgba(13, 13, 26, 0.8);
   box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.08), 0 4px 12px -8px rgba(212, 175, 55, 0.12);
 }
+.form-group select option { background-color: #111116; color: #ffffff; }
 .form-group textarea { min-height: 110px; resize: vertical; font-family: var(--sans); }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 @media(max-width: 460px) { .form-row { grid-template-columns: 1fr; } }
@@ -1672,6 +1673,24 @@ input:focus, select:focus, textarea:focus {
   outline: none !important;
   background: rgba(255, 255, 255, 0.04) !important;
 }
+/* Select & Option Contrast Fix (Dark theme) */
+select,
+#f-topic {
+  background-color: #111116 !important;
+  color: #ffffff !important;
+  color-scheme: dark;
+  cursor: pointer;
+}
+select:focus,
+#f-topic:focus {
+  background-color: #161622 !important;
+  color: #ffffff !important;
+}
+select option,
+#f-topic option {
+  background-color: #111116 !important;
+  color: #ffffff !important;
+}
 label { font-weight: 600 !important; font-size: 0.9rem !important; letter-spacing: 0.02em !important; color: var(--text-dim) !important; margin-bottom: 8px !important; display: block; }
 .form-group { margin-bottom: 24px !important; }
 
@@ -1718,6 +1737,24 @@ label { font-weight: 600 !important; font-size: 0.9rem !important; letter-spacin
   background: #fff !important;
   border-color: var(--gold) !important;
   box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2) !important;
+}
+/* Select & Option Contrast Fix (Light theme) */
+[data-theme="light"] select,
+[data-theme="light"] #f-topic {
+  background-color: #ffffff !important;
+  color: #111116 !important;
+  color-scheme: light;
+  cursor: pointer;
+}
+[data-theme="light"] select:focus,
+[data-theme="light"] #f-topic:focus {
+  background-color: #ffffff !important;
+  color: #111116 !important;
+}
+[data-theme="light"] select option,
+[data-theme="light"] #f-topic option {
+  background-color: #ffffff !important;
+  color: #111116 !important;
 }
 [data-theme="light"] label {
   color: #444 !important;
