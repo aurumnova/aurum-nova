@@ -4318,6 +4318,9 @@ function initAIChatWidget() {
       chatBox.setAttribute('aria-hidden', 'false');
       if (iconOpen) iconOpen.style.display = 'none';
       if (iconClose) iconClose.style.display = 'block';
+      if (window.AurumAudio && typeof window.AurumAudio.playChatOpenSound === 'function') {
+        window.AurumAudio.playChatOpenSound();
+      }
       setTimeout(function() {
         chatInput.focus();
         scrollToBottom();
@@ -4327,6 +4330,9 @@ function initAIChatWidget() {
       chatBox.setAttribute('aria-hidden', 'true');
       if (iconOpen) iconOpen.style.display = 'block';
       if (iconClose) iconClose.style.display = 'none';
+      if (window.AurumAudio && typeof window.AurumAudio.playClickSound === 'function') {
+        window.AurumAudio.playClickSound();
+      }
     }
   }
 
@@ -4435,6 +4441,9 @@ function initAIChatWidget() {
     const safeText = escapeHtml(text);
 
     appendMessage(safeText, 'user');
+    if (window.AurumAudio && typeof window.AurumAudio.playMessageSentSound === 'function') {
+      window.AurumAudio.playMessageSentSound();
+    }
     chatInput.value = '';
     chatInput.disabled = true;
     if (sendBtn) sendBtn.disabled = true;
@@ -4464,6 +4473,9 @@ function initAIChatWidget() {
       window.__lastChatTs = now;
       if (res.ok && data.response) {
         appendMessage(data.response, 'bot');
+        if (window.AurumAudio && typeof window.AurumAudio.playMessageReceivedSound === 'function') {
+          window.AurumAudio.playMessageReceivedSound();
+        }
       } else {
         appendMessage('Disculpa, no pude procesar tu mensaje. Reintenta o contáctanos por WhatsApp.', 'bot');
       }
@@ -4684,11 +4696,107 @@ if (themeToggle) {
     } catch(e) {}
   }
 
+  // Subtle ascending blip on message send (sine tone 420Hz -> 680Hz in 35ms)
+  function playMessageSentSound() {
+    if (!soundEnabled) return;
+    try {
+      const ctx = getAudioContext();
+      if (!ctx) return;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(420, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(680, ctx.currentTime + 0.035);
+
+      gain.gain.setValueAtTime(0.035, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.045);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.05);
+    } catch(e) {}
+  }
+
+  // Crystalline concierge chime on message receive (two harmonious sine tones: 880Hz + 1318.5Hz)
+  function playMessageReceivedSound() {
+    if (!soundEnabled) return;
+    try {
+      const ctx = getAudioContext();
+      if (!ctx) return;
+      const t0 = ctx.currentTime;
+
+      // Note 1: A5 (880 Hz)
+      const osc1 = ctx.createOscillator();
+      const gain1 = ctx.createGain();
+      osc1.type = 'sine';
+      osc1.frequency.setValueAtTime(880, t0);
+      gain1.gain.setValueAtTime(0.03, t0);
+      gain1.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.09);
+      osc1.connect(gain1);
+      gain1.connect(ctx.destination);
+      osc1.start(t0);
+      osc1.stop(t0 + 0.095);
+
+      // Note 2: E6 (1318.5 Hz) - delayed by 45ms for a crisp luxury interval
+      const osc2 = ctx.createOscillator();
+      const gain2 = ctx.createGain();
+      osc2.type = 'sine';
+      osc2.frequency.setValueAtTime(1318.5, t0 + 0.045);
+      gain2.gain.setValueAtTime(0.035, t0 + 0.045);
+      gain2.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.22);
+      osc2.connect(gain2);
+      gain2.connect(ctx.destination);
+      osc2.start(t0 + 0.045);
+      osc2.stop(t0 + 0.23);
+    } catch(e) {}
+  }
+
+  // Subtle welcoming swell on chat opening (520Hz -> 760Hz in 40ms)
+  function playChatOpenSound() {
+    if (!soundEnabled) return;
+    try {
+      const ctx = getAudioContext();
+      if (!ctx) return;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(520, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(760, ctx.currentTime + 0.04);
+
+      gain.gain.setValueAtTime(0.035, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.055);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.06);
+    } catch(e) {}
+  }
+
+  // Expose global API for other components (e.g. AI chat widget)
+  window.AurumAudio = {
+    playClickSound: playClickSound,
+    playHoverSound: playHoverSound,
+    playMessageSentSound: playMessageSentSound,
+    playMessageReceivedSound: playMessageReceivedSound,
+    playChatOpenSound: playChatOpenSound,
+    isSoundEnabled: function() { return soundEnabled; }
+  };
+
   // Attach tactile audio to interactive buttons and links
   function bindAudioListeners() {
-    const targets = document.querySelectorAll('button:not(#soundToggle), .btn, .theme-toggle-btn:not(#soundToggle), .menu-toggle, .nav-links a, .hero-cta a');
-    targets.forEach(function(el) {
+    const clickTargets = document.querySelectorAll('button:not(#soundToggle):not(#aiChatToggle):not(#aiChatSendBtn):not(#aiChatCloseBtn), .btn, .theme-toggle-btn:not(#soundToggle), .menu-toggle, .nav-links a, .hero-cta a');
+    clickTargets.forEach(function(el) {
       el.addEventListener('click', playClickSound, { passive: true });
+    });
+
+    const hoverTargets = document.querySelectorAll('button:not(#soundToggle), .btn, .theme-toggle-btn:not(#soundToggle), .menu-toggle, .nav-links a, .hero-cta a, .ai-chat-chip');
+    hoverTargets.forEach(function(el) {
       el.addEventListener('mouseenter', playHoverSound, { passive: true });
     });
   }
