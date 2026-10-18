@@ -13,6 +13,9 @@
 *.env
 *.pem
 *.key
+*.cert
+*.crt
+id_rsa*
 
 # Dependencies & Build Artifacts
 node_modules/
