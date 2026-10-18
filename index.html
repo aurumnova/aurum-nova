@@ -3467,207 +3467,55 @@ nav.scrolled .nav-inner {
 }
 
 /* 6. Reduced Motion */
-/* 7. HERO BADGE — EXECUTIVE HARDWARE CAPSULE (Apple / Linear Tier) */
+/* 7. HERO BADGE — REFINED EXECUTIVE PILL (Obsidian & Gold) */
 .hero-badge {
   display: inline-flex !important;
   align-items: center !important;
-  position: relative !important;
-  padding: 1.5px !important;
+  gap: 10px !important;
+  padding: 6px 16px 6px 12px !important;
   border-radius: 9999px !important;
-  background: linear-gradient(135deg, rgba(212, 175, 55, 0.42) 0%, rgba(212, 175, 55, 0.08) 45%, rgba(79, 214, 224, 0.35) 100%) !important;
-  box-shadow: 0 10px 32px -8px rgba(0, 0, 0, 0.8), 0 0 20px -4px rgba(212, 175, 55, 0.2) !important;
-  margin-bottom: 24px !important;
+  background: rgba(212, 175, 55, 0.05) !important;
+  border: 1px solid rgba(212, 175, 55, 0.22) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35) !important;
+  margin-bottom: 22px !important;
   cursor: default !important;
-  transform: translateZ(0) !important;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease !important;
-  overflow: hidden !important;
-  max-width: 100% !important;
+  transition: all 0.25s ease !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  font-family: var(--mono) !important;
+  font-size: 0.72rem !important;
+  letter-spacing: 0.12em !important;
+  color: var(--gold) !important;
+  text-transform: uppercase !important;
 }
 
 .hero-badge:hover {
-  transform: translateY(-2px) !important;
-  box-shadow: 0 16px 36px -6px rgba(0, 0, 0, 0.9), 0 0 28px -2px rgba(212, 175, 55, 0.38) !important;
+  background: rgba(212, 175, 55, 0.09) !important;
+  border-color: rgba(212, 175, 55, 0.38) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.12) !important;
+}
+
+.hero-badge .dot {
+  width: 7px !important;
+  height: 7px !important;
+  border-radius: 50% !important;
+  background: var(--gold) !important;
+  box-shadow: 0 0 10px var(--gold-glow) !important;
+  animation: pulse-dot 2.4s ease-in-out infinite !important;
+  flex-shrink: 0 !important;
 }
 
 [data-theme="light"] .hero-badge {
-  background: linear-gradient(135deg, rgba(212, 175, 55, 0.45) 0%, rgba(0, 0, 0, 0.05) 50%, rgba(79, 214, 224, 0.3) 100%) !important;
-  box-shadow: 0 4px 18px -4px rgba(0, 0, 0, 0.08), 0 0 14px -2px rgba(212, 175, 55, 0.15) !important;
+  background: rgba(184, 134, 11, 0.08) !important;
+  border: 1px solid rgba(184, 134, 11, 0.30) !important;
+  color: #634800 !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04) !important;
 }
 
-/* Border Beam Shimmer */
-.hero-badge .badge-border-beam {
-  position: absolute;
-  inset: -120%;
-  background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, transparent 290deg, rgba(212, 175, 55, 0.85) 340deg, #ffffff 360deg);
-  animation: badge-beam-rotate 6.5s linear infinite;
-  pointer-events: none;
-  opacity: 0.65;
-}
-
-@keyframes badge-beam-rotate {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-.hero-badge .badge-inner {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  position: relative;
-  z-index: 1;
-  padding: 6px 14px 6px 8px;
-  border-radius: 9999px;
-  background: linear-gradient(180deg, rgba(16, 16, 26, 0.94) 0%, rgba(8, 8, 14, 0.98) 100%);
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.15), inset 0 -1px 1px rgba(0, 0, 0, 0.5);
-}
-
-[data-theme="light"] .hero-badge .badge-inner {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(246, 246, 250, 0.98) 100%);
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.9), 0 2px 10px rgba(0, 0, 0, 0.05);
-}
-
-/* Internal Micro-Chip */
-.badge-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 3px 9px 3px 7px;
-  border-radius: 9999px;
-  background: rgba(212, 175, 55, 0.12);
-  border: 1px solid rgba(212, 175, 55, 0.32);
-  flex-shrink: 0;
-}
-
-[data-theme="light"] .badge-chip {
-  background: rgba(212, 175, 55, 0.12) !important;
-  border-color: rgba(212, 175, 55, 0.35) !important;
-}
-
-/* Living Radar Dot with Ping Ring */
-.badge-live-pulse {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 9px;
-  height: 9px;
-}
-
-.badge-live-pulse .pulse-ring {
-  position: absolute;
-  inset: -3px;
-  border-radius: 50%;
-  border: 1.5px solid var(--gold);
-  opacity: 0.8;
-  animation: pulse-ring-expand 2.2s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
-}
-
-.badge-live-pulse .pulse-core {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--gold-2);
-  box-shadow: 0 0 8px var(--gold);
-}
-
-@keyframes pulse-ring-expand {
-  0% { transform: scale(0.6); opacity: 1; }
-  100% { transform: scale(2.4); opacity: 0; }
-}
-
-.badge-chip-label {
-  font-family: var(--mono);
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  color: var(--gold);
-  text-transform: uppercase;
-}
-
-.badge-sep {
-  width: 1px;
-  height: 14px;
-  background: linear-gradient(180deg, transparent, rgba(212, 175, 55, 0.4), transparent);
-  flex-shrink: 0;
-}
-
-.badge-wave-wrap {
-  display: inline-flex;
-  align-items: center;
-  padding: 2px 4px;
-  background: rgba(0, 0, 0, 0.35);
-  border-radius: 4px;
-  border: 1px solid rgba(212, 175, 55, 0.15);
-  flex-shrink: 0;
-}
-
-[data-theme="light"] .badge-wave-wrap {
-  background: rgba(0, 0, 0, 0.04) !important;
-  border-color: rgba(212, 175, 55, 0.2) !important;
-}
-
-.badge-text {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 5px;
-  font-size: 0.73rem;
-  letter-spacing: 0.08em;
-  color: var(--text-muted);
-  white-space: nowrap;
-}
-
-[data-theme="light"] .badge-text {
-  color: var(--text-muted-light, #495057) !important;
-}
-
-.badge-brand {
-  font-family: var(--sans);
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  color: var(--text);
-  background: linear-gradient(135deg, #ffffff 0%, var(--gold-2) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-[data-theme="light"] .badge-brand {
-  background: linear-gradient(135deg, #111116 0%, var(--gold-3) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.badge-sub {
-  font-family: var(--mono);
-  font-size: 0.65rem;
-  letter-spacing: 0.08em;
-  opacity: 0.85;
-}
-
-.badge-tag-status {
-  font-family: var(--mono);
-  font-size: 0.58rem;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  padding: 2px 6px;
-  border-radius: 4px;
-  background: rgba(79, 214, 224, 0.12);
-  color: var(--cyan);
-  border: 1px solid rgba(79, 214, 224, 0.3);
-  text-transform: uppercase;
-  flex-shrink: 0;
-}
-
-[data-theme="light"] .badge-tag-status {
-  background: rgba(79, 214, 224, 0.14) !important;
-  color: #007782 !important;
-  border-color: rgba(79, 214, 224, 0.4) !important;
-}
-
-@media (max-width: 600px) {
-  .badge-sub { display: none; }
-  .badge-inner { gap: 6px; padding: 5px 10px 5px 6px; }
+[data-theme="light"] .hero-badge .dot {
+  background: #b8860b !important;
+  box-shadow: 0 0 6px rgba(184, 134, 11, 0.45) !important;
 }
 
 /* =============================================
@@ -3946,26 +3794,9 @@ nav.scrolled .nav-inner {
   <div class="wrap">
     <div class="hero-grid">
       <div class="hero-copy reveal">
-        <div class="hero-badge" role="status" aria-label="Sistema activo: Aurum Nova Ingeniería y Estrategia de IA">
-          <div class="badge-border-beam" aria-hidden="true"></div>
-          <div class="badge-inner">
-            <span class="badge-chip">
-              <span class="badge-live-pulse" aria-hidden="true">
-                <span class="pulse-ring"></span>
-                <span class="pulse-core"></span>
-              </span>
-              <span class="badge-chip-label">SYS_RUNTIME 2026</span>
-            </span>
-            <span class="badge-sep" aria-hidden="true"></span>
-            <div class="badge-wave-wrap" aria-hidden="true" title="Frecuencia Cuántica Activa">
-              <canvas id="heroWaveCanvas" width="44" height="14" class="hero-wave-canvas"></canvas>
-            </div>
-            <span class="badge-text">
-              <span class="badge-brand">AURUM NOVA</span>
-              <span class="badge-sub">&middot; INGENIER&Iacute;A &amp; ESTRATEGIA DE IA</span>
-            </span>
-            <span class="badge-tag-status">ONLINE</span>
-          </div>
+        <div class="hero-badge" role="status" aria-label="Aurum Nova: Ingeniería y Estrategia de IA">
+          <span class="dot" aria-hidden="true"></span>
+          <span>AURUM NOVA &middot; INGENIER&Iacute;A &amp; ESTRATEGIA DE IA</span>
         </div>
 
         <h1 class="hero-title">
@@ -5649,44 +5480,7 @@ function initMagneticButtons() {
   });
 }
 
-// 5. Living Quantum Waveform Canvas
-function initLiveQuantumWave() {
-  const canvas = document.getElementById('heroWaveCanvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  if (!ctx) return;
-
-  let step = 0;
-  function draw() {
-    step += 0.06;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    ctx.beginPath();
-    ctx.strokeStyle = '#d4af37';
-    ctx.lineWidth = 1.4;
-    for (let x = 0; x < canvas.width; x++) {
-      const y = canvas.height / 2 + Math.sin(x * 0.25 + step) * 3.5;
-      if (x === 0) ctx.moveTo(x, y);
-      else ctx.lineTo(x, y);
-    }
-    ctx.stroke();
-
-    ctx.beginPath();
-    ctx.strokeStyle = 'rgba(79, 214, 224, 0.7)';
-    ctx.lineWidth = 1;
-    for (let x = 0; x < canvas.width; x++) {
-      const y = canvas.height / 2 + Math.cos(x * 0.3 - step * 1.2) * 2.5;
-      if (x === 0) ctx.moveTo(x, y);
-      else ctx.lineTo(x, y);
-    }
-    ctx.stroke();
-
-    requestAnimationFrame(draw);
-  }
-  requestAnimationFrame(draw);
-}
-
-// 6. Metric Odometers / Number Increments
+// 5. Metric Odometers / Number Increments
 function initLiveOdometerMetrics() {
   const stats = document.querySelectorAll('.stat .num');
   if (!stats.length || !('IntersectionObserver' in window)) return;
@@ -5786,7 +5580,6 @@ function initLuxury3DSuite() {
   initQuantumNeuralCanvas3D();
   initCardSpotlightAndTilt();
   initMagneticButtons();
-  initLiveQuantumWave();
   initLiveOdometerMetrics();
   initBackgroundAmbientSystem();
 }
