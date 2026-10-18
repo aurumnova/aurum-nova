@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" href="favicon.ico">
 
 <!-- Security headers -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' assets/ https://images.unsplash.com data:; connect-src 'self' https://wa.me https://aurum-nova-ai-sales-worker.aurum-nova.workers.dev; frame-ancestors 'none'; base-uri 'self'; form-action 'self';">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://connect.facebook.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' assets/ https://images.unsplash.com https://www.facebook.com https://www.google-analytics.com data:; connect-src 'self' https://wa.me https://aurum-nova-ai-sales-worker.aurum-nova.workers.dev https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self';">
 <meta http-equiv="X-Frame-Options" content="DENY">
 <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()">
 <meta property="og:title" content="AURUM NOVA — Angel Alvarado, CEO">
@@ -4622,6 +4622,13 @@ if (contactForm) {
         waText += `. Acabo de enviar el formulario para ${programName} y me gustaría confirmar mi prioridad.`;
         const waUrl = `https://wa.me/593981138814?text=${encodeURIComponent(waText)}`;
 
+        if (typeof window.trackAurumEvent === 'function') {
+          window.trackAurumEvent('generate_lead', {
+            service: programName,
+            source: 'contact_form'
+          });
+        }
+
         note.innerHTML = `✓ Gracias, ${safeName.split(' ')[0]}. Tu consulta fue registrada.<br><a href="${waUrl}" target="_blank" rel="noopener" style="color: var(--gold); text-decoration: underline; font-weight: 600; display: inline-block; margin-top: 6px;">→ ¿Quieres acelerar tu diagnóstico? Haz clic aquí para confirmar tu prioridad por WhatsApp ahora mismo</a>`;
         note.style.color = 'var(--gold)';
         btn.textContent = 'Enviado — gracias';
@@ -4674,6 +4681,9 @@ function initAIChatWidget() {
       if (iconClose) iconClose.style.display = 'block';
       if (window.AurumAudio && typeof window.AurumAudio.playChatOpenSound === 'function') {
         window.AurumAudio.playChatOpenSound();
+      }
+      if (typeof window.trackAurumEvent === 'function') {
+        window.trackAurumEvent('chat_opened');
       }
       setTimeout(function() {
         chatInput.focus();
@@ -4795,6 +4805,9 @@ function initAIChatWidget() {
     const safeText = escapeHtml(text);
 
     appendMessage(safeText, 'user');
+    if (typeof window.trackAurumEvent === 'function') {
+      window.trackAurumEvent('chat_message_sent', { message_length: text.length });
+    }
     if (window.AurumAudio && typeof window.AurumAudio.playMessageSentSound === 'function') {
       window.AurumAudio.playMessageSentSound();
     }
@@ -5589,6 +5602,45 @@ if (document.readyState === 'loading') {
 } else {
   initLuxury3DSuite();
 }
+
+/* =============================================
+   8. CONVERSION TRACKING & TELEMETRY ENGINE
+   Standard DataLayer + GA4 + Meta Pixel Bridge
+   ============================================= */
+window.dataLayer = window.dataLayer || [];
+window.trackAurumEvent = function(eventName, eventParams) {
+  try {
+    eventParams = eventParams || {};
+    eventParams.event = eventName;
+    eventParams.timestamp = new Date().toISOString();
+
+    // 1. GTM / GA4 dataLayer
+    window.dataLayer.push(eventParams);
+
+    // 2. Google Analytics 4 direct
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', eventName, eventParams);
+    }
+
+    // 3. Meta Pixel direct
+    if (typeof window.fbq === 'function') {
+      window.fbq('trackCustom', eventName, eventParams);
+    }
+  } catch(e) {}
+};
+
+// Auto-track all WhatsApp CTA interactions
+document.addEventListener('click', function(e) {
+  const waTarget = e.target.closest('a[href*="wa.me"], .wa-float');
+  if (waTarget) {
+    const rawLabel = waTarget.textContent || waTarget.getAttribute('aria-label') || '';
+    window.trackAurumEvent('contact_whatsapp', {
+      destination: '0981138814',
+      label: rawLabel.trim().slice(0, 60),
+      url: waTarget.href || 'whatsapp_floating'
+    });
+  }
+}, { passive: true });
 </script>
 
 <!-- AI CHAT WIDGET -->
