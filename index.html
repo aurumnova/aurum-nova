@@ -3325,6 +3325,156 @@ nav.scrolled .nav-inner {
     transition: none !important;
   }
 }
+
+/* =============================================
+   AURUM NOVA — $10k+ LUXURY 3D & TACTILE SUITE
+   Awwwards / Linear-tier Interactive Physics
+   ============================================= */
+
+/* 1. Hero 3D Perspective & Holographic Frame */
+.portrait-container {
+  perspective: 1200px;
+  -webkit-perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
+.portrait-frame {
+  position: relative;
+  z-index: 1;
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease;
+}
+
+.portrait-frame .hud-bracket {
+  transform: translateZ(38px);
+  will-change: transform;
+  transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+  filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.65));
+}
+
+.portrait-frame .hud-coords {
+  transform: translateZ(32px);
+  will-change: transform;
+}
+
+.portrait-frame .portrait-overlay {
+  transform: translateZ(26px);
+}
+
+.portrait-specular-glare {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 3;
+  opacity: 0;
+  mix-blend-mode: overlay;
+  transition: opacity 0.4s ease;
+  background: radial-gradient(circle 260px at var(--glare-x, 50%) var(--glare-y, 50%), rgba(255, 255, 255, 0.5) 0%, rgba(212, 175, 55, 0.25) 35%, transparent 70%);
+}
+
+.portrait-frame:hover .portrait-specular-glare {
+  opacity: 1;
+}
+
+/* 2. Quantum Neural 3D Canvas in Hero Background */
+.hero-canvas-3d {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero-wave-canvas {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 6px;
+  border-radius: 2px;
+}
+
+/* 3. Linear / Stripe Dynamic Spotlight on Bento & Service Cards */
+.spotlight-card {
+  position: relative;
+  overflow: hidden;
+  --spotlight-x: 50%;
+  --spotlight-y: 50%;
+  --spotlight-opacity: 0;
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.spotlight-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: radial-gradient(
+    420px circle at var(--spotlight-x, 50%) var(--spotlight-y, 50%),
+    rgba(212, 175, 55, 0.75) 0%,
+    rgba(79, 214, 224, 0.35) 40%,
+    transparent 72%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: var(--spotlight-opacity, 0);
+  transition: opacity 0.35s ease;
+  z-index: 2;
+}
+
+.spotlight-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    520px circle at var(--spotlight-x, 50%) var(--spotlight-y, 50%),
+    rgba(212, 175, 55, 0.08) 0%,
+    rgba(79, 214, 224, 0.03) 45%,
+    transparent 75%
+  );
+  pointer-events: none;
+  opacity: var(--spotlight-opacity, 0);
+  transition: opacity 0.35s ease;
+  z-index: 1;
+}
+
+/* 4. Magnetic Interactive Physics on Buttons */
+.magnetic-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  will-change: transform;
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s ease;
+}
+
+.magnetic-btn:active {
+  transform: scale(0.96) !important;
+}
+
+/* 5. Metrics High-Tech Numerals */
+.stat .num.odometer-active {
+  display: inline-block;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 0 16px var(--gold-glow);
+}
+
+/* 6. Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .portrait-frame,
+  .spotlight-card,
+  .magnetic-btn {
+    transform: none !important;
+    transition: none !important;
+  }
+}
 </style>
 </head>
 <body>
@@ -3411,6 +3561,7 @@ nav.scrolled .nav-inner {
 <section class="hero" id="top">
   <!-- Living Ambient Neural Topology -->
   <div class="hero-neural-matrix" aria-hidden="true">
+    <canvas id="heroCanvas3D" class="hero-canvas-3d" aria-hidden="true"></canvas>
     <svg class="neural-svg" viewBox="0 0 1200 700" preserveAspectRatio="none">
       <defs>
         <linearGradient id="neuralGradGold" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -3443,6 +3594,7 @@ nav.scrolled .nav-inner {
         <div class="hero-badge">
           <span class="dot"></span>
           <span class="badge-hud">SYS_RUNTIME 2026 //</span>
+          <canvas id="heroWaveCanvas" width="38" height="12" class="hero-wave-canvas" aria-hidden="true"></canvas>
           <span>AURUM NOVA &middot; INGENIER&Iacute;A &amp; ESTRATEGIA DE IA</span>
         </div>
 
@@ -3480,7 +3632,8 @@ nav.scrolled .nav-inner {
       <div class="hero-visual reveal" style="transition-delay: 0.15s">
         <div class="portrait-container">
           <div class="portrait-hud-aura" aria-hidden="true"></div>
-          <div class="portrait-frame">
+          <div class="portrait-frame" id="heroPortraitFrame">
+            <div class="portrait-specular-glare" aria-hidden="true"></div>
             <div class="hud-bracket tl" aria-hidden="true"></div>
             <div class="hud-bracket tr" aria-hidden="true"></div>
             <div class="hud-bracket bl" aria-hidden="true"></div>
@@ -3846,7 +3999,7 @@ nav.scrolled .nav-inner {
           </div>
           <div class="body">
             <div class="lbl">WhatsApp / Teléfono</div>
-            <div class="val"><a href="https://wa.me/593994195932?text=Hola%20Angel%2C%20me%20interesa%20tu%20servicio" target="_blank" rel="noopener">+593 99 419 5932</a> <span style="color:var(--text-dim);font-size:0.82rem">(WhatsApp directo)</span></div>
+            <div class="val"><a href="https://wa.me/593981138814?text=Hola%20Angel%2C%20me%20interesa%20tu%20servicio" target="_blank" rel="noopener">+593 98 113 8814</a> <span style="color:var(--text-dim);font-size:0.82rem">(WhatsApp directo)</span></div>
           </div>
         </div>
         <div class="contact-item">
@@ -3896,7 +4049,7 @@ nav.scrolled .nav-inner {
           <p style="font-size:0.84rem;color:var(--text-muted);margin-bottom:14px">
             El <em>IA Growth Audit</em> es el punto de entrada más común: descubres qué es viable y cuánto cuesta antes de comprometer más. <a href="#contact" style="color:var(--gold);border-bottom:1px solid transparent">Agenda tu diagnóstico gratuito de 15 min →</a>
           </p>
-          <a href="https://wa.me/593994195932?text=Hola%20Angel%2C%20quiero%20un%20IA%20Growth%20Audit" class="btn btn-ghost" style="padding:10px 22px;font-size:0.82rem" target="_blank" rel="noopener">Habla por WhatsApp ahora →</a>
+          <a href="https://wa.me/593981138814?text=Hola%20Angel%2C%20quiero%20un%20IA%20Growth%20Audit" class="btn btn-ghost" style="padding:10px 22px;font-size:0.82rem" target="_blank" rel="noopener">Habla por WhatsApp ahora →</a>
         </div>
       </div>
 
@@ -3918,7 +4071,7 @@ nav.scrolled .nav-inner {
           </div>
           <div class="form-group">
             <label for="f-phone">Teléfono / WhatsApp (opcional)</label>
-            <input id="f-phone" name="phone" type="text" placeholder="+593 99 419 5932">
+            <input id="f-phone" name="phone" type="text" placeholder="+593 98 113 8814">
           </div>
           <div class="form-group">
             <label for="f-topic">Programa de interés</label>
@@ -3964,7 +4117,7 @@ nav.scrolled .nav-inner {
       <div class="footer-copy">© 2026 Angel Alvarado · CEO · AURUM NOVA <span style="opacity:0.4;margin:0 6px">·</span> Trabajo global con clientes hispanos e ingleses <span style="opacity:0.4;margin:0 6px">·</span> <a href="LICENSE" class="license-badge">MIT License</a></div>
       <div class="footer-links">
         <a href="https://mail.google.com/mail/?view=cm&fs=1&to=aurum.nova.business@gmail.com&su=&body=">Email</a>
-        <a href="https://wa.me/593994195932" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="https://wa.me/593981138814" target="_blank" rel="noopener">WhatsApp</a>
         <a href="https://github.com/aurum-ceo" target="_blank" rel="noopener">GitHub</a>
         <a href="https://www.linkedin.com/in/angel-santiago-alvarado-rodriguez-647428423/" target="_blank" rel="noopener">LinkedIn</a>
         <a href="#about">Sobre mí</a>
@@ -4215,7 +4368,7 @@ if (contactForm) {
     if (!name || name.length > 120) { showFormError('Nombre requerido (máx 120 caracteres).', nameInput); return; }
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254) { showFormError('Email inválido.', emailInput); return; }
     if (!msg || msg.length > 5000) { showFormError('Mensaje requerido (máx 5000 caracteres).', msgInput); return; }
-    if (phone && !/^\+?[1-9]\d{6,14}$/.test(phone.replace(/[\s-]/g, ''))) { showFormError('Teléfono en formato E.164 (ej: +593994195932).', this.querySelector('#f-phone')); return; }
+    if (phone && !/^\+?[1-9]\d{6,14}$/.test(phone.replace(/[\s-]/g, ''))) { showFormError('Teléfono en formato E.164 (ej: +593981138814).', this.querySelector('#f-phone')); return; }
     const allowedTopics = ['audit', 'pipeline', 'content', 'consulting', 'other', ''];
     if (!allowedTopics.includes(topic)) { showFormError('Tema no válido.'); return; }
 
@@ -4266,7 +4419,7 @@ if (contactForm) {
         let waText = `Hola Angel, soy ${name}`;
         if (company) waText += ` de ${company}`;
         waText += `. Acabo de enviar el formulario para ${programName} y me gustaría confirmar mi prioridad.`;
-        const waUrl = `https://wa.me/593994195932?text=${encodeURIComponent(waText)}`;
+        const waUrl = `https://wa.me/593981138814?text=${encodeURIComponent(waText)}`;
 
         note.innerHTML = `✓ Gracias, ${safeName.split(' ')[0]}. Tu consulta fue registrada.<br><a href="${waUrl}" target="_blank" rel="noopener" style="color: var(--gold); text-decoration: underline; font-weight: 600; display: inline-block; margin-top: 6px;">→ ¿Quieres acelerar tu diagnóstico? Haz clic aquí para confirmar tu prioridad por WhatsApp ahora mismo</a>`;
         note.style.color = 'var(--gold)';
@@ -4365,7 +4518,7 @@ function initAIChatWidget() {
     safe = safe.replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer" style="color:var(--gold);text-decoration:underline;font-weight:600;">$1</a>');
 
     // 4. Convertir teléfono de WhatsApp en enlace directo
-    safe = safe.replace(/(\+593\s*99\s*419\s*5932)/g, '<a href="https://wa.me/593994195932?text=Hola%20Angel,%20vengo%20del%20asistente%20web%20de%20Aurum%20Nova" target="_blank" rel="noopener noreferrer" style="color:var(--gold);font-weight:600;border-bottom:1px dashed var(--gold);text-decoration:none;">$1 ↗</a>');
+    safe = safe.replace(/(\+593\s*98\s*113\s*8814|098\s*113\s*8814|\+593\s*99\s*419\s*5932)/g, '<a href="https://wa.me/593981138814?text=Hola%20Angel,%20vengo%20del%20asistente%20web%20de%20Aurum%20Nova" target="_blank" rel="noopener noreferrer" style="color:var(--gold);font-weight:600;border-bottom:1px dashed var(--gold);text-decoration:none;">$1 ↗</a>');
 
     // 5. Saltos de línea
     safe = safe.replace(/\n/g, '<br>');
@@ -4821,6 +4974,404 @@ if (themeToggle) {
   window.addEventListener('scroll', updateProgress, { passive: true });
   updateProgress();
 })();
+
+/* =============================================
+   AURUM NOVA — $10k+ LUXURY 3D & TACTILE SUITE
+   Awwwards / Linear-tier Interactive Physics
+   ============================================= */
+
+// 1. Hero 3D Parallax & Depth Tilt on Founder Portrait
+function initHero3DParallax() {
+  const container = document.querySelector('.portrait-container');
+  const frame = document.getElementById('heroPortraitFrame') || document.querySelector('.portrait-frame');
+  if (!container || !frame) return;
+
+  const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  if (isTouchDevice) {
+    let angle = 0;
+    function autoFloat() {
+      angle += 0.015;
+      const rotX = Math.sin(angle) * 3;
+      const rotY = Math.cos(angle * 0.8) * 3.5;
+      frame.style.transform = `rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg)`;
+      requestAnimationFrame(autoFloat);
+    }
+    requestAnimationFrame(autoFloat);
+    return;
+  }
+
+  let rafId = null;
+  let targetRotX = 0, targetRotY = 0;
+  let currentRotX = 0, currentRotY = 0;
+
+  function updateOrientation() {
+    currentRotX += (targetRotX - currentRotX) * 0.12;
+    currentRotY += (targetRotY - currentRotY) * 0.12;
+    frame.style.transform = `rotateX(${currentRotX.toFixed(2)}deg) rotateY(${currentRotY.toFixed(2)}deg) translateZ(8px)`;
+    if (Math.abs(targetRotX - currentRotX) > 0.01 || Math.abs(targetRotY - currentRotY) > 0.01) {
+      rafId = requestAnimationFrame(updateOrientation);
+    } else {
+      rafId = null;
+    }
+  }
+
+  const heroSection = document.getElementById('top') || document.querySelector('.hero');
+  if (heroSection) {
+    heroSection.addEventListener('mousemove', function(e) {
+      const rect = container.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      const normX = (e.clientX - centerX) / (window.innerWidth / 2);
+      const normY = (e.clientY - centerY) / (window.innerHeight / 2);
+
+      targetRotY = Math.max(-14, Math.min(14, normX * 14));
+      targetRotX = Math.max(-12, Math.min(12, -normY * 12));
+
+      const frameRect = frame.getBoundingClientRect();
+      const glareX = ((e.clientX - frameRect.left) / frameRect.width) * 100;
+      const glareY = ((e.clientY - frameRect.top) / frameRect.height) * 100;
+      frame.style.setProperty('--glare-x', `${Math.max(0, Math.min(100, glareX))}%`);
+      frame.style.setProperty('--glare-y', `${Math.max(0, Math.min(100, glareY))}%`);
+
+      if (!rafId) rafId = requestAnimationFrame(updateOrientation);
+    }, { passive: true });
+
+    heroSection.addEventListener('mouseleave', function() {
+      targetRotX = 0;
+      targetRotY = 0;
+      if (!rafId) rafId = requestAnimationFrame(updateOrientation);
+    }, { passive: true });
+  }
+}
+
+// 2. Quantum Neural 3D Interactive Canvas
+function initQuantumNeuralCanvas3D() {
+  const canvas = document.getElementById('heroCanvas3D');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  const heroSection = document.getElementById('top') || canvas.closest('.hero');
+  let width = 0, height = 0;
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  let isVisible = true;
+  const mouse = { x: -9999, y: -9999, active: false };
+
+  if ('IntersectionObserver' in window && heroSection) {
+    const observer = new IntersectionObserver((entries) => {
+      isVisible = entries[0].isIntersecting;
+      if (isVisible) requestAnimationFrame(render);
+    }, { threshold: 0.05 });
+    observer.observe(heroSection);
+  }
+
+  function resize() {
+    if (!heroSection) return;
+    const rect = heroSection.getBoundingClientRect();
+    width = rect.width;
+    height = rect.height;
+    canvas.width = Math.floor(width * dpr);
+    canvas.height = Math.floor(height * dpr);
+    canvas.style.width = width + 'px';
+    canvas.style.height = height + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  resize();
+  window.addEventListener('resize', resize, { passive: true });
+
+  if (heroSection) {
+    heroSection.addEventListener('mousemove', (e) => {
+      const rect = heroSection.getBoundingClientRect();
+      mouse.x = e.clientX - rect.left;
+      mouse.y = e.clientY - rect.top;
+      mouse.active = true;
+    }, { passive: true });
+
+    heroSection.addEventListener('mouseleave', () => {
+      mouse.active = false;
+      mouse.x = -9999;
+      mouse.y = -9999;
+    }, { passive: true });
+  }
+
+  const nodeCount = Math.min(65, Math.max(35, Math.floor(window.innerWidth / 28)));
+  const nodes = [];
+  const fov = 350;
+
+  for (let i = 0; i < nodeCount; i++) {
+    nodes.push({
+      x: (Math.random() - 0.5) * 1100,
+      y: (Math.random() - 0.5) * 650,
+      z: Math.random() * 400 - 150,
+      vx: (Math.random() - 0.5) * 0.45,
+      vy: (Math.random() - 0.5) * 0.45,
+      vz: (Math.random() - 0.5) * 0.3,
+      baseRadius: Math.random() * 1.8 + 1.2,
+      isCyan: Math.random() < 0.24,
+      phase: Math.random() * Math.PI * 2
+    });
+  }
+
+  function render() {
+    if (!isVisible) return;
+
+    ctx.clearRect(0, 0, width, height);
+    const centerX = width * 0.5;
+    const centerY = height * 0.45;
+    const projected = [];
+
+    for (let i = 0; i < nodes.length; i++) {
+      const p = nodes[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.z += p.vz;
+      p.phase += 0.02;
+
+      if (p.x < -600) p.x = 600;
+      if (p.x > 600) p.x = -600;
+      if (p.y < -350) p.y = 350;
+      if (p.y > 350) p.y = -350;
+      if (p.z < -200) p.z = 250;
+      if (p.z > 250) p.z = -200;
+
+      const scale = fov / (fov + p.z + 200);
+      const projX = centerX + p.x * scale;
+      const projY = centerY + p.y * scale;
+
+      if (mouse.active) {
+        const dx = mouse.x - projX;
+        const dy = mouse.y - projY;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 180 && dist > 1) {
+          const force = (1 - dist / 180) * 0.35;
+          p.x += (dx / dist) * force * 4;
+          p.y += (dy / dist) * force * 4;
+        }
+      }
+
+      const alpha = Math.max(0.12, Math.min(0.85, scale * 0.7 + Math.sin(p.phase) * 0.15));
+      projected.push({ x: projX, y: projY, scale, alpha, isCyan: p.isCyan, baseRadius: p.baseRadius });
+    }
+
+    const maxDist = 125;
+    for (let i = 0; i < projected.length; i++) {
+      for (let j = i + 1; j < projected.length; j++) {
+        const p1 = projected[i];
+        const p2 = projected[j];
+        const dx = p1.x - p2.x;
+        const dy = p1.y - p2.y;
+        const d = Math.sqrt(dx * dx + dy * dy);
+
+        if (d < maxDist) {
+          const lineAlpha = (1 - d / maxDist) * Math.min(p1.alpha, p2.alpha) * 0.55;
+          ctx.beginPath();
+          ctx.moveTo(p1.x, p1.y);
+          ctx.lineTo(p2.x, p2.y);
+          if (p1.isCyan || p2.isCyan) {
+            ctx.strokeStyle = `rgba(79, 214, 224, ${lineAlpha.toFixed(3)})`;
+          } else {
+            ctx.strokeStyle = `rgba(212, 175, 55, ${lineAlpha.toFixed(3)})`;
+          }
+          ctx.lineWidth = Math.min(p1.scale, p2.scale) * 1.1;
+          ctx.stroke();
+        }
+      }
+
+      if (mouse.active) {
+        const dx = mouse.x - projected[i].x;
+        const dy = mouse.y - projected[i].y;
+        const d = Math.sqrt(dx * dx + dy * dy);
+        if (d < 160) {
+          const cursorAlpha = (1 - d / 160) * projected[i].alpha * 0.75;
+          ctx.beginPath();
+          ctx.moveTo(projected[i].x, projected[i].y);
+          ctx.lineTo(mouse.x, mouse.y);
+          ctx.strokeStyle = `rgba(212, 175, 55, ${cursorAlpha.toFixed(3)})`;
+          ctx.lineWidth = 1.3;
+          ctx.stroke();
+        }
+      }
+    }
+
+    for (let i = 0; i < projected.length; i++) {
+      const p = projected[i];
+      const r = p.baseRadius * p.scale;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, Math.max(1, r), 0, Math.PI * 2);
+      ctx.fillStyle = p.isCyan
+        ? `rgba(79, 214, 224, ${p.alpha.toFixed(3)})`
+        : `rgba(212, 175, 55, ${p.alpha.toFixed(3)})`;
+      ctx.fill();
+    }
+
+    requestAnimationFrame(render);
+  }
+
+  requestAnimationFrame(render);
+}
+
+// 3. Dynamic Spotlight & 3D Tilt on Cards (Linear / Stripe luxury effect)
+function initCardSpotlightAndTilt() {
+  const cards = document.querySelectorAll('.service-card, .vision-card, .premium-card, .project-card, .form-card');
+  const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+  cards.forEach((card) => {
+    card.classList.add('spotlight-card');
+
+    if (isTouch) return;
+
+    let rafId = null;
+
+    card.addEventListener('pointermove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      card.style.setProperty('--spotlight-x', `${x}px`);
+      card.style.setProperty('--spotlight-y', `${y}px`);
+      card.style.setProperty('--spotlight-opacity', '1');
+
+      const tiltX = (y / rect.height - 0.5) * -4.5;
+      const tiltY = (x / rect.width - 0.5) * 5;
+
+      if (!rafId) {
+        rafId = requestAnimationFrame(() => {
+          card.style.transform = `perspective(1000px) rotateX(${tiltX.toFixed(2)}deg) rotateY(${tiltY.toFixed(2)}deg) translateY(-4px)`;
+          rafId = null;
+        });
+      }
+    }, { passive: true });
+
+    card.addEventListener('pointerleave', () => {
+      card.style.setProperty('--spotlight-opacity', '0');
+      card.style.transform = '';
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+    }, { passive: true });
+  });
+}
+
+// 4. Magnetic Interactive Physics on Buttons
+function initMagneticButtons() {
+  const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  if (isTouch) return;
+
+  const buttons = document.querySelectorAll('.btn-primary, .btn-ghost, .nav-cta, .hero-cta .btn');
+
+  buttons.forEach((btn) => {
+    btn.classList.add('magnetic-btn');
+
+    btn.addEventListener('mousemove', (e) => {
+      const rect = btn.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      const deltaX = (e.clientX - centerX) * 0.28;
+      const deltaY = (e.clientY - centerY) * 0.28;
+
+      btn.style.transform = `translate(${deltaX.toFixed(1)}px, ${deltaY.toFixed(1)}px)`;
+    }, { passive: true });
+
+    btn.addEventListener('mouseleave', () => {
+      btn.style.transform = 'translate(0px, 0px)';
+    }, { passive: true });
+  });
+}
+
+// 5. Living Quantum Waveform Canvas
+function initLiveQuantumWave() {
+  const canvas = document.getElementById('heroWaveCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  let step = 0;
+  function draw() {
+    step += 0.06;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    ctx.beginPath();
+    ctx.strokeStyle = '#d4af37';
+    ctx.lineWidth = 1.4;
+    for (let x = 0; x < canvas.width; x++) {
+      const y = canvas.height / 2 + Math.sin(x * 0.25 + step) * 3.5;
+      if (x === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.strokeStyle = 'rgba(79, 214, 224, 0.7)';
+    ctx.lineWidth = 1;
+    for (let x = 0; x < canvas.width; x++) {
+      const y = canvas.height / 2 + Math.cos(x * 0.3 - step * 1.2) * 2.5;
+      if (x === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+
+    requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+}
+
+// 6. Metric Odometers / Number Increments
+function initLiveOdometerMetrics() {
+  const stats = document.querySelectorAll('.stat .num');
+  if (!stats.length || !('IntersectionObserver' in window)) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting && !entry.target.__counted) {
+        entry.target.__counted = true;
+        const text = entry.target.textContent.trim();
+        const numericVal = parseFloat(text.replace(/[^0-9.]/g, ''));
+
+        if (!isNaN(numericVal) && numericVal > 0) {
+          entry.target.classList.add('odometer-active');
+          const duration = 1200;
+          const start = performance.now();
+
+          function tick(now) {
+            const progress = Math.min((now - start) / duration, 1);
+            const easeOut = 1 - Math.pow(1 - progress, 3);
+            const current = Math.floor(easeOut * numericVal);
+            entry.target.textContent = current;
+            if (progress < 1) {
+              requestAnimationFrame(tick);
+            } else {
+              entry.target.textContent = text;
+            }
+          }
+          requestAnimationFrame(tick);
+        } else {
+          entry.target.style.transition = 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), text-shadow 0.4s';
+          entry.target.style.transform = 'scale(1.1)';
+          setTimeout(() => { entry.target.style.transform = ''; }, 400);
+        }
+      }
+    });
+  }, { threshold: 0.3 });
+
+  stats.forEach((el) => observer.observe(el));
+}
+
+// Master initialization
+function initLuxury3DSuite() {
+  initHero3DParallax();
+  initQuantumNeuralCanvas3D();
+  initCardSpotlightAndTilt();
+  initMagneticButtons();
+  initLiveQuantumWave();
+  initLiveOdometerMetrics();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initLuxury3DSuite);
+} else {
+  initLuxury3DSuite();
+}
 </script>
 
 <!-- AI CHAT WIDGET -->
@@ -4877,9 +5428,9 @@ if (themeToggle) {
 </div>
 
 <!-- WHATSAPP FLOATING BUTTON -->
-<a href="https://wa.me/593994195932?text=Hola%20Angel%2C%20me%20interesa%20tu%20servicio"
+<a href="https://wa.me/593981138814?text=Hola%20Angel%2C%20me%20interesa%20tu%20servicio"
    class="wa-float" target="_blank" rel="noopener"
-   aria-label="WhatsApp directo — +593 99 419 5932">
+   aria-label="WhatsApp directo — +593 98 113 8814">
   <span class="wa-pulse" aria-hidden="true"></span>
   <svg height="24" width="24" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.992c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"></path>
