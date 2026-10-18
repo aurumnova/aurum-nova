@@ -3474,8 +3474,8 @@ nav.scrolled .nav-inner {
   position: relative !important;
   padding: 1.5px !important;
   border-radius: 9999px !important;
-  background: linear-gradient(135deg, rgba(212, 175, 55, 0.45) 0%, rgba(212, 175, 55, 0.10) 45%, rgba(79, 214, 224, 0.38) 100%) !important;
-  box-shadow: 0 10px 32px -8px rgba(0, 0, 0, 0.8), 0 0 20px -4px rgba(212, 175, 55, 0.22) !important;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.42) 0%, rgba(212, 175, 55, 0.08) 45%, rgba(79, 214, 224, 0.35) 100%) !important;
+  box-shadow: 0 10px 32px -8px rgba(0, 0, 0, 0.8), 0 0 20px -4px rgba(212, 175, 55, 0.2) !important;
   margin-bottom: 24px !important;
   cursor: default !important;
   transform: translateZ(0) !important;
@@ -3486,7 +3486,12 @@ nav.scrolled .nav-inner {
 
 .hero-badge:hover {
   transform: translateY(-2px) !important;
-  box-shadow: 0 16px 36px -6px rgba(0, 0, 0, 0.9), 0 0 28px -2px rgba(212, 175, 55, 0.4) !important;
+  box-shadow: 0 16px 36px -6px rgba(0, 0, 0, 0.9), 0 0 28px -2px rgba(212, 175, 55, 0.38) !important;
+}
+
+[data-theme="light"] .hero-badge {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.45) 0%, rgba(0, 0, 0, 0.05) 50%, rgba(79, 214, 224, 0.3) 100%) !important;
+  box-shadow: 0 4px 18px -4px rgba(0, 0, 0, 0.08), 0 0 14px -2px rgba(212, 175, 55, 0.15) !important;
 }
 
 /* Border Beam Shimmer */
@@ -3494,9 +3499,9 @@ nav.scrolled .nav-inner {
   position: absolute;
   inset: -120%;
   background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, transparent 290deg, rgba(212, 175, 55, 0.85) 340deg, #ffffff 360deg);
-  animation: badge-beam-rotate 5s linear infinite;
+  animation: badge-beam-rotate 6.5s linear infinite;
   pointer-events: none;
-  opacity: 0.7;
+  opacity: 0.65;
 }
 
 @keyframes badge-beam-rotate {
@@ -3533,6 +3538,11 @@ nav.scrolled .nav-inner {
   background: rgba(212, 175, 55, 0.12);
   border: 1px solid rgba(212, 175, 55, 0.32);
   flex-shrink: 0;
+}
+
+[data-theme="light"] .badge-chip {
+  background: rgba(212, 175, 55, 0.12) !important;
+  border-color: rgba(212, 175, 55, 0.35) !important;
 }
 
 /* Living Radar Dot with Ping Ring */
@@ -3593,6 +3603,11 @@ nav.scrolled .nav-inner {
   flex-shrink: 0;
 }
 
+[data-theme="light"] .badge-wave-wrap {
+  background: rgba(0, 0, 0, 0.04) !important;
+  border-color: rgba(212, 175, 55, 0.2) !important;
+}
+
 .badge-text {
   display: inline-flex;
   align-items: baseline;
@@ -3601,6 +3616,10 @@ nav.scrolled .nav-inner {
   letter-spacing: 0.08em;
   color: var(--text-muted);
   white-space: nowrap;
+}
+
+[data-theme="light"] .badge-text {
+  color: var(--text-muted-light, #495057) !important;
 }
 
 .badge-brand {
@@ -3640,6 +3659,12 @@ nav.scrolled .nav-inner {
   flex-shrink: 0;
 }
 
+[data-theme="light"] .badge-tag-status {
+  background: rgba(79, 214, 224, 0.14) !important;
+  color: #007782 !important;
+  border-color: rgba(79, 214, 224, 0.4) !important;
+}
+
 @media (max-width: 600px) {
   .badge-sub { display: none; }
   .badge-inner { gap: 6px; padding: 5px 10px 5px 6px; }
@@ -3674,7 +3699,7 @@ nav.scrolled .nav-inner {
   transform: translateX(-50%);
   width: 1000px;
   height: 720px;
-  background: radial-gradient(ellipse at center, rgba(212, 175, 55, 0.11) 0%, rgba(212, 175, 55, 0.035) 45%, transparent 72%);
+  background: radial-gradient(ellipse at center, rgba(212, 175, 55, 0.10) 0%, rgba(212, 175, 55, 0.03) 45%, transparent 72%);
   filter: blur(85px);
   animation: aurora-drift-1 22s ease-in-out infinite alternate;
 }
@@ -3685,7 +3710,7 @@ nav.scrolled .nav-inner {
   right: -100px;
   width: 720px;
   height: 720px;
-  background: radial-gradient(circle at center, rgba(79, 214, 224, 0.08) 0%, rgba(79, 214, 224, 0.02) 48%, transparent 70%);
+  background: radial-gradient(circle at center, rgba(79, 214, 224, 0.07) 0%, rgba(79, 214, 224, 0.018) 48%, transparent 70%);
   filter: blur(100px);
   animation: aurora-drift-2 18s ease-in-out infinite alternate;
 }
@@ -3696,7 +3721,7 @@ nav.scrolled .nav-inner {
   left: -120px;
   width: 820px;
   height: 820px;
-  background: radial-gradient(circle at center, rgba(184, 134, 11, 0.07) 0%, rgba(212, 175, 55, 0.02) 50%, transparent 72%);
+  background: radial-gradient(circle at center, rgba(184, 134, 11, 0.06) 0%, rgba(212, 175, 55, 0.018) 50%, transparent 72%);
   filter: blur(110px);
   animation: aurora-drift-3 26s ease-in-out infinite alternate;
 }
@@ -3720,10 +3745,10 @@ nav.scrolled .nav-inner {
 }
 
 [data-theme="light"] .ambient-orb-gold {
-  background: radial-gradient(ellipse at center, rgba(212, 175, 55, 0.08) 0%, rgba(212, 175, 55, 0.02) 50%, transparent 72%);
+  background: radial-gradient(ellipse at center, rgba(212, 175, 55, 0.07) 0%, rgba(212, 175, 55, 0.015) 50%, transparent 72%);
 }
 [data-theme="light"] .ambient-orb-cyan {
-  background: radial-gradient(circle at center, rgba(79, 214, 224, 0.04) 0%, transparent 65%);
+  background: radial-gradient(circle at center, rgba(79, 214, 224, 0.035) 0%, transparent 65%);
 }
 
 /* 2. Architectural Radar Grid with Cursor Spotlight */
@@ -3733,8 +3758,8 @@ nav.scrolled .nav-inner {
   pointer-events: none !important;
   z-index: 0 !important;
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.038) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.038) 1px, transparent 1px) !important;
+    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px) !important;
   background-size: 40px 40px !important;
   background-position: center top !important;
   mask-image: radial-gradient(
@@ -3752,35 +3777,56 @@ nav.scrolled .nav-inner {
     transparent 100%
   ) !important;
   transition: opacity 0.3s ease !important;
-  opacity: 0.85 !important;
+  opacity: 0.8 !important;
 }
 
 [data-theme="light"] .precision-grid-bg {
   background-image: 
-    linear-gradient(to right, rgba(0, 0, 0, 0.045) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.045) 1px, transparent 1px) !important;
-  opacity: 0.65 !important;
+    linear-gradient(to right, rgba(0, 0, 0, 0.038) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.038) 1px, transparent 1px) !important;
+  opacity: 0.6 !important;
 }
 
-/* Traveling Quantum Radar Scan Beam */
+/* Traveling Quantum Radar Scan Beam (Subtle, whisper-quiet telemetry) */
 .radar-scan-beam {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, transparent 0%, rgba(212, 175, 55, 0.65) 50%, rgba(79, 214, 224, 0.4) 75%, transparent 100%);
-  box-shadow: 0 0 16px rgba(212, 175, 55, 0.6), 0 0 32px rgba(212, 175, 55, 0.3);
-  animation: radar-sweep 12s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent 0%, rgba(212, 175, 55, 0.32) 35%, rgba(79, 214, 224, 0.28) 55%, rgba(212, 175, 55, 0.32) 75%, transparent 100%);
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.22);
+  animation: radar-sweep 16s cubic-bezier(0.4, 0, 0.2, 1) infinite;
   pointer-events: none;
-  opacity: 0.8;
+  opacity: 0.42;
+}
+
+[data-theme="light"] .radar-scan-beam {
+  background: linear-gradient(90deg, transparent 0%, rgba(212, 175, 55, 0.25) 35%, rgba(79, 214, 224, 0.2) 65%, transparent 100%);
+  opacity: 0.28;
 }
 
 @keyframes radar-sweep {
-  0% { transform: translateY(-50px); opacity: 0; }
-  8% { opacity: 0.85; }
-  92% { opacity: 0.85; }
+  0% { transform: translateY(-40px); opacity: 0; }
+  6% { opacity: 0.45; }
+  92% { opacity: 0.45; }
   100% { transform: translateY(100vh); opacity: 0; }
+}
+
+/* Accessibility & Stability: Full Reduced Motion Override */
+@media (prefers-reduced-motion: reduce) {
+  .portrait-frame,
+  .spotlight-card,
+  .magnetic-btn,
+  .badge-border-beam,
+  .radar-scan-beam,
+  .ambient-orb,
+  .badge-live-pulse .pulse-ring {
+    animation: none !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .radar-scan-beam { display: none !important; }
 }
 </style>
 </head>
@@ -5304,7 +5350,7 @@ if (themeToggle) {
    Awwwards / Linear-tier Interactive Physics
    ============================================= */
 
-// 1. Hero 3D Parallax & Depth Tilt on Founder Portrait
+// 1. Hero 3D Parallax & Depth Tilt on Founder Portrait (Calibrated Micro-Damping)
 function initHero3DParallax() {
   const container = document.querySelector('.portrait-container');
   const frame = document.getElementById('heroPortraitFrame') || document.querySelector('.portrait-frame');
@@ -5315,8 +5361,8 @@ function initHero3DParallax() {
     let angle = 0;
     function autoFloat() {
       angle += 0.015;
-      const rotX = Math.sin(angle) * 3;
-      const rotY = Math.cos(angle * 0.8) * 3.5;
+      const rotX = Math.sin(angle) * 1.5;
+      const rotY = Math.cos(angle * 0.8) * 1.8;
       frame.style.transform = `rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg)`;
       requestAnimationFrame(autoFloat);
     }
@@ -5329,9 +5375,9 @@ function initHero3DParallax() {
   let currentRotX = 0, currentRotY = 0;
 
   function updateOrientation() {
-    currentRotX += (targetRotX - currentRotX) * 0.12;
-    currentRotY += (targetRotY - currentRotY) * 0.12;
-    frame.style.transform = `rotateX(${currentRotX.toFixed(2)}deg) rotateY(${currentRotY.toFixed(2)}deg) translateZ(8px)`;
+    currentRotX += (targetRotX - currentRotX) * 0.09;
+    currentRotY += (targetRotY - currentRotY) * 0.09;
+    frame.style.transform = `rotateX(${currentRotX.toFixed(2)}deg) rotateY(${currentRotY.toFixed(2)}deg) translateZ(6px)`;
     if (Math.abs(targetRotX - currentRotX) > 0.01 || Math.abs(targetRotY - currentRotY) > 0.01) {
       rafId = requestAnimationFrame(updateOrientation);
     } else {
@@ -5348,8 +5394,8 @@ function initHero3DParallax() {
       const normX = (e.clientX - centerX) / (window.innerWidth / 2);
       const normY = (e.clientY - centerY) / (window.innerHeight / 2);
 
-      targetRotY = Math.max(-14, Math.min(14, normX * 14));
-      targetRotX = Math.max(-12, Math.min(12, -normY * 12));
+      targetRotY = Math.max(-6.5, Math.min(6.5, normX * 6.5));
+      targetRotX = Math.max(-5.5, Math.min(5.5, -normY * 5.5));
 
       const frameRect = frame.getBoundingClientRect();
       const glareX = ((e.clientX - frameRect.left) / frameRect.width) * 100;
@@ -5368,7 +5414,7 @@ function initHero3DParallax() {
   }
 }
 
-// 2. Quantum Neural 3D Interactive Canvas
+// 2. Quantum Neural 3D Interactive Canvas (Tranquil Ambient Drift)
 function initQuantumNeuralCanvas3D() {
   const canvas = document.getElementById('heroCanvas3D');
   if (!canvas) return;
@@ -5418,7 +5464,7 @@ function initQuantumNeuralCanvas3D() {
     }, { passive: true });
   }
 
-  const nodeCount = Math.min(65, Math.max(35, Math.floor(window.innerWidth / 28)));
+  const nodeCount = Math.min(50, Math.max(28, Math.floor(window.innerWidth / 34)));
   const nodes = [];
   const fov = 350;
 
@@ -5427,11 +5473,11 @@ function initQuantumNeuralCanvas3D() {
       x: (Math.random() - 0.5) * 1100,
       y: (Math.random() - 0.5) * 650,
       z: Math.random() * 400 - 150,
-      vx: (Math.random() - 0.5) * 0.45,
-      vy: (Math.random() - 0.5) * 0.45,
-      vz: (Math.random() - 0.5) * 0.3,
-      baseRadius: Math.random() * 1.8 + 1.2,
-      isCyan: Math.random() < 0.24,
+      vx: (Math.random() - 0.5) * 0.22,
+      vy: (Math.random() - 0.5) * 0.22,
+      vz: (Math.random() - 0.5) * 0.14,
+      baseRadius: Math.random() * 1.6 + 1.1,
+      isCyan: Math.random() < 0.22,
       phase: Math.random() * Math.PI * 2
     });
   }
@@ -5449,7 +5495,7 @@ function initQuantumNeuralCanvas3D() {
       p.x += p.vx;
       p.y += p.vy;
       p.z += p.vz;
-      p.phase += 0.02;
+      p.phase += 0.016;
 
       if (p.x < -600) p.x = 600;
       if (p.x > 600) p.x = -600;
@@ -5466,18 +5512,18 @@ function initQuantumNeuralCanvas3D() {
         const dx = mouse.x - projX;
         const dy = mouse.y - projY;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 180 && dist > 1) {
-          const force = (1 - dist / 180) * 0.35;
-          p.x += (dx / dist) * force * 4;
-          p.y += (dy / dist) * force * 4;
+        if (dist < 160 && dist > 1) {
+          const force = (1 - dist / 160) * 0.16;
+          p.x += (dx / dist) * force * 2.2;
+          p.y += (dy / dist) * force * 2.2;
         }
       }
 
-      const alpha = Math.max(0.12, Math.min(0.85, scale * 0.7 + Math.sin(p.phase) * 0.15));
+      const alpha = Math.max(0.10, Math.min(0.80, scale * 0.65 + Math.sin(p.phase) * 0.12));
       projected.push({ x: projX, y: projY, scale, alpha, isCyan: p.isCyan, baseRadius: p.baseRadius });
     }
 
-    const maxDist = 125;
+    const maxDist = 120;
     for (let i = 0; i < projected.length; i++) {
       for (let j = i + 1; j < projected.length; j++) {
         const p1 = projected[i];
@@ -5487,7 +5533,7 @@ function initQuantumNeuralCanvas3D() {
         const d = Math.sqrt(dx * dx + dy * dy);
 
         if (d < maxDist) {
-          const lineAlpha = (1 - d / maxDist) * Math.min(p1.alpha, p2.alpha) * 0.55;
+          const lineAlpha = (1 - d / maxDist) * Math.min(p1.alpha, p2.alpha) * 0.42;
           ctx.beginPath();
           ctx.moveTo(p1.x, p1.y);
           ctx.lineTo(p2.x, p2.y);
@@ -5496,7 +5542,7 @@ function initQuantumNeuralCanvas3D() {
           } else {
             ctx.strokeStyle = `rgba(212, 175, 55, ${lineAlpha.toFixed(3)})`;
           }
-          ctx.lineWidth = Math.min(p1.scale, p2.scale) * 1.1;
+          ctx.lineWidth = Math.min(p1.scale, p2.scale) * 0.95;
           ctx.stroke();
         }
       }
@@ -5504,14 +5550,14 @@ function initQuantumNeuralCanvas3D() {
       if (mouse.active) {
         const dx = mouse.x - projected[i].x;
         const dy = mouse.y - projected[i].y;
-        const d = Math.sqrt(dx * dx + dy * dy);
-        if (d < 160) {
-          const cursorAlpha = (1 - d / 160) * projected[i].alpha * 0.75;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 150) {
+          const cursorAlpha = (1 - dist / 150) * projected[i].alpha * 0.6;
           ctx.beginPath();
           ctx.moveTo(projected[i].x, projected[i].y);
           ctx.lineTo(mouse.x, mouse.y);
           ctx.strokeStyle = `rgba(212, 175, 55, ${cursorAlpha.toFixed(3)})`;
-          ctx.lineWidth = 1.3;
+          ctx.lineWidth = 1.1;
           ctx.stroke();
         }
       }
@@ -5534,7 +5580,7 @@ function initQuantumNeuralCanvas3D() {
   requestAnimationFrame(render);
 }
 
-// 3. Dynamic Spotlight & 3D Tilt on Cards (Linear / Stripe luxury effect)
+// 3. Dynamic Spotlight & 3D Tilt on Cards (Subtle Weighted Tactile Lift)
 function initCardSpotlightAndTilt() {
   const cards = document.querySelectorAll('.service-card, .vision-card, .premium-card, .project-card, .form-card');
   const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
@@ -5555,12 +5601,12 @@ function initCardSpotlightAndTilt() {
       card.style.setProperty('--spotlight-y', `${y}px`);
       card.style.setProperty('--spotlight-opacity', '1');
 
-      const tiltX = (y / rect.height - 0.5) * -4.5;
-      const tiltY = (x / rect.width - 0.5) * 5;
+      const tiltX = (y / rect.height - 0.5) * -2.2;
+      const tiltY = (x / rect.width - 0.5) * 2.2;
 
       if (!rafId) {
         rafId = requestAnimationFrame(() => {
-          card.style.transform = `perspective(1000px) rotateX(${tiltX.toFixed(2)}deg) rotateY(${tiltY.toFixed(2)}deg) translateY(-4px)`;
+          card.style.transform = `perspective(1000px) rotateX(${tiltX.toFixed(2)}deg) rotateY(${tiltY.toFixed(2)}deg) translateY(-2px)`;
           rafId = null;
         });
       }
@@ -5577,7 +5623,7 @@ function initCardSpotlightAndTilt() {
   });
 }
 
-// 4. Magnetic Interactive Physics on Buttons
+// 4. Magnetic Interactive Physics on Buttons (Linear/Apple Tactile Resistance)
 function initMagneticButtons() {
   const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
   if (isTouch) return;
@@ -5591,8 +5637,8 @@ function initMagneticButtons() {
       const rect = btn.getBoundingClientRect();
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
-      const deltaX = (e.clientX - centerX) * 0.28;
-      const deltaY = (e.clientY - centerY) * 0.28;
+      const deltaX = Math.max(-5, Math.min(5, (e.clientX - centerX) * 0.14));
+      const deltaY = Math.max(-5, Math.min(5, (e.clientY - centerY) * 0.14));
 
       btn.style.transform = `translate(${deltaX.toFixed(1)}px, ${deltaY.toFixed(1)}px)`;
     }, { passive: true });
@@ -5712,8 +5758,8 @@ function initBackgroundAmbientSystem() {
     }
 
     if (glowLayer) {
-      const offsetX = ((currentX / window.innerWidth) - 0.5) * 22;
-      const offsetY = ((currentY / window.innerHeight) - 0.5) * 18;
+      const offsetX = ((currentX / window.innerWidth) - 0.5) * 14;
+      const offsetY = ((currentY / window.innerHeight) - 0.5) * 10;
       glowLayer.style.transform = `translate3d(${offsetX.toFixed(1)}px, ${offsetY.toFixed(1)}px, 0)`;
     }
 
@@ -5731,8 +5777,11 @@ function initBackgroundAmbientSystem() {
   }, { passive: true });
 }
 
-// Master initialization
+// Master initialization with accessibility guard
 function initLuxury3DSuite() {
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    return;
+  }
   initHero3DParallax();
   initQuantumNeuralCanvas3D();
   initCardSpotlightAndTilt();
