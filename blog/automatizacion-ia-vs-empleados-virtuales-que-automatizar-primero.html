@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Automatización con IA vs. Empleados Virtuales: Qué tareas automatizar primero — AURUM NOVA</title>
+<meta name="description" content="Guía estratégica para dueños de empresas sobre cómo priorizar automatizaciones con IA frente a la contratación de personal, multiplicando la capacidad operativa sin inflar costos fijos.">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#050509">
+<meta name="author" content="Angel Santiago Alvarado Rodriguez">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://images.unsplash.com data:; connect-src 'self';">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Automatización con IA vs. Empleados Virtuales: Qué tareas automatizar primero — AURUM NOVA">
+<meta property="og:description" content="Aprende a descomponer los cuellos de botella de tu empresa y automatizar tareas operativas de alto volumen con IA antes de delegar a ciegas.">
+<meta property="og:image" content="https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&q=80">
+<meta property="og:type" content="article">
+<meta property="article:published_time" content="2026-10-18">
+<meta property="article:author" content="https://github.com/aurum-ceo">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Automatización con IA vs. Empleados Virtuales — AURUM NOVA">
+<meta name="twitter:description" content="El mapa táctico para priorizar micro-automatizaciones en tu empresa con retorno de inversión garantizado.">
+
+<link rel="icon" type="image/x-icon" href="../favicon.ico">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #050509;
+  --bg-2: #080810;
+  --bg-3: #0b0b14;
+  --bg-card: #0d0d1a;
+  --bg-card-2: #111123;
+  --border: rgba(212, 175, 55, 0.14);
+  --border-strong: rgba(212, 175, 55, 0.42);
+  --gold: #d4af37;
+  --gold-2: #e8c85a;
+  --gold-3: #b8962e;
+  --gold-soft: rgba(212, 175, 55, 0.08);
+  --gold-glow: rgba(212, 175, 55, 0.55);
+  --cyan: #4fd6e0;
+  --text: #efe9de;
+  --text-muted: #a09c93;
+  --text-dim: #8a867d;
+  --maxw: 780px;
+  --radius: 16px;
+  --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --mono: 'JetBrains Mono', 'Courier New', Consolas, monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans); background: var(--bg); color: var(--text);
+  line-height: 1.7; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+  overflow-x: hidden; min-height: 100vh; display: flex; flex-direction: column;
+}
+body::before {
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(212, 175, 55, 0.05) 0%, transparent 70%);
+}
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg-2); }
+::-webkit-scrollbar-thumb { background: rgba(212, 175, 55, 0.25); border-radius: 4px; }
+::selection { background: var(--gold); color: #050509; }
+
+.wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 28px; position: relative; z-index: 2; width: 100%; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 12px 0; background: rgba(5, 5, 9, 0.85);
+  backdrop-filter: blur(18px) saturate(170%); -webkit-backdrop-filter: blur(18px) saturate(170%);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.09);
+}
+.nav-inner { display: flex; align-items: center; justify-content: space-between; max-width: 1180px; margin: 0 auto; padding: 0 28px; gap: 16px; }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.05rem; letter-spacing: -0.02em; color: var(--text); text-decoration: none; }
+.brand .mark { width: 30px; height: 30px; border-radius: 6px; background: linear-gradient(135deg, var(--gold-2), var(--gold-3)); display: grid; place-items: center; color: #050509; font-weight: 900; font-size: 0.95rem; box-shadow: 0 3px 10px -2px var(--gold-glow); font-family: var(--serif); }
+.brand .name { color: var(--gold); }
+.brand-sub { color: var(--text-muted); font-weight: 500; font-size: 0.78rem; margin-left: 2px; }
+.nav-links { display: flex; gap: 24px; align-items: center; }
+.nav-links a { color: var(--text-muted); font-size: 0.82rem; transition: color .2s; text-decoration: none; }
+.nav-links a:hover { color: var(--gold); }
+.menu-toggle {
+  display: none; background: none; border: 1px solid var(--border); border-radius: 8px;
+  color: var(--text); cursor: pointer; padding: 6px 8px; align-items: center; justify-content: center;
+}
+.menu-toggle:hover { border-color: var(--gold); }
+#mobileMenu {
+  display: none; flex-direction: column; padding: 12px 18px; margin-top: 8px;
+  border-radius: 12px; border: 1px solid var(--border); background: rgba(7, 7, 12, 0.96);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); pointer-events: auto;
+}
+#mobileMenu a {
+  padding: 10px 0; color: var(--text-muted); font-size: 0.9rem; font-weight: 500;
+  text-decoration: none; border-bottom: 1px solid rgba(212, 175, 55, 0.08); transition: color .2s;
+}
+#mobileMenu a:last-child { border-bottom: none; }
+#mobileMenu a:hover { color: var(--gold); }
+
+/* ARTICLE */
+main.wrap { flex: 1; padding-top: 110px; padding-bottom: 70px; }
+.article-header { padding-bottom: 32px; border-bottom: 1px solid var(--border); margin-bottom: 36px; }
+.article-header .meta {
+  font-family: var(--mono); font-size: 0.72rem; color: var(--gold);
+  letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px;
+  display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
+}
+.article-header .meta .sep { color: var(--border-strong); }
+.article-header h1 {
+  font-size: clamp(1.85rem, 4.2vw, 2.75rem); font-weight: 700; line-height: 1.2;
+  letter-spacing: -0.02em; margin-bottom: 20px; color: var(--text);
+}
+.article-header .lead { font-size: 1.08rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 24px; }
+.article-header .author {
+  display: flex; align-items: center; gap: 14px;
+}
+.article-header .author .mark {
+  width: 40px; height: 40px; border-radius: 8px;
+  background: linear-gradient(135deg, var(--gold-2), var(--gold-3));
+  display: grid; place-items: center; color: #050509; font-weight: 900; font-size: 1.15rem;
+  box-shadow: 0 4px 12px -2px var(--gold-glow); font-family: var(--serif);
+}
+.article-header .author .info { font-size: 0.88rem; }
+.article-header .author .name { color: var(--text); font-weight: 600; }
+.article-header .author .role { color: var(--text-dim); font-size: 0.78rem; font-family: var(--mono); }
+
+/* ARTICLE BODY */
+.article-body { padding-bottom: 40px; }
+.article-body p { margin-bottom: 20px; font-size: 0.98rem; line-height: 1.8; color: var(--text-muted); }
+.article-body h2 { font-size: 1.45rem; font-weight: 700; margin: 44px 0 16px; color: var(--text); letter-spacing: -0.01em; border-left: 3px solid var(--gold); padding-left: 14px; }
+.article-body h3 { font-size: 1.15rem; font-weight: 600; margin: 28px 0 12px; color: var(--text); }
+.article-body strong { color: var(--text); font-weight: 600; }
+.article-body em { color: var(--text); font-style: italic; }
+.article-body ul, .article-body ol { margin: 16px 0 24px 24px; color: var(--text-muted); }
+.article-body li { margin-bottom: 10px; line-height: 1.7; font-size: 0.96rem; }
+
+/* TABLE COMPARISON */
+.table-wrap {
+  overflow-x: auto; margin: 28px 0; border: 1px solid var(--border);
+  border-radius: 12px; background: var(--bg-card);
+}
+table.comparison-table {
+  width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left;
+}
+table.comparison-table th {
+  background: #111123; color: var(--gold); font-family: var(--mono);
+  font-size: 0.76rem; letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 14px 18px; border-bottom: 1px solid var(--border-strong);
+}
+table.comparison-table td {
+  padding: 14px 18px; border-bottom: 1px solid var(--border);
+  color: var(--text-muted); vertical-align: top; line-height: 1.5;
+}
+table.comparison-table tr:last-child td { border-bottom: none; }
+table.comparison-table tr:hover td { background: rgba(212, 175, 55, 0.03); }
+
+.article-callout {
+  margin: 32px 0; padding: 24px; border-radius: var(--radius);
+  background: linear-gradient(180deg, var(--bg-card), var(--bg-card-2));
+  border: 1px solid var(--border); border-left: 3px solid var(--gold);
+}
+.article-callout .label {
+  font-family: var(--mono); font-size: 0.72rem; color: var(--gold);
+  letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; font-weight: 600;
+}
+.article-callout p { margin-bottom: 0; font-size: 0.94rem; color: var(--text); }
+
+.article-back {
+  margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;
+}
+.article-back a { color: var(--gold); text-decoration: none; font-size: 0.88rem; font-weight: 500; }
+.article-back a:hover { color: var(--gold-2); }
+.author-note { font-size: 0.78rem; color: var(--text-dim); font-family: var(--mono); }
+
+/* FOOTER */
+footer {
+  padding: 32px 0 24px; border-top: 1px solid var(--border);
+  position: relative; z-index: 2; background: rgba(8, 8, 15, 0.4);
+}
+.footer-inner { display: flex; flex-direction: column; gap: 14px; align-items: center; }
+@media(min-width: 640px) {
+  .footer-inner { flex-direction: row; justify-content: space-between; }
+}
+.footer-copy { font-size: 0.74rem; color: var(--text-dim); font-family: var(--mono); }
+.footer-links { display: flex; gap: 18px; }
+.footer-links a { color: var(--text-dim); font-size: 0.78rem; transition: color .2s; text-decoration: none; }
+.footer-links a:hover { color: var(--gold); }
+
+/* WHATSAPP FLOAT */
+.wa-float {
+  position: fixed; bottom: 24px; right: 24px; z-index: 99;
+  width: 54px; height: 54px; border-radius: 50%;
+  background: #25d366; color: #fff; display: grid; place-items: center;
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.35); text-decoration: none;
+  transition: transform .2s ease;
+}
+.wa-float:hover { transform: scale(1.08); }
+
+@media(max-width: 640px) {
+  .wrap { padding: 0 18px; }
+  .nav-inner { padding: 0 18px; }
+  .nav-links { display: none; }
+  .menu-toggle { display: flex; }
+}
+@media(prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto !important; }
+  .wa-float { transition: none !important; }
+  .wa-float:hover { transform: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="../" class="brand">
+      <span class="mark">A</span>
+      <span class="name">AURUM</span> NOVA<span class="brand-sub">· CEO</span>
+    </a>
+    <div class="nav-links">
+      <a href="../">Inicio</a>
+      <a href="../#about">Sobre mí</a>
+      <a href="../#services">Servicios</a>
+      <a href="../#portfolio">Portafolio</a>
+      <a href="../#contact">Contacto</a>
+    </div>
+    <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false" id="menuToggle">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+  <div id="mobileMenu" class="wrap">
+    <a href="../">Inicio</a>
+    <a href="../#about">Sobre mí</a>
+    <a href="../#services">Servicios</a>
+    <a href="../#portfolio">Portafolio</a>
+    <a href="../#contact">Contacto</a>
+  </div>
+</nav>
+
+<!-- ARTICLE -->
+<main class="wrap">
+  <header class="article-header">
+    <div class="meta">
+      <span>Estrategia Operativa & ROI</span>
+      <span class="sep">/</span>
+      <span>Octubre 2026</span>
+      <span class="sep">/</span>
+      <span>8 min de lectura</span>
+    </div>
+    <h1>Automatización con IA vs. Empleados Virtuales: Qué tareas automatizar primero para duplicar tu capacidad operativa</h1>
+    <p class="lead">Antes de contratar a tres personas más o comprar cinco suscripciones de software caras, necesitas una auditoría de fricción operativa. Aquí te muestro la matriz de decisión que separa la burocracia evitable del verdadero valor comercial.</p>
+    <div class="author">
+      <div class="mark">A</div>
+      <div class="info">
+        <div class="name">Angel Santiago Alvarado Rodriguez</div>
+        <div class="role">CEO & Lead AI Architect · AURUM NOVA</div>
+      </div>
+    </div>
+  </header>
+
+  <article class="article-body">
+    <p>Cuando un negocio empieza a crecer y los mensajes de clientes se acumulan, la reacción instintiva de la mayoría de fundadores es contratar: <em>«Necesito un asistente virtual, dos personas para WhatsApp y alguien que pase cotizaciones a Excel»</em>.</p>
+
+    <p>Tres meses después, el fundador descubre que su problema no era la falta de manos, sino <strong>la falta de sistemas</strong>. Ahora tiene una nómina más pesada, empleados aburridos haciendo tareas mecánicas de copiar y pegar datos, y los mismos errores de digitación de siempre.</p>
+
+    <p>El dilema moderno no es «Humanos vs. Máquinas». La pregunta correcta que todo directivo debe hacerse es: <strong>¿Qué tareas deben morir en el código para que mis empleados humanos puedan dedicarse exclusivamente a pensar, empatizar y vender?</strong></p>
+
+    <h2>1. La Matriz de Fricción: Dónde entra la IA y dónde jamás debe entrar</h2>
+    <p>Para no malgastar capital, categorizamos los procesos de tu empresa en dos ejes: <strong>Volumen Repetitivo</strong> y <strong>Nivel de Criterio Estratégico Requerido</strong>.</p>
+
+    <div class="table-wrap">
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Tipo de Tarea</th>
+            <th>Ejemplo Concreto</th>
+            <th>Solución Correcta</th>
+            <th>Impacto en el Negocio</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Alto Volumen / Criterio Predecible</strong></td>
+            <td>Calificar datos de contacto, consultar inventario, agendar reuniones en Calendly, transcribir comprobantes bancarios.</td>
+            <td><strong>Automatización 100% con IA</strong></td>
+            <td>Respuesta en 1 segundo, cero costo variable por hora extra, 0% error de digitación.</td>
+          </tr>
+          <tr>
+            <td><strong>Volumen Medio / Criterio Condicional</strong></td>
+            <td>Redacción de propuestas personalizadas, investigación de prospectos antes de una llamada, resúmenes de CRM.</td>
+            <td><strong>IA Asistida (Copiloto)</strong></td>
+            <td>El agente de IA redacta el borrador completo en 3 segundos; el ejecutivo humano lo aprueba en 20 segundos.</td>
+          </tr>
+          <tr>
+            <td><strong>Bajo Volumen / Alto Impacto</strong></td>
+            <td>Negociación de precios especiales, contención de clientes inconformes, cierre de alianzas clave.</td>
+            <td><strong>100% Humano (Sin IA)</strong></td>
+            <td>Se requiere empatía real, intuición comercial y autoridad legal.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="article-callout">
+      <div class="label">Regla de Oro de AURUM NOVA</div>
+      <p>Si una tarea se puede explicar con una fórmula de 5 pasos y un diagrama de flujo, debe estar automatizada. Si requiere entender la emoción no dicha del cliente o negociar márgenes de beneficio complejos, debe estar en manos de un profesional bien remunerado.</p>
+    </div>
+
+    <h2>2. Las Tres Micro-Automatizaciones con Mayor ROI</h2>
+    <p>Si quieres ver resultados económicos medibles en los primeros 14 días sin rediseñar toda la compañía, empieza por estos tres frentes:</p>
+
+    <h3>1. Enriquecimiento de Prospectos en Tiempo Real</h3>
+    <p>¿Cuánto tiempo pasa tu equipo comercial buscando en Google el número de teléfono, sector o tamaño de empresa de un lead que llenó un formulario? En promedio: entre 8 y 15 minutos por contacto.</p>
+    <p>Una micro-automatización en el backend recibe el email o RUC del prospecto, consulta fuentes públicas en 400 milisegundos, genera una síntesis ejecutiva con un LLM compacto y le entrega al vendedor una ficha estructurada antes de que marque el teléfono.</p>
+
+    <h3>2. Disparo de Respuestas y Agendamiento 24/7</h3>
+    <p>El 78% de los compradores B2B cierran con el primer proveedor que les responde con información útil. Si un prospecto pide una reunión el sábado a las 9:00 PM y tu equipo responde el lunes a las 10:00 AM, ese cliente ya agendó con tu competidor.</p>
+    <p>Un agente conversacional ligero en WhatsApp o web califica el presupuesto y sincroniza directamente la disponibilidad en Cal.com o Google Calendar. Tu equipo llega el lunes con la agenda llena de reuniones pre-cualificadas.</p>
+
+    <h3>3. Minutas y Tareas Post-Llamada sin Fricción</h3>
+    <p>Los comerciales odian llenar el CRM después de hablar con un cliente. El resultado: datos incompletos y seguimiento inexistente.</p>
+    <p>Con un bot que transcriba y extraiga acuerdos clave de la reunión (compromisos, fechas límite, objeciones expresadas), el CRM se actualiza solo en un clic. Tus ejecutivos dedican el 90% de su jornada a hablar con personas, no a escribir informes administrativos.</p>
+
+    <h2>3. El Mito del "Costo Fijo Inalcanzable"</h2>
+    <p>Muchas empresas postergan la automatización porque creen que necesitan contratar consultoras tradicionales que cobran \$25,000 por proyectos de 6 meses en plataformas pesadas como Salesforce o SAP.</p>
+    <p>En el ecosistema tecnológico actual, <strong>la infraestructura moderna en el Edge (Cloudflare, bases de datos serverless, APIs de inferencia ligera)</strong> permite implementar sistemas de prospección y atención de clase mundial con costos operativos mensuales de servidores que rara vez superan los \$15 a \$40 dólares.</p>
+    <p>El retorno de inversión no se mide en meses, sino en las primeras semanas de operación continua.</p>
+
+    <h2>Conclusión: Escalabilidad sin Burocracia</h2>
+    <p>Hacer crecer una empresa no significa inflar la nómina innecesariamente. Las empresas más rentables de los próximos cinco años serán aquellas que mantengan equipos humanos compactos, ágiles y altamente compensados, respaldados por una infraestructura silenciosa de agentes de IA que absorban todo el trabajo rutinario.</p>
+
+    <div class="article-callout">
+      <div class="label">¿Quieres saber qué procesos de tu negocio son automatizables hoy mismo?</div>
+      <p>En una sesión técnica de 15 minutos podemos analizar tu flujo comercial actual e identificar las dos automatizaciones que liberarán el 40% de tu tiempo operativo este mes. Escríbenos a <strong>aurum.nova.business@gmail.com</strong> o envía un mensaje al <strong>+593 98 113 8814</strong>.</p>
+    </div>
+  </article>
+
+  <div class="article-back">
+    <a href="./index.html">← Volver al índice del Blog</a>
+    <span class="author-note">© 2026 AURUM NOVA · Angel Santiago Alvarado Rodriguez</span>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap footer-inner">
+    <a href="../" class="brand" style="font-size:0.95rem">AURUM NOVA</a>
+    <div class="footer-links">
+      <a href="../">Inicio</a>
+      <a href="../#about">Sobre mí</a>
+      <a href="../#services">Servicios</a>
+      <a href="../#portfolio">Portafolio</a>
+      <a href="../#contact">Contacto</a>
+    </div>
+    <div class="footer-copy">© 2026 Angel Santiago Alvarado Rodriguez · CEO · AURUM NOVA</div>
+  </div>
+</footer>
+
+<!-- WHATSAPP FLOATING BUTTON -->
+<a href="https://wa.me/593981138814?text=Hola%20Angel%2C%20le%C3%AD%20tu%20art%C3%ADculo%20sobre%20automatizaci%C3%B3n%20con%20IA%20y%20quiero%20hacer%20un%20diagn%C3%B3stico"
+   class="wa-float" target="_blank" rel="noopener"
+   aria-label="WhatsApp directo — +593 98 113 8814">
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="width:28px;height:28px">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"></path>
+  </svg>
+</a>
+
+<script>
+/* ---------- Mobile menu ---------- */
+(function() {
+  var menuToggle = document.getElementById('menuToggle');
+  var mobileMenu = document.getElementById('mobileMenu');
+  if (menuToggle && mobileMenu) {
+    menuToggle.addEventListener('click', function() {
+      var open = mobileMenu.style.display === 'flex';
+      mobileMenu.style.display = open ? 'none' : 'flex';
+      menuToggle.setAttribute('aria-expanded', open ? 'false' : 'true');
+      if (open) {
+        menuToggle.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
+      } else {
+        menuToggle.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+      }
+    });
+    mobileMenu.querySelectorAll('a').forEach(function(a) {
+      a.addEventListener('click', function() {
+        mobileMenu.style.display = 'none';
+        menuToggle.setAttribute('aria-expanded', 'false');
+        menuToggle.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
+      });
+    });
+  }
+})();
+</script>
+</body>
+</html>

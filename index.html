@@ -4362,6 +4362,8 @@ const TIMELINE = [
 ];
 
 const BLOG = [
+  { date: "Oct 2026", title: "Arquitectura de Agentes Autónomos de Venta: WhatsApp sin alucinaciones", desc: "Diseño de sistemas de contención en 3 capas en el Edge: filtros anti-inyección, esquemas JSON estrictos y fallbacks determinísticos para cualificar clientes 24/7 sin inventar precios.", link: "blog/arquitectura-agentes-autonomos-ventas-whatsapp-sin-alucinaciones.html", draft: false },
+  { date: "Oct 2026", title: "Automatización con IA vs. Empleados Virtuales: Qué tareas automatizar primero", desc: "La matriz de fricción para dueños de empresas: aprende a descomponer procesos en micro-automatizaciones antes de inflar la nómina con contrataciones burocráticas.", link: "blog/automatizacion-ia-vs-empleados-virtuales-que-automatizar-primero.html", draft: false },
   { date: "Sep 2026", title: "Cómo aplico IA a ventas sin perder el toque humano", desc: "Mi enfoque para usar inteligencia artificial en ventas, leads y procesos — lo que funciona, lo que no, y cómo lo aplico con empresas y microempresas.", link: "blog/como-aplico-ia-ventas-sin-perder-el-toque-humano.html", draft: false },
   { date: "Sep 2026", title: "Cómo usar IA para segmentar leads sin depender de un CRM caro", desc: "Tres formas prácticas de segmentar y priorizar leads usando herramientas de IA accesibles, sin comprar software costoso. Para empresas y microempresas.", link: "blog/como-usar-ia-para-segmentar-leads-sin-depender-de-un-crm-caro.html", draft: false }
 ];
@@ -4726,7 +4728,7 @@ function initAIChatWidget() {
     safe = safe.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
 
     // 3. Convertir URLs en enlaces seguros con acento dorado
-    safe = safe.replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer" style="color:var(--gold);text-decoration:underline;font-weight:600;">$1</a>');
+    safe = safe.replace(/(https?:\/\/[^\s<]+)/g, "<a href='$1' target='_blank' rel='noopener noreferrer' style='color:var(--gold);text-decoration:underline;font-weight:600;'>$1</a>");
 
     // 4. Convertir teléfono de WhatsApp en enlace directo
     safe = safe.replace(/(\+593\s*98\s*113\s*8814|098\s*113\s*8814|\+593\s*99\s*419\s*5932)/g, '<a href="https://wa.me/593981138814?text=Hola%20Angel,%20vengo%20del%20asistente%20web%20de%20Aurum%20Nova" target="_blank" rel="noopener noreferrer" style="color:var(--gold);font-weight:600;border-bottom:1px dashed var(--gold);text-decoration:none;">$1 ↗</a>');
