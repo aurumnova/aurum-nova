@@ -1139,6 +1139,35 @@ footer {
   opacity: 0.5;
   cursor: not-allowed;
 }
+.ai-chat-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 4px 0 6px 0;
+  width: 100%;
+}
+.ai-chat-chip {
+  background: rgba(212, 175, 55, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  color: var(--gold);
+  border-radius: 14px;
+  padding: 6px 11px;
+  font-size: 11.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+  font-family: inherit;
+}
+.ai-chat-chip:hover {
+  background: rgba(212, 175, 55, 0.2);
+  border-color: var(--gold);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.15);
+}
+.ai-chat-chip:active {
+  transform: scale(0.96);
+}
 @media(max-width: 480px) {
   .ai-chat-widget { bottom: 76px; right: 16px; }
   .ai-chat-toggle { width: 52px; height: 52px; }
@@ -4313,16 +4342,59 @@ function initAIChatWidget() {
     });
   }
 
+  function formatBotMessage(text) {
+    if (!text) return '';
+    // 1. Escapar HTML para evitar XSS
+    let safe = text
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+
+    // 2. Formatear negritas: **texto**
+    safe = safe.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+
+    // 3. Convertir URLs en enlaces seguros con acento dorado
+    safe = safe.replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer" style="color:var(--gold);text-decoration:underline;font-weight:600;">$1</a>');
+
+    // 4. Convertir teléfono de WhatsApp en enlace directo
+    safe = safe.replace(/(\+593\s*99\s*419\s*5932)/g, '<a href="https://wa.me/593994195932?text=Hola%20Angel,%20vengo%20del%20asistente%20web%20de%20Aurum%20Nova" target="_blank" rel="noopener noreferrer" style="color:var(--gold);font-weight:600;border-bottom:1px dashed var(--gold);text-decoration:none;">$1 ↗</a>');
+
+    // 5. Saltos de línea
+    safe = safe.replace(/\n/g, '<br>');
+    return safe;
+  }
+
   function appendMessage(text, role) {
     const msgDiv = document.createElement('div');
     msgDiv.className = 'ai-msg ' + (role === 'user' ? 'ai-msg-user' : 'ai-msg-bot');
     const bubble = document.createElement('div');
     bubble.className = 'ai-msg-bubble';
-    bubble.textContent = text;
+    if (role === 'bot') {
+      bubble.innerHTML = formatBotMessage(text);
+    } else {
+      bubble.textContent = text;
+    }
     msgDiv.appendChild(bubble);
     messagesContainer.appendChild(msgDiv);
     scrollToBottom();
     return msgDiv;
+  }
+
+  function bindChips() {
+    const chips = messagesContainer.querySelectorAll('.ai-chat-chip');
+    chips.forEach(function(chip) {
+      if (chip.__bound) return;
+      chip.__bound = true;
+      chip.addEventListener('click', function(e) {
+        e.preventDefault();
+        const prompt = chip.getAttribute('data-prompt');
+        if (!prompt) return;
+        chatInput.value = prompt;
+        chatForm.dispatchEvent(new Event('submit', { cancelable: true }));
+      });
+    });
   }
 
   let loadingEl = null;
@@ -4348,9 +4420,9 @@ function initAIChatWidget() {
   chatForm.addEventListener('submit', async function(e) {
     e.preventDefault();
     const now = Date.now();
-    const CHAT_COOLDOWN_MS = 10000;
+    const CHAT_COOLDOWN_MS = 2000;
     if (window.__lastChatTs && now - window.__lastChatTs < CHAT_COOLDOWN_MS) {
-      appendMessage('Por favor espera unos segundos antes de enviar otro mensaje.', 'bot');
+      appendMessage('Por favor espera un segundo antes de enviar otro mensaje.', 'bot');
       return;
     }
 
@@ -4358,7 +4430,7 @@ function initAIChatWidget() {
     if (!text) return;
     if (text.length > 500) { appendMessage('Mensaje muy largo (máx 500 caracteres).', 'bot'); return; }
 
-    // Sanitizar
+    // Sanitizar entrada
     const escapeHtml = s => s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
     const safeText = escapeHtml(text);
 
@@ -4405,6 +4477,8 @@ function initAIChatWidget() {
       scrollToBottom();
     }
   });
+
+  bindChips();
 }
 if (document.readyState === "loading") {
   document.addEventListener("DOMContentLoaded", initAIChatWidget);
@@ -4671,8 +4745,14 @@ if (themeToggle) {
     <div id="aiChatMessages" class="ai-chat-messages">
       <div class="ai-msg ai-msg-bot">
         <div class="ai-msg-bubble">
-          Hola, soy el asistente comercial de Aurum Nova. ¿En qué podemos ayudarte para potenciar y automatizar las ventas de tu empresa con IA?
+          ¡Hola! Soy el asistente de Aurum Nova. Te ayudo a automatizar tus ventas, responder leads al instante y agendar citas 24/7 con Inteligencia Artificial. ¿Qué tipo de negocio tienes o qué te gustaría automatizar?
         </div>
+      </div>
+      <div id="aiChatChips" class="ai-chat-chips">
+        <button type="button" class="ai-chat-chip" data-prompt="¿Cuánto cuesta Pipeline IA y qué incluye?">💰 Precios y planes</button>
+        <button type="button" class="ai-chat-chip" data-prompt="Tengo una clínica médica/dental, ¿cómo me ayuda la IA?">🏥 Para Clínicas</button>
+        <button type="button" class="ai-chat-chip" data-prompt="Tengo una inmobiliaria, ¿cómo aumentan mis ventas?">🏢 Para Inmobiliarias</button>
+        <button type="button" class="ai-chat-chip" data-prompt="Quiero agendar una demo de 15 minutos">📅 Agendar llamada</button>
       </div>
     </div>
 
