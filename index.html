@@ -3703,7 +3703,7 @@ nav.scrolled .nav-inner {
       <span class="mark">
         <picture>
           <source srcset="assets/logo-a.webp" type="image/webp">
-          <img src="ChatGPT Image 17 sept 2026, 13_45_33.png" alt="AURUM NOVA" width="24" height="24" style="width:24px;height:24px;display:block;object-fit:contain;aspect-ratio:1/1">
+          <img src="assets/logo-a.png" alt="AURUM NOVA" width="24" height="24" style="width:24px;height:24px;display:block;object-fit:contain;aspect-ratio:1/1">
         </picture>
       </span>
       <span class="name">AURUM</span> NOVA
@@ -4291,7 +4291,7 @@ nav.scrolled .nav-inner {
           </div>
           <div class="form-group" style="position:absolute;left:-9999px;top:-9999px;opacity:0;height:0;width:0;overflow:hidden" aria-hidden="true">
             <label for="f-hp">Website</label>
-            <input id="f-hp" name="_gotcha" type="text" tabindex="-1" autocomplete="off">
+            <input id="f-hp" name="hp" type="text" tabindex="-1" autocomplete="off">
           </div>
           <button type="submit" class="btn btn-primary form-submit">Enviar — Agendar una reunión</button>
           <div class="form-note">↓ tus datos no se comparten. Respuesta en &lt; 24 h hábiles.</div>
@@ -4310,7 +4310,7 @@ nav.scrolled .nav-inner {
         <span class="mark">
           <picture>
             <source srcset="assets/logo-a.webp" type="image/webp">
-            <img src="ChatGPT Image 17 sept 2026, 13_45_33.png" alt="AURUM NOVA" width="18" height="18" style="width:18px;height:18px;display:block;object-fit:contain;aspect-ratio:1/1">
+            <img src="assets/logo-a.png" alt="AURUM NOVA" width="18" height="18" style="width:18px;height:18px;display:block;object-fit:contain;aspect-ratio:1/1">
           </picture>
         </span>
         <span class="name">AURUM</span> NOVA
@@ -4502,24 +4502,57 @@ if (menuToggle && mobileMenu) {
   });
 }
 
-/* ---------- Helper: Session ID persistente (UUIDv4) para Chat y Leads ---------- */
+/* ---------- Helper: Sesión Criptográfica (Bootstrap & Token Opaco) ---------- */
 const WORKER_BASE_URL = 'https://aurum-nova-ai-sales-worker.aurum-nova.workers.dev';
 
-function getSessionId() {
+async function getOrBootstrapSession() {
   const KEY = 'aurum_nova_session_id';
-  let sid = localStorage.getItem(KEY);
-  const uuidV4Pattern = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-  if (!sid || !uuidV4Pattern.test(sid)) {
-    sid = (typeof crypto !== 'undefined' && crypto.randomUUID)
-      ? crypto.randomUUID()
-      : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-          const r = Math.random() * 16 | 0;
-          const v = c === 'x' ? r : (r & 0x3 | 0x8);
-          return v.toString(16);
-        });
-    localStorage.setItem(KEY, sid);
+  let token = localStorage.getItem(KEY);
+
+  // Un token válido debe ser opaco, comenzar con 'an_sess_' y contener una firma válida separada por punto
+  const isOpaque = typeof token === 'string' && token.startsWith('an_sess_') && token.includes('.');
+  if (isOpaque) {
+    return token;
   }
-  return sid;
+
+  // Si no hay token o es un identificador legacy sin firma, se solicita bootstrap explícito al servidor
+  try {
+    const res = await fetch(WORKER_BASE_URL + '/api/v1/session/bootstrap', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      }
+    });
+    if (!res.ok) {
+      throw new Error('Bootstrap failed with status ' + res.status);
+    }
+    const data = await res.json();
+    if (data && data.sessionToken) {
+      localStorage.setItem(KEY, data.sessionToken);
+      return data.sessionToken;
+    }
+    throw new Error('Bootstrap response missing sessionToken');
+  } catch (err) {
+    console.warn('Error en bootstrap de sesión:', err);
+    throw err;
+  }
+}
+
+function getSessionId() {
+  // Para compatibilidad sincrónica cuando ya existe en localStorage
+  const KEY = 'aurum_nova_session_id';
+  const token = localStorage.getItem(KEY);
+  if (typeof token === 'string' && token.startsWith('an_sess_') && token.includes('.')) {
+    return token;
+  }
+  return null;
+}
+
+function setSessionToken(token) {
+  if (typeof token === 'string' && token.startsWith('an_sess_') && token.includes('.')) {
+    localStorage.setItem('aurum_nova_session_id', token.trim());
+  }
 }
 
 /* ---------- Form handler — envía al Cloudflare Worker (D1 Leads) ---------- */
@@ -4590,13 +4623,15 @@ if (contactForm) {
     note.style.color = '';
 
     try {
+      const sid = await getOrBootstrapSession();
       const payload = {
-        sessionId: getSessionId(),
+        sessionId: sid,
         name: safeName,
         email: safeEmail,
         company: safeCompany || undefined,
         need: safeMsg,
         source: 'contact-form',
+        hp: hpInput ? hpInput.value : undefined,
         metadata: { phone: safePhone, topic: safeTopic }
       };
       const res = await fetch(WORKER_BASE_URL + '/api/v1/leads', {
@@ -4610,6 +4645,9 @@ if (contactForm) {
       // No loggear data en producción
       const data = await res.json().catch(() => ({}));
       if (res.ok && (data.status === 'created' || data.status === 'updated' || data.leadId)) {
+        if (data.sessionId) {
+          setSessionToken(data.sessionId);
+        }
         lastSubmitTs = now;
         const topicLabels = {
           audit: 'IA Growth Audit',
@@ -4642,7 +4680,14 @@ if (contactForm) {
           btn.disabled = false;
         }, 15000);
       } else {
-        showFormError('Hubo un inconveniente. Intenta de nuevo o contáctanos por WhatsApp.');
+        if (res.status === 401) {
+          localStorage.removeItem('aurum_nova_session_id');
+          showFormError('Tu sesión previa ha expirado por seguridad. Haz clic en "Enviar" nuevamente para renovarla.');
+        } else if (res.status === 429) {
+          showFormError('Has alcanzado el límite de intentos. Por favor espera un minuto antes de reintentar.');
+        } else {
+          showFormError('Hubo un inconveniente. Intenta de nuevo o contáctanos por WhatsApp.');
+        }
         btn.disabled = false;
         btn.textContent = 'Enviar — Agendar una reunión';
       }
@@ -4819,10 +4864,8 @@ function initAIChatWidget() {
     showLoading();
 
     try {
-      const sid = getSessionId();
-      // Validar UUIDv4 estricto antes de enviar
-      const uuidV4Pattern = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-      if (!uuidV4Pattern.test(sid)) {
+      const sid = await getOrBootstrapSession();
+      if (!sid || typeof sid !== 'string' || !sid.startsWith('an_sess_') || !sid.includes('.')) {
         throw new Error('Invalid session');
       }
 
@@ -4841,12 +4884,22 @@ function initAIChatWidget() {
       hideLoading();
       window.__lastChatTs = now;
       if (res.ok && data.response) {
+        if (data.sessionId) {
+          setSessionToken(data.sessionId);
+        }
         appendMessage(data.response, 'bot');
         if (window.AurumAudio && typeof window.AurumAudio.playMessageReceivedSound === 'function') {
           window.AurumAudio.playMessageReceivedSound();
         }
       } else {
-        appendMessage('Disculpa, no pude procesar tu mensaje. Reintenta o contáctanos por WhatsApp.', 'bot');
+        if (res.status === 401) {
+          localStorage.removeItem('aurum_nova_session_id');
+          appendMessage('Tu sesión ha expirado por seguridad. Envía un nuevo mensaje para iniciar una conversación protegida.', 'bot');
+        } else if (res.status === 429) {
+          appendMessage('Has enviado demasiados mensajes. Por favor espera un momento antes de continuar.', 'bot');
+        } else {
+          appendMessage('Disculpa, no pude procesar tu mensaje. Reintenta o contáctanos por WhatsApp.', 'bot');
+        }
       }
     } catch (err) {
       hideLoading();
