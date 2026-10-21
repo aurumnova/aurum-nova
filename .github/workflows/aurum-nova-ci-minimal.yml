@@ -16,6 +16,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Validar flujo de sesión
+        run: node tests/sessionRetry.test.mjs
+
       - name: Validar estructura del sitio
         run: |
           python3 << 'EOF'
@@ -64,6 +67,20 @@ jobs:
           check_file_not_empty('aurumpitch.html', 'aurumpitch.html')
           check_dir_exists('assets', 'assets/')
           check_dir_exists('blog', 'blog/')
+
+          with open('index.html', encoding='utf-8') as f:
+              index_content = f.read()
+
+          for marker in (
+              '/api/v1/session/bootstrap',
+              'an_sess_',
+              'fetchWithSessionRetry',
+              'parts.length === 3',
+          ):
+              if marker not in index_content:
+                  errors.append(
+                      f'ERROR: index.html no contiene el marcador de sesión: {marker}'
+                  )
 
           blog_dir = os.path.join(base_dir, 'blog')
           blog_htmls = []
