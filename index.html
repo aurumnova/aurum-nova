@@ -4504,15 +4504,23 @@ if (menuToggle && mobileMenu) {
 
 /* ---------- Helper: Sesión Criptográfica (Bootstrap & Token Opaco) ---------- */
 const WORKER_BASE_URL = 'https://aurum-nova-ai-sales-worker.aurum-nova.workers.dev';
+const SESSION_STORAGE_KEY = 'aurum_nova_session_id';
+
+function isValidSessionToken(token) {
+  if (typeof token !== 'string' || !token.startsWith('an_sess_')) {
+    return false;
+  }
+  // Formato v2: an_sess_<uuid>.<firma>.<expiración>
+  const parts = token.trim().split('.');
+  return parts.length === 3 && parts.every((part) => part.length > 0);
+}
 
 async function getOrBootstrapSession() {
-  const KEY = 'aurum_nova_session_id';
-  let token = localStorage.getItem(KEY);
+  const stored = localStorage.getItem(SESSION_STORAGE_KEY);
 
-  // Un token válido debe ser opaco, comenzar con 'an_sess_' y contener una firma válida separada por punto
-  const isOpaque = typeof token === 'string' && token.startsWith('an_sess_') && token.includes('.');
-  if (isOpaque) {
-    return token;
+  // Un token válido debe ser opaco y tener exactamente tres segmentos.
+  if (isValidSessionToken(stored)) {
+    return stored.trim();
   }
 
   // Si no hay token o es un identificador legacy sin firma, se solicita bootstrap explícito al servidor
@@ -4528,30 +4536,42 @@ async function getOrBootstrapSession() {
       throw new Error('Bootstrap failed with status ' + res.status);
     }
     const data = await res.json();
-    if (data && data.sessionToken) {
-      localStorage.setItem(KEY, data.sessionToken);
-      return data.sessionToken;
+    if (data && isValidSessionToken(data.sessionToken)) {
+      localStorage.setItem(SESSION_STORAGE_KEY, data.sessionToken.trim());
+      return data.sessionToken.trim();
     }
-    throw new Error('Bootstrap response missing sessionToken');
+    throw new Error('Bootstrap response missing a valid sessionToken');
   } catch (err) {
     console.warn('Error en bootstrap de sesión:', err);
     throw err;
   }
 }
 
+async function fetchWithSessionRetry(url, makeOptions) {
+  let sessionId = await getOrBootstrapSession();
+  let response = await fetch(url, makeOptions(sessionId));
+
+  // During a worker/frontend cutover an old token can produce a 401.
+  // Re-bootstrap and retry exactly once with the same payload so the user
+  // does not lose a chat message or a contact-form submission.
+  if (response.status === 401) {
+    localStorage.removeItem(SESSION_STORAGE_KEY);
+    sessionId = await getOrBootstrapSession();
+    response = await fetch(url, makeOptions(sessionId));
+  }
+
+  return response;
+}
+
 function getSessionId() {
   // Para compatibilidad sincrónica cuando ya existe en localStorage
-  const KEY = 'aurum_nova_session_id';
-  const token = localStorage.getItem(KEY);
-  if (typeof token === 'string' && token.startsWith('an_sess_') && token.includes('.')) {
-    return token;
-  }
-  return null;
+  const token = localStorage.getItem(SESSION_STORAGE_KEY);
+  return isValidSessionToken(token) ? token.trim() : null;
 }
 
 function setSessionToken(token) {
-  if (typeof token === 'string' && token.startsWith('an_sess_') && token.includes('.')) {
-    localStorage.setItem('aurum_nova_session_id', token.trim());
+  if (isValidSessionToken(token)) {
+    localStorage.setItem(SESSION_STORAGE_KEY, token.trim());
   }
 }
 
@@ -4623,25 +4643,26 @@ if (contactForm) {
     note.style.color = '';
 
     try {
-      const sid = await getOrBootstrapSession();
-      const payload = {
-        sessionId: sid,
-        name: safeName,
-        email: safeEmail,
-        company: safeCompany || undefined,
-        need: safeMsg,
-        source: 'contact-form',
-        hp: hpInput ? hpInput.value : undefined,
-        metadata: { phone: safePhone, topic: safeTopic }
-      };
-      const res = await fetch(WORKER_BASE_URL + '/api/v1/leads', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify(payload)
-      });
+      const res = await fetchWithSessionRetry(
+        WORKER_BASE_URL + '/api/v1/leads',
+        (sessionId) => ({
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            sessionId,
+            name: safeName,
+            email: safeEmail,
+            company: safeCompany || undefined,
+            need: safeMsg,
+            source: 'contact-form',
+            hp: hpInput ? hpInput.value : undefined,
+            metadata: { phone: safePhone, topic: safeTopic }
+          })
+        })
+      );
       // No loggear data en producción
       const data = await res.json().catch(() => ({}));
       if (res.ok && (data.status === 'created' || data.status === 'updated' || data.leadId)) {
@@ -4681,7 +4702,7 @@ if (contactForm) {
         }, 15000);
       } else {
         if (res.status === 401) {
-          localStorage.removeItem('aurum_nova_session_id');
+          localStorage.removeItem(SESSION_STORAGE_KEY);
           showFormError('Tu sesión previa ha expirado por seguridad. Haz clic en "Enviar" nuevamente para renovarla.');
         } else if (res.status === 429) {
           showFormError('Has alcanzado el límite de intentos. Por favor espera un minuto antes de reintentar.');
@@ -4864,22 +4885,20 @@ function initAIChatWidget() {
     showLoading();
 
     try {
-      const sid = await getOrBootstrapSession();
-      if (!sid || typeof sid !== 'string' || !sid.startsWith('an_sess_') || !sid.includes('.')) {
-        throw new Error('Invalid session');
-      }
-
-      const res = await fetch(WORKER_BASE_URL + '/api/v1/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          sessionId: sid,
-          message: safeText
+      const res = await fetchWithSessionRetry(
+        WORKER_BASE_URL + '/api/v1/chat',
+        (sessionId) => ({
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            sessionId,
+            message: safeText
+          })
         })
-      });
+      );
       const data = await res.json().catch(() => ({}));
       hideLoading();
       window.__lastChatTs = now;
@@ -4893,7 +4912,7 @@ function initAIChatWidget() {
         }
       } else {
         if (res.status === 401) {
-          localStorage.removeItem('aurum_nova_session_id');
+          localStorage.removeItem(SESSION_STORAGE_KEY);
           appendMessage('Tu sesión ha expirado por seguridad. Envía un nuevo mensaje para iniciar una conversación protegida.', 'bot');
         } else if (res.status === 429) {
           appendMessage('Has enviado demasiados mensajes. Por favor espera un momento antes de continuar.', 'bot');
