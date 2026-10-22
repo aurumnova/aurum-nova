@@ -65,5 +65,10 @@ export default defineConfig({
       testMatch: /smoke\.prod\.spec\.js/,
       use: { ...localUse, baseURL: PROD_BASE_URL, viewport: { width: 1440, height: 900 } },
     },
+    {
+      name: 'smoke-prod-mobile',
+      testMatch: /smoke\.prod\.spec\.js/,
+      use: { ...localUse, baseURL: PROD_BASE_URL, viewport: { width: 375, height: 812 }, hasTouch: true, isMobile: true, deviceScaleFactor: 2 },
+    },
   ],
 });

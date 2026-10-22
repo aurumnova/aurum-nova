@@ -59,15 +59,41 @@ test.describe('Chat IA', () => {
 
   test('abre, envia con stub y cierra con Escape', async ({ page }) => {
     await page.goto('./');
+    const toggle = page.locator('#aiChatToggle');
+    const box = page.locator('#aiChatBox');
 
-    await page.locator('#aiChatToggle').click();
-    await expect(page.locator('#aiChatBox')).toBeVisible();
+    await expect(toggle).toHaveAttribute('aria-controls', 'aiChatBox');
+    await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+
+    await toggle.click();
+    await expect(box).toBeVisible();
+    await expect(toggle).toHaveAttribute('aria-expanded', 'true');
 
     await page.locator('#aiChatInput').fill('Hola, prueba E2E');
     await page.locator('#aiChatSendBtn').click();
-    await expect(page.locator('#aiChatMessages')).toContainText('Precios', { timeout: 10000 });
+    await expect(page.locator('#aiChatMessages')).toContainText('desde stub E2E', { timeout: 10000 });
+    await expect(page.locator('#aiChatInput')).toBeFocused();
 
     await page.keyboard.press('Escape');
-    await expect(page.locator('#aiChatBox')).toBeHidden();
+    await expect(box).toBeHidden();
+    await expect(toggle).toHaveAttribute('aria-expanded', 'false');
+    await expect(toggle).toBeFocused();
+  });
+
+  test('Escape no cierra el chat si el foco esta fuera del panel', async ({ page }) => {
+    await page.goto('./');
+    const toggle = page.locator('#aiChatToggle');
+    const box = page.locator('#aiChatBox');
+
+    await toggle.click();
+    await expect(box).toBeVisible();
+
+    await page.locator('h1').click();
+    await page.keyboard.press('Escape');
+    await expect(box).toBeVisible();
+
+    await page.locator('#aiChatCloseBtn').click();
+    await expect(box).toBeHidden();
+    await expect(toggle).toBeFocused();
   });
 });
