@@ -1,4 +1,4 @@
-// Gate de calidad: 0px de overflow horizontal y 0 errores de consola/pageerror.
+// Gate de calidad: 0px estricto de overflow horizontal y 0 errores de consola/pageerror.
 import { expect } from '@playwright/test';
 
 export function attachQuality(page) {
@@ -22,10 +22,11 @@ export function attachQuality(page) {
         clientWidth: document.documentElement.clientWidth,
       }));
 
+      const overflow = scrollWidth - clientWidth;
       expect(
-        scrollWidth,
-        `overflow horizontal: scrollWidth ${scrollWidth} > clientWidth ${clientWidth}`,
-      ).toBeLessThanOrEqual(clientWidth + 1);
+        overflow,
+        `overflow horizontal: scrollWidth ${scrollWidth} > clientWidth ${clientWidth} (${overflow}px)`,
+      ).toBeLessThanOrEqual(0);
 
       expect(
         errors,

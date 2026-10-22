@@ -3748,7 +3748,7 @@ nav.scrolled .nav-inner {
         </svg>
       </button>
       <a href="#contact" class="btn btn-primary nav-cta" style="padding:10px 20px;font-size:0.82rem">Agenda tu diagnóstico <span style="opacity:0.7;font-size:0.75rem">↓</span></a>
-      <button class="menu-toggle" aria-label="Abrir menú" aria-expanded="false" id="menuToggle">
+      <button type="button" class="menu-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileMenu" id="menuToggle">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
           <line x1="3" y1="6" x2="21" y2="6"></line>
           <line x1="3" y1="12" x2="21" y2="12"></line>
@@ -3757,7 +3757,7 @@ nav.scrolled .nav-inner {
       </button>
     </div>
   </div>
-  <div id="mobileMenu">
+  <div id="mobileMenu" aria-hidden="true">
     <a href="#about" data-target="about">Sobre mí</a>
     <a href="#services" data-target="services">Programas</a>
     <a href="#portfolio" data-target="portfolio">Casos</a>
@@ -4493,22 +4493,42 @@ if (blogList) {
 const menuToggle = document.getElementById('menuToggle');
 const mobileMenu = document.getElementById('mobileMenu');
 if (menuToggle && mobileMenu) {
-  menuToggle.addEventListener('click', function() {
-    const open = mobileMenu.style.display === 'flex';
-    mobileMenu.style.display = open ? 'none' : 'flex';
-    menuToggle.setAttribute('aria-expanded', open ? 'false' : 'true');
-    if (open) {
-      menuToggle.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg"  width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
-    } else {
-      menuToggle.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg"  width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+  const menuIcon = '<svg xmlns="http://www.w3.org/2000/svg"  width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
+  const closeIcon = '<svg xmlns="http://www.w3.org/2000/svg"  width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+  const firstMenuLink = mobileMenu.querySelector('a');
+
+  function setMenuOpen(open, returnFocus) {
+    mobileMenu.style.display = open ? 'flex' : 'none';
+    mobileMenu.setAttribute('aria-hidden', open ? 'false' : 'true');
+    menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menuToggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+    menuToggle.innerHTML = open ? closeIcon : menuIcon;
+
+    if (open && firstMenuLink) {
+      window.setTimeout(function() {
+        firstMenuLink.focus();
+      }, 0);
+    } else if (returnFocus) {
+      menuToggle.focus();
     }
+  }
+
+  menuToggle.addEventListener('click', function() {
+    const isOpen = menuToggle.getAttribute('aria-expanded') === 'true';
+    setMenuOpen(!isOpen, isOpen);
   });
+
   mobileMenu.querySelectorAll('a').forEach(function(a) {
     a.addEventListener('click', function() {
-      mobileMenu.style.display = 'none';
-      menuToggle.setAttribute('aria-expanded', 'false');
-      menuToggle.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg"  width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>';
+      setMenuOpen(false, false);
     });
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && menuToggle.getAttribute('aria-expanded') === 'true') {
+      e.stopPropagation();
+      setMenuOpen(false, true);
+    }
   });
 }
 
@@ -4755,6 +4775,8 @@ function initAIChatWidget() {
     if (shouldOpen) {
       chatBox.style.display = 'flex';
       chatBox.setAttribute('aria-hidden', 'false');
+      toggleBtn.setAttribute('aria-expanded', 'true');
+      toggleBtn.setAttribute('aria-label', 'Cerrar asistente de ventas IA');
       if (iconOpen) iconOpen.style.display = 'none';
       if (iconClose) iconClose.style.display = 'block';
       if (window.AurumAudio && typeof window.AurumAudio.playChatOpenSound === 'function') {
@@ -4770,6 +4792,8 @@ function initAIChatWidget() {
     } else {
       chatBox.style.display = 'none';
       chatBox.setAttribute('aria-hidden', 'true');
+      toggleBtn.setAttribute('aria-expanded', 'false');
+      toggleBtn.setAttribute('aria-label', 'Abrir asistente de ventas IA');
       if (iconOpen) iconOpen.style.display = 'block';
       if (iconClose) iconClose.style.display = 'none';
       if (window.AurumAudio && typeof window.AurumAudio.playClickSound === 'function') {
@@ -4787,15 +4811,16 @@ function initAIChatWidget() {
     closeBtn.addEventListener('click', function(e) {
       e.stopPropagation();
       toggleChat(false);
+      toggleBtn.focus();
     });
   }
 
-  // Accesibilidad: Escape cierra el panel del chat cuando esta abierto.
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' && chatBox.style.display !== 'none') {
+  // Accesibilidad: Escape solo cierra el chat cuando el foco esta dentro del panel.
+  chatBox.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
       e.stopPropagation();
       toggleChat(false);
-      if (toggleBtn) toggleBtn.focus();
+      toggleBtn.focus();
     }
   });
 
@@ -4921,6 +4946,9 @@ function initAIChatWidget() {
       const data = await res.json().catch(() => ({}));
       hideLoading();
       window.__lastChatTs = now;
+      chatInput.disabled = false;
+      if (sendBtn) sendBtn.disabled = false;
+      chatInput.focus();
       if (res.ok && data.response) {
         if (data.sessionId) {
           setSessionToken(data.sessionId);
@@ -5738,7 +5766,7 @@ document.addEventListener('click', function(e) {
 
 <!-- AI CHAT WIDGET -->
 <div id="aiChatWidget" class="ai-chat-widget">
-  <button id="aiChatToggle" class="ai-chat-toggle" aria-label="Abrir asistente de ventas IA" title="Chatear con el Asistente IA">
+  <button id="aiChatToggle" class="ai-chat-toggle" aria-label="Abrir asistente de ventas IA" aria-controls="aiChatBox" aria-expanded="false" title="Chatear con el Asistente IA">
     <span class="ai-chat-pulse" aria-hidden="true"></span>
     <svg id="aiChatIconOpen" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
