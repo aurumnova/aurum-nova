@@ -12,10 +12,13 @@
 <link rel="icon" type="image/png" sizes="32x32" href="favicon.ico">
 <link rel="apple-touch-icon" href="favicon.ico">
 
-<!-- Security headers -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://connect.facebook.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' assets/ https://images.unsplash.com https://www.facebook.com https://www.google-analytics.com data:; connect-src 'self' https://wa.me https://aurum-nova-ai-sales-worker.aurum-nova.workers.dev https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self';">
-<meta http-equiv="X-Frame-Options" content="DENY">
-<meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()">
+<!-- Security headers.
+     NOTA: frame-ancestors, X-Frame-Options y Permissions-Policy solo pueden
+     entregarse como headers HTTP reales; en <meta> el navegador los ignora y
+     genera errores de consola. GitHub Pages no permite headers personalizados,
+     asi que la proteccion anti-clickjacking debe aplicarse en la capa de
+     hosting (Cloudflare Pages/Worker). Ver browser-qa-report 2026-10-21. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://connect.facebook.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' assets/ https://images.unsplash.com https://www.facebook.com https://www.google-analytics.com data:; connect-src 'self' https://wa.me https://aurum-nova-ai-sales-worker.aurum-nova.workers.dev https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com; base-uri 'self'; form-action 'self';">
 <meta property="og:title" content="AURUM NOVA — Angel Alvarado, CEO">
 <meta property="og:description" content="IA aplicada a ventas y crecimiento empresarial. Socio colaborador para empresas y microempresas. Trabajo global — clientes en español e inglés.">
 <meta property="og:image" content="https://aurumnova.github.io/aurum-nova/assets/portrait.png">
@@ -360,7 +363,7 @@ nav {
 .nav-links a:hover::after { width: 100%; }
 
 .nav-cta { margin-left: 6px; }
-@media(max-width: 900px) { .nav-cta { display: none; } }
+@media(max-width: 900px) { .nav-cta { display: none !important; } }
 
 .nav-actions {
   display: flex;
@@ -2731,6 +2734,13 @@ nav.scrolled .nav-inner {
   .theme-toggle-btn, .menu-toggle { width: 34px !important; height: 34px !important; }
 }
 
+/* En pantallas muy angostas (<=360px) se oculta el sonido tactil, que es
+   decorativo, para garantizar 0px de overflow horizontal. El tema y el menu
+   movil siguen visibles. */
+@media (max-width: 360px) {
+  #soundToggle { display: none !important; }
+}
+
 /* =============================================
    FULL-BLEED FLANKS & PERIPHERAL ATMOSPHERE SYSTEM
    ============================================= */
@@ -4780,6 +4790,15 @@ function initAIChatWidget() {
     });
   }
 
+  // Accesibilidad: Escape cierra el panel del chat cuando esta abierto.
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && chatBox.style.display !== 'none') {
+      e.stopPropagation();
+      toggleChat(false);
+      if (toggleBtn) toggleBtn.focus();
+    }
+  });
+
   function formatBotMessage(text) {
     if (!text) return '';
     // 1. Escapar HTML para evitar XSS
@@ -5546,7 +5565,7 @@ function initMagneticButtons() {
   const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
   if (isTouch) return;
 
-  const buttons = document.querySelectorAll('.btn-primary, .btn-ghost, .nav-cta, .hero-cta .btn');
+  const buttons = document.querySelectorAll('.btn-primary:not(.nav-cta), .btn-ghost, .hero-cta .btn');
 
   buttons.forEach((btn) => {
     btn.classList.add('magnetic-btn');
@@ -5732,7 +5751,7 @@ document.addEventListener('click', function(e) {
     </svg>
   </button>
 
-  <div id="aiChatBox" class="ai-chat-box" style="display:none;" aria-hidden="true">
+  <div id="aiChatBox" class="ai-chat-box" role="dialog" aria-modal="false" aria-label="Asistente de ventas IA" style="display:none;" aria-hidden="true">
     <div class="ai-chat-header">
       <div class="ai-chat-header-info">
         <div class="ai-chat-status-dot"></div>
