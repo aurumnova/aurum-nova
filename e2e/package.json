@@ -1,0 +1,17 @@
+{
+  "name": "aurum-nova-e2e",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Browser QA gate de AURUM NOVA (Playwright)",
+  "type": "module",
+  "scripts": {
+    "test": "playwright test --project=desktop-1440 --project=desktop-1024 --project=tablet-768 --project=mobile-414 --project=mobile-390 --project=mobile-375",
+    "test:ci": "playwright test --project=desktop-1440 --project=desktop-1024 --project=tablet-768 --project=mobile-414 --project=mobile-390 --project=mobile-375",
+    "test:smoke": "playwright test --project=smoke-prod",
+    "test:report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^26.6.4"
+  }
+}
