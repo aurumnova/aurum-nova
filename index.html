@@ -18,7 +18,7 @@
      genera errores de consola. GitHub Pages no permite headers personalizados,
      asi que la proteccion anti-clickjacking debe aplicarse en la capa de
      hosting (Cloudflare Pages/Worker). Ver browser-qa-report 2026-10-21. -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://connect.facebook.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' assets/ https://images.unsplash.com https://www.facebook.com https://www.google-analytics.com data:; connect-src 'self' https://wa.me https://aurum-nova-ai-sales-worker.aurum-nova.workers.dev https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com; base-uri 'self'; form-action 'self';">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://connect.facebook.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' assets/ https://images.unsplash.com https://www.facebook.com https://www.google-analytics.com data:; connect-src 'self' https://wa.me https://aurum-nova-ai-sales-worker.aurum-nova.workers.dev https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://fonts.googleapis.com https://fonts.gstatic.com; base-uri 'self'; form-action 'self';">
 <meta property="og:title" content="AURUM NOVA — Angel Alvarado, CEO">
 <meta property="og:description" content="IA aplicada a ventas y crecimiento empresarial. Socio colaborador para empresas y microempresas. Trabajo global — clientes en español e inglés.">
 <meta property="og:image" content="https://aurumnova.github.io/aurum-nova/assets/portrait.png">
@@ -57,8 +57,8 @@
   --gold-3-light: #b8962e;
   --text-light: #212529;
   --text-muted-light: #495057;
-  --text-dim-light: #6c757d;
-  --text-faint-light: #adb5bd;
+  --text-dim-light: #5f6670;
+  --text-faint-light: #6c757d;
   --bg-2-dark: #0a0a0c;
   --bg-2-light: #f8f9fa;
   --bg-2: var(--bg-2-dark, #080810);
@@ -100,12 +100,12 @@
   --text-muted-dark: #a09c93;
   --text-muted-light: #495057;
   --text-muted: var(--text-muted-dark, #a09c93);
-  --text-dim-dark: #5c5952;
-  --text-dim-light: #6c757d;
-  --text-dim: var(--text-dim-dark, #5c5952);
-  --text-faint-dark: #7b7871;
-  --text-faint-light: #adb5bd;
-  --text-faint: var(--text-faint-dark, #7b7871);
+  --text-dim-dark: #9a968d;
+  --text-dim-light: #5f6670;
+  --text-dim: var(--text-dim-dark, #9a968d);
+  --text-faint-dark: #8f8b83;
+  --text-faint-light: #6c757d;
+  --text-faint: var(--text-faint-dark, #8f8b83);
   --sans: 'Inter', system-ui, -apple-system, sans-serif;
   --serif: 'Cormorant Garamond', Georgia, serif;
   --mono: 'JetBrains Mono', 'SF Mono', monospace;
@@ -1204,7 +1204,7 @@ footer {
 .reveal.visible { opacity: 1; transform: none; }
 @media(prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; }
-  .hero-badge .dot { animation: none; }
+  html .hero-badge .dot { animation: none !important; }
   html { scroll-behavior: auto; }
 }
 
@@ -1340,7 +1340,7 @@ footer {
   border-color: rgba(212, 175, 55, 0.14);
 }
 
-[data-theme="light"] .vision-card h3 { color: var(--gold-2-light); }
+[data-theme="light"] .vision-card h3 { color: var(--gold); }
 
 [data-theme="light"] .vision-card p { color: var(--text-muted-light); }
 
@@ -1383,13 +1383,15 @@ footer {
   --border: rgba(212, 175, 55, 0.1);
   --border-strong: rgba(212, 175, 55, 0.3);
   --border-glass: rgba(212, 175, 55, 0.05);
-  --gold: #b8860b;
+  --gold: #8a6508;
   --gold-2: #d4af37;
   --gold-3: #b8962e;
   --text: #212529;
   --text-muted: #495057;
-  --text-dim: #6c757d;
-  --text-faint: #adb5bd;
+  --text-dim: #5f6670;
+  --text-faint: #6c757d;
+  --cyan: #087f8c;
+  --cyan-soft: rgba(8, 127, 140, 0.10);
   --bg-card: #ffffff;
   --bg-card-2: #f8f9fa;
 }
@@ -1524,6 +1526,8 @@ footer {
 [data-theme="light"] .form-card { border: 1px solid var(--border); }
 
 [data-theme="light"] .form-card:hover { border-color: var(--border-strong); }
+
+[data-theme="light"] footer { background: #f8f9fa; }
 
 [data-theme="light"] .footer-brand { color: var(--text); }
 
@@ -3671,8 +3675,55 @@ nav.scrolled .nav-inner {
   100% { transform: translateY(100vh); opacity: 0; }
 }
 
+/* Accessibility: inline links must be distinguishable without color */
+p a,
+.contact-item .val a,
+.license-badge {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+}
+
+.license-badge:hover,
+.footer-links a.license-badge:hover,
+[data-theme="light"] .footer-links a.license-badge:hover {
+  text-decoration: underline;
+}
+
+/* Accessibility: light-theme surfaces that previously used dark overlays */
+[data-theme="light"] .timeline-item .status {
+  background: #ffffff;
+}
+
+#faq {
+  background: rgba(8, 8, 15, 0.25);
+}
+
+[data-theme="light"] #faq {
+  background: rgba(8, 8, 15, 0.04);
+}
+
+[data-theme="light"] #faq .eyebrow {
+  opacity: 1;
+}
+
+/* Keep gradient headline stops above the large-text contrast threshold */
+[data-theme="light"] .hero-title .serif-italic,
+[data-theme="light"] .text-gradient-gold {
+  background: linear-gradient(135deg, #8a6508 0%, #6f5206 50%, #806000 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* Gold text over permanently dark media/overlays must stay bright in light theme */
+[data-theme="light"] .role-desc,
+[data-theme="light"] .thumb-label {
+  color: var(--gold-2);
+}
+
 /* Accessibility & Stability: Full Reduced Motion Override */
 @media (prefers-reduced-motion: reduce) {
+  html .hero-badge .dot,
   .portrait-frame,
   .spotlight-card,
   .magnetic-btn,
@@ -3709,7 +3760,7 @@ nav.scrolled .nav-inner {
 <!-- NAV -->
 <nav role="navigation" aria-label="Navegación principal">
   <div class="wrap nav-inner">
-    <a href="#top" class="brand" aria-label="AURUM NOVA">
+    <a href="#top" class="brand" aria-label="AURUM NOVA · CEO">
       <span class="mark">
         <picture>
           <source srcset="assets/logo-a.webp" type="image/webp">
@@ -3768,7 +3819,7 @@ nav.scrolled .nav-inner {
   </div>
 </nav>
 
-<main id="top">
+<main>
 
 <!-- HERO -->
 <section class="hero" id="top">
@@ -4136,7 +4187,7 @@ nav.scrolled .nav-inner {
 </section>
 
 <!-- FAQ — objeciones y dudas comunes -->
-<section id="faq" style="padding:80px 0;background:rgba(8,8,15,0.25)">
+<section id="faq" style="padding:80px 0">
   <div class="wrap">
     <div class="section-header">
       <div class="gold-line"></div>
