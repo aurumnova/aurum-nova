@@ -4820,7 +4820,47 @@ function initAIChatWidget() {
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
   }
 
-  function toggleChat(open) {
+  // Plan 3: restaura el historial del visitante al abrir el chat.
+  // Best-effort: si no hay token o algo falla, se conserva el welcome + chips.
+  async function restoreChatHistory() {
+    const token = getSessionId();
+    if (!token) return;
+
+    try {
+      const res = await fetch(
+        WORKER_BASE_URL + '/api/v1/chat/history?page=1&limit=100',
+        {
+          method: 'GET',
+          headers: {
+            'Authorization': 'Bearer ' + token,
+            'Accept': 'application/json',
+          },
+        }
+      );
+
+      if (res.status === 401) {
+        localStorage.removeItem(SESSION_STORAGE_KEY);
+        return;
+      }
+      if (!res.ok) return;
+
+      const data = await res.json().catch(() => null);
+      if (!data || !Array.isArray(data.messages)) return;
+
+      const msgs = data.messages;
+      if (msgs.length === 0) return;
+
+      messagesContainer.innerHTML = '';
+      msgs.forEach((m) => {
+        appendMessage(m.content, m.role === 'assistant' ? 'bot' : 'user');
+      });
+      scrollToBottom();
+    } catch (err) {
+      console.warn('Chat history restore failed:', err);
+    }
+  }
+
+  async function toggleChat(open) {
     const isCurrentlyOpen = chatBox.style.display !== 'none';
     const shouldOpen = typeof open === 'boolean' ? open : !isCurrentlyOpen;
     if (shouldOpen) {
@@ -4836,6 +4876,7 @@ function initAIChatWidget() {
       if (typeof window.trackAurumEvent === 'function') {
         window.trackAurumEvent('chat_opened');
       }
+      await restoreChatHistory();
       setTimeout(function() {
         chatInput.focus();
         scrollToBottom();
