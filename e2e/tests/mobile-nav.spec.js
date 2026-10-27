@@ -1,4 +1,4 @@
-import { test, expect } from './fixtures.js';
+﻿import { test, expect } from './fixtures.js';
 
 test.describe('Navegacion movil', () => {
   test.beforeEach(async ({ page }, testInfo) => {

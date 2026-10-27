@@ -2,37 +2,37 @@
 "use strict";
 
 /* =============================================
-   CONTENIDO ESCALABLE â€” edit these arrays
-   Agrega/edita proyectos, avances y posts aquÃ­
+   CONTENIDO ESCALABLE ÔÇö edit these arrays
+   Agrega/edita proyectos, avances y posts aqu├¡
    ============================================= */
 
 const PROJECTS = [
   {
-    title: "PrÃ³ximamente â€” casos de estudio",
-    category: "En construcciÃ³n",
-    desc: "Estoy seleccionando proyectos piloto con empresas y microempresas para los prÃ³ximos meses. Si tenÃ©s un problema de ventas, procesos o datos, contactame: estoy aceptando proyectos de casos de estudio con condiciÃ³n especial. Ãrea: mercado hispano (Ecuador, LatinoamÃ©rica, EspaÃ±a) y clientes en inglÃ©s cuando el idioma no es barrera.",
-    more: "Quiero ser caso â†’",
+    title: "Pr├│ximamente ÔÇö casos de estudio",
+    category: "En construcci├│n",
+    desc: "Estoy seleccionando proyectos piloto con empresas y microempresas para los pr├│ximos meses. Si ten├®s un problema de ventas, procesos o datos, contactame: estoy aceptando proyectos de casos de estudio con condici├│n especial. ├ürea: mercado hispano (Ecuador, Latinoam├®rica, Espa├▒a) y clientes en ingl├®s cuando el idioma no es barrera.",
+    more: "Quiero ser caso ÔåÆ",
     img: "",
     metrics: [
       { v: "Piloto", l: "Proyectos abiertos" },
-      { v: "CondiciÃ³n", l: "Especial de lanzamiento" },
-      { v: "Global", l: "EspaÃ±ol Â· InglÃ©s" }
+      { v: "Condici├│n", l: "Especial de lanzamiento" },
+      { v: "Global", l: "Espa├▒ol ┬À Ingl├®s" }
     ]
   }
 ];
 
 const TIMELINE = [
-  { date: "2026", title: "Inicio de AURUM NOVA", desc: "FundaciÃ³n de la empresa. CEO / fundador. Trabajo solo, modelo escalable a equipo. Posicionamiento global â€” mercado hispano + clientes en inglÃ©s.", done: true, status: "live" },
-  { date: "2026", title: "Primer proyecto piloto global", desc: "Primera implementaciÃ³n con empresa/microempresa. Aceptando proyectos piloto de casos de estudio con condiciÃ³n especial. Enfocado en chatbot/automatizaciÃ³n de leads y auditorÃ­a IA.", done: false, status: "planned" },
-  { date: "2026", title: "Casos en espaÃ±ol e inglÃ©s", desc: "Primeros case studies publicados â€” clientes en mercado hispano y en inglÃ©s. Construyendo prueba social para escalar a mÃ¡s clientes globales.", done: false, status: "planned" },
-  { date: "2026", title: "FormaciÃ³n de equipo", desc: "Cuando el volumen lo pida, incorporaciÃ³n de socios/equipo para escalar servicios a mÃ¡s clientes simultÃ¡neos.", done: false, status: "planned" }
+  { date: "2026", title: "Inicio de AURUM NOVA", desc: "Fundaci├│n de la empresa. CEO / fundador. Trabajo solo, modelo escalable a equipo. Posicionamiento global ÔÇö mercado hispano + clientes en ingl├®s.", done: true, status: "live" },
+  { date: "2026", title: "Primer proyecto piloto global", desc: "Primera implementaci├│n con empresa/microempresa. Aceptando proyectos piloto de casos de estudio con condici├│n especial. Enfocado en chatbot/automatizaci├│n de leads y auditor├¡a IA.", done: false, status: "planned" },
+  { date: "2026", title: "Casos en espa├▒ol e ingl├®s", desc: "Primeros case studies publicados ÔÇö clientes en mercado hispano y en ingl├®s. Construyendo prueba social para escalar a m├ís clientes globales.", done: false, status: "planned" },
+  { date: "2026", title: "Formaci├│n de equipo", desc: "Cuando el volumen lo pida, incorporaci├│n de socios/equipo para escalar servicios a m├ís clientes simult├íneos.", done: false, status: "planned" }
 ];
 
 const BLOG = [
-  { date: "Oct 2026", title: "Arquitectura de Agentes AutÃ³nomos de Venta: WhatsApp sin alucinaciones", desc: "DiseÃ±o de sistemas de contenciÃ³n en 3 capas en el Edge: filtros anti-inyecciÃ³n, esquemas JSON estrictos y fallbacks determinÃ­sticos para cualificar clientes 24/7 sin inventar precios.", link: "blog/arquitectura-agentes-autonomos-ventas-whatsapp-sin-alucinaciones.html", draft: false },
-  { date: "Oct 2026", title: "AutomatizaciÃ³n con IA vs. Empleados Virtuales: QuÃ© tareas automatizar primero", desc: "La matriz de fricciÃ³n para dueÃ±os de empresas: aprende a descomponer procesos en micro-automatizaciones antes de inflar la nÃ³mina con contrataciones burocrÃ¡ticas.", link: "blog/automatizacion-ia-vs-empleados-virtuales-que-automatizar-primero.html", draft: false },
-  { date: "Sep 2026", title: "CÃ³mo aplico IA a ventas sin perder el toque humano", desc: "Mi enfoque para usar inteligencia artificial en ventas, leads y procesos â€” lo que funciona, lo que no, y cÃ³mo lo aplico con empresas y microempresas.", link: "blog/como-aplico-ia-ventas-sin-perder-el-toque-humano.html", draft: false },
-  { date: "Sep 2026", title: "CÃ³mo usar IA para segmentar leads sin depender de un CRM caro", desc: "Tres formas prÃ¡cticas de segmentar y priorizar leads usando herramientas de IA accesibles, sin comprar software costoso. Para empresas y microempresas.", link: "blog/como-usar-ia-para-segmentar-leads-sin-depender-de-un-crm-caro.html", draft: false }
+  { date: "Oct 2026", title: "Arquitectura de Agentes Aut├│nomos de Venta: WhatsApp sin alucinaciones", desc: "Dise├▒o de sistemas de contenci├│n en 3 capas en el Edge: filtros anti-inyecci├│n, esquemas JSON estrictos y fallbacks determin├¡sticos para cualificar clientes 24/7 sin inventar precios.", link: "blog/arquitectura-agentes-autonomos-ventas-whatsapp-sin-alucinaciones.html", draft: false },
+  { date: "Oct 2026", title: "Automatizaci├│n con IA vs. Empleados Virtuales: Qu├® tareas automatizar primero", desc: "La matriz de fricci├│n para due├▒os de empresas: aprende a descomponer procesos en micro-automatizaciones antes de inflar la n├│mina con contrataciones burocr├íticas.", link: "blog/automatizacion-ia-vs-empleados-virtuales-que-automatizar-primero.html", draft: false },
+  { date: "Sep 2026", title: "C├│mo aplico IA a ventas sin perder el toque humano", desc: "Mi enfoque para usar inteligencia artificial en ventas, leads y procesos ÔÇö lo que funciona, lo que no, y c├│mo lo aplico con empresas y microempresas.", link: "blog/como-aplico-ia-ventas-sin-perder-el-toque-humano.html", draft: false },
+  { date: "Sep 2026", title: "C├│mo usar IA para segmentar leads sin depender de un CRM caro", desc: "Tres formas pr├ícticas de segmentar y priorizar leads usando herramientas de IA accesibles, sin comprar software costoso. Para empresas y microempresas.", link: "blog/como-usar-ia-para-segmentar-leads-sin-depender-de-un-crm-caro.html", draft: false }
 ];
 
 /* ---------- Render portfolio ---------- */
@@ -42,9 +42,9 @@ if (portfolioGrid) {
     portfolioGrid.innerHTML = `
       <div style="grid-column:1/-1;text-align:center;padding:54px 20px;color:var(--text-dim);border:1px dashed var(--border);border-radius:var(--radius);position:relative;overflow:hidden">
         <div style="position:absolute;top:0;left:0;width:3px;height:0;background:linear-gradient(180deg,var(--gold-2),var(--gold-3))"></div>
-        <div style="font-size:1.8rem;color:var(--gold);margin-bottom:10px;font-family:var(--serif);font-style:italic">â€¢</div>
-        <p style="font-family:var(--mono);font-size:0.76rem;letter-spacing:0.12em">PORTAFOLIO EN CONSTRUCCIÃ“N</p>
-        <p style="font-size:0.9rem;margin-top:8px;color:var(--text-muted)">PrÃ³ximamente casos de estudio reales con clientes en mercado hispano e inglÃ©s.<br>Edita el array <code style="color:var(--gold)">PROJECTS</code> en este archivo para agregarlos.</p>
+        <div style="font-size:1.8rem;color:var(--gold);margin-bottom:10px;font-family:var(--serif);font-style:italic">ÔÇó</div>
+        <p style="font-family:var(--mono);font-size:0.76rem;letter-spacing:0.12em">PORTAFOLIO EN CONSTRUCCI├ôN</p>
+        <p style="font-size:0.9rem;margin-top:8px;color:var(--text-muted)">Pr├│ximamente casos de estudio reales con clientes en mercado hispano e ingl├®s.<br>Edita el array <code style="color:var(--gold)">PROJECTS</code> en este archivo para agregarlos.</p>
       </div>`;
   } else {
     portfolioGrid.innerHTML = PROJECTS.map(function(p) {
@@ -86,7 +86,7 @@ if (timelineWrap) {
           <div class="timeline-date">${t.date}</div>
           <h3>${t.title}</h3>
           <p>${t.desc}</p>
-          <div class="status ${t.status || ''}"><span class="s-dot"></span>${t.status === 'live' ? 'En progreso' : t.status === 'planned' ? 'PrÃ³ximamente' : 'Pendiente'}</div>
+          <div class="status ${t.status || ''}"><span class="s-dot"></span>${t.status === 'live' ? 'En progreso' : t.status === 'planned' ? 'Pr├│ximamente' : 'Pendiente'}</div>
         </div>
       </div>`;
   }).join(''));
@@ -99,9 +99,9 @@ if (blogList) {
     blogList.innerHTML = `
       <div style="grid-column:1/-1;text-align:center;padding:54px 20px;color:var(--text-dim);border:1px dashed var(--border);border-radius:var(--radius);position:relative;overflow:hidden">
         <div style="position:absolute;top:0;left:0;width:3px;height:0;background:linear-gradient(180deg,var(--gold-2),var(--gold-3))"></div>
-        <div style="font-size:1.8rem;color:var(--gold);margin-bottom:10px;font-family:var(--serif);font-style:italic">â€¢</div>
-        <p style="font-family:var(--mono);font-size:0.76rem;letter-spacing:0.12em">BLOG EN CONSTRUCCIÃ“N</p>
-        <p style="font-size:0.9rem;margin-top:8px;color:var(--text-muted)">PrÃ³ximamente publicaciones. Edita el array <code style="color:var(--gold)">BLOG</code> en este archivo.</p>
+        <div style="font-size:1.8rem;color:var(--gold);margin-bottom:10px;font-family:var(--serif);font-style:italic">ÔÇó</div>
+        <p style="font-family:var(--mono);font-size:0.76rem;letter-spacing:0.12em">BLOG EN CONSTRUCCI├ôN</p>
+        <p style="font-size:0.9rem;margin-top:8px;color:var(--text-muted)">Pr├│ximamente publicaciones. Edita el array <code style="color:var(--gold)">BLOG</code> en este archivo.</p>
       </div>`;
   } else {
     blogList.innerHTML = BLOG.map(function(b) {
@@ -113,13 +113,13 @@ if (blogList) {
           </div>
           <h3>${b.title}</h3>
           <p>${b.desc}</p>
-          <a href="${b.link}" class="read-more">${b.draft ? 'Leer borrador' : 'leer â†’'}</a>
+          <a href="${b.link}" class="read-more">${b.draft ? 'Leer borrador' : 'leer ÔåÆ'}</a>
         </article>`;
     }).join('');
   }
 }
 
-/* ---------- Scroll reveal â€” ROBUSTO ---------- */
+/* ---------- Scroll reveal ÔÇö ROBUSTO ---------- */
 (function() {
   const revealEls = document.querySelectorAll('.reveal');
   if (revealEls.length) {
@@ -158,7 +158,7 @@ if (menuToggle && mobileMenu) {
     mobileMenu.style.display = open ? 'flex' : 'none';
     mobileMenu.setAttribute('aria-hidden', open ? 'false' : 'true');
     menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-    menuToggle.setAttribute('aria-label', open ? 'Cerrar menÃº' : 'Abrir menÃº');
+    menuToggle.setAttribute('aria-label', open ? 'Cerrar men├║' : 'Abrir men├║');
     menuToggle.innerHTML = open ? closeIcon : menuIcon;
 
     if (open && firstMenuLink) {
@@ -189,7 +189,7 @@ if (menuToggle && mobileMenu) {
   });
 }
 
-/* ---------- Helper: SesiÃ³n CriptogrÃ¡fica (Bootstrap & Token Opaco) ---------- */
+/* ---------- Helper: Sesi├│n Criptogr├ífica (Bootstrap & Token Opaco) ---------- */
 const WORKER_BASE_URL = 'https://aurum-nova-ai-sales-worker.aurum-nova.workers.dev';
 const SESSION_STORAGE_KEY = 'aurum_nova_session_id';
 
@@ -197,7 +197,7 @@ function isValidSessionToken(token) {
   if (typeof token !== 'string' || !token.startsWith('an_sess_')) {
     return false;
   }
-  // Formato v2: an_sess_<uuid>.<firma>.<expiraciÃ³n>
+  // Formato v2: an_sess_<uuid>.<firma>.<expiraci├│n>
   const parts = token.trim().split('.');
   return parts.length === 3 && parts.every((part) => part.length > 0);
 }
@@ -205,12 +205,12 @@ function isValidSessionToken(token) {
 async function getOrBootstrapSession() {
   const stored = localStorage.getItem(SESSION_STORAGE_KEY);
 
-  // Un token vÃ¡lido debe ser opaco y tener exactamente tres segmentos.
+  // Un token v├ílido debe ser opaco y tener exactamente tres segmentos.
   if (isValidSessionToken(stored)) {
     return stored.trim();
   }
 
-  // Si no hay token o es un identificador legacy sin firma, se solicita bootstrap explÃ­cito al servidor
+  // Si no hay token o es un identificador legacy sin firma, se solicita bootstrap expl├¡cito al servidor
   try {
     const res = await fetch(WORKER_BASE_URL + '/api/v1/session/bootstrap', {
       method: 'POST',
@@ -229,7 +229,7 @@ async function getOrBootstrapSession() {
     }
     throw new Error('Bootstrap response missing a valid sessionToken');
   } catch (err) {
-    console.warn('Error en bootstrap de sesiÃ³n:', err);
+    console.warn('Error en bootstrap de sesi├│n:', err);
     throw err;
   }
 }
@@ -251,7 +251,7 @@ async function fetchWithSessionRetry(url, makeOptions) {
 }
 
 function getSessionId() {
-  // Para compatibilidad sincrÃ³nica cuando ya existe en localStorage
+  // Para compatibilidad sincr├│nica cuando ya existe en localStorage
   const token = localStorage.getItem(SESSION_STORAGE_KEY);
   return isValidSessionToken(token) ? token.trim() : null;
 }
@@ -262,10 +262,10 @@ function setSessionToken(token) {
   }
 }
 
-/* ---------- Form handler â€” envÃ­a al Cloudflare Worker (D1 Leads) ---------- */
+/* ---------- Form handler ÔÇö env├¡a al Cloudflare Worker (D1 Leads) ---------- */
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
-  // Rate limit por sesiÃ³n: 1 submit / 30s
+  // Rate limit por sesi├│n: 1 submit / 30s
   const SUBMIT_COOLDOWN_MS = 30000;
   let lastSubmitTs = 0;
 
@@ -289,7 +289,7 @@ if (contactForm) {
     const phone = (this.querySelector('#f-phone')?.value || '').trim();
     const topic = this.querySelector('#f-topic')?.value || '';
 
-    // Honeypot check â€” abort silently if filled (bot)
+    // Honeypot check ÔÇö abort silently if filled (bot)
     if (hpInput && hpInput.value !== '') {
       console.debug('Honeypot triggered');
       return;
@@ -297,7 +297,7 @@ if (contactForm) {
 
     function showFormError(message, inputToFocus) {
       if (note) {
-        note.textContent = 'âš  ' + message;
+        note.textContent = 'ÔÜá ' + message;
         note.style.color = '#ff6b6b';
       }
       if (inputToFocus) {
@@ -307,15 +307,15 @@ if (contactForm) {
       }
     }
 
-    // ValidaciÃ³n robusta
-    if (!name || name.length > 120) { showFormError('Nombre requerido (mÃ¡x 120 caracteres).', nameInput); return; }
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254) { showFormError('Email invÃ¡lido.', emailInput); return; }
-    if (!msg || msg.length > 5000) { showFormError('Mensaje requerido (mÃ¡x 5000 caracteres).', msgInput); return; }
-    if (phone && !/^\+?[1-9]\d{6,14}$/.test(phone.replace(/[\s-]/g, ''))) { showFormError('TelÃ©fono en formato E.164 (ej: +593981138814).', this.querySelector('#f-phone')); return; }
+    // Validaci├│n robusta
+    if (!name || name.length > 120) { showFormError('Nombre requerido (m├íx 120 caracteres).', nameInput); return; }
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254) { showFormError('Email inv├ílido.', emailInput); return; }
+    if (!msg || msg.length > 5000) { showFormError('Mensaje requerido (m├íx 5000 caracteres).', msgInput); return; }
+    if (phone && !/^\+?[1-9]\d{6,14}$/.test(phone.replace(/[\s-]/g, ''))) { showFormError('Tel├®fono en formato E.164 (ej: +593981138814).', this.querySelector('#f-phone')); return; }
     const allowedTopics = ['audit', 'pipeline', 'content', 'consulting', 'other', ''];
-    if (!allowedTopics.includes(topic)) { showFormError('Tema no vÃ¡lido.'); return; }
+    if (!allowedTopics.includes(topic)) { showFormError('Tema no v├ílido.'); return; }
 
-    // SanitizaciÃ³n bÃ¡sica (escape HTML para reflejo seguro)
+    // Sanitizaci├│n b├ísica (escape HTML para reflejo seguro)
     const escapeHtml = s => s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
     const safeName = escapeHtml(name);
     const safeEmail = escapeHtml(email);
@@ -325,7 +325,7 @@ if (contactForm) {
     const safeTopic = escapeHtml(topic);
 
     btn.disabled = true;
-    btn.textContent = 'Enviandoâ€¦';
+    btn.textContent = 'EnviandoÔÇª';
     note.textContent = '';
     note.style.color = '';
 
@@ -350,7 +350,7 @@ if (contactForm) {
           })
         })
       );
-      // No loggear data en producciÃ³n
+      // No loggear data en producci├│n
       const data = await res.json().catch(() => ({}));
       if (res.ok && (data.status === 'created' || data.status === 'updated' || data.leadId)) {
         if (data.sessionId) {
@@ -361,13 +361,13 @@ if (contactForm) {
           audit: 'IA Growth Audit',
           pipeline: 'Pipeline IA',
           content: 'Content Engine IA',
-          consulting: 'ConsultorÃ­a estratÃ©gica IA',
+          consulting: 'Consultor├¡a estrat├®gica IA',
           other: 'Otro servicio'
         };
         const programName = topicLabels[topic] || (topic ? topic : 'un servicio de IA');
         let waText = `Hola Angel, soy ${name}`;
         if (company) waText += ` de ${company}`;
-        waText += `. Acabo de enviar el formulario para ${programName} y me gustarÃ­a confirmar mi prioridad.`;
+        waText += `. Acabo de enviar el formulario para ${programName} y me gustar├¡a confirmar mi prioridad.`;
         const waUrl = `https://wa.me/593981138814?text=${encodeURIComponent(waText)}`;
 
         if (typeof window.trackAurumEvent === 'function') {
@@ -377,33 +377,33 @@ if (contactForm) {
           });
         }
 
-        note.innerHTML = `âœ“ Gracias, ${safeName.split(' ')[0]}. Tu consulta fue registrada.<br><a href="${waUrl}" target="_blank" rel="noopener" style="color: var(--gold); text-decoration: underline; font-weight: 600; display: inline-block; margin-top: 6px;">â†’ Â¿Quieres acelerar tu diagnÃ³stico? Haz clic aquÃ­ para confirmar tu prioridad por WhatsApp ahora mismo</a>`;
+        note.innerHTML = `Ô£ô Gracias, ${safeName.split(' ')[0]}. Tu consulta fue registrada.<br><a href="${waUrl}" target="_blank" rel="noopener" style="color: var(--gold); text-decoration: underline; font-weight: 600; display: inline-block; margin-top: 6px;">ÔåÆ ┬┐Quieres acelerar tu diagn├│stico? Haz clic aqu├¡ para confirmar tu prioridad por WhatsApp ahora mismo</a>`;
         note.style.color = 'var(--gold)';
-        btn.textContent = 'Enviado â€” gracias';
+        btn.textContent = 'Enviado ÔÇö gracias';
         setTimeout(() => {
-          btn.textContent = 'Enviar â€” Agendar una reuniÃ³n';
+          btn.textContent = 'Enviar ÔÇö Agendar una reuni├│n';
           note.style.color = '';
-          note.textContent = 'â†“ tus datos no se comparten. Respuesta en < 24 h hÃ¡biles.';
+          note.textContent = 'Ôåô tus datos no se comparten. Respuesta en < 24 h h├íbiles.';
           contactForm.reset();
           btn.disabled = false;
         }, 15000);
       } else {
         if (res.status === 401) {
           localStorage.removeItem(SESSION_STORAGE_KEY);
-          showFormError('Tu sesiÃ³n previa ha expirado por seguridad. Haz clic en "Enviar" nuevamente para renovarla.');
+          showFormError('Tu sesi├│n previa ha expirado por seguridad. Haz clic en "Enviar" nuevamente para renovarla.');
         } else if (res.status === 429) {
-          showFormError('Has alcanzado el lÃ­mite de intentos. Por favor espera un minuto antes de reintentar.');
+          showFormError('Has alcanzado el l├¡mite de intentos. Por favor espera un minuto antes de reintentar.');
         } else {
-          showFormError('Hubo un inconveniente. Intenta de nuevo o contÃ¡ctanos por WhatsApp.');
+          showFormError('Hubo un inconveniente. Intenta de nuevo o cont├íctanos por WhatsApp.');
         }
         btn.disabled = false;
-        btn.textContent = 'Enviar â€” Agendar una reuniÃ³n';
+        btn.textContent = 'Enviar ÔÇö Agendar una reuni├│n';
       }
     } catch (err) {
       // Silenciar detalles internos
-      showFormError('Error de conexiÃ³n. Intenta de nuevo o escrÃ­benos a WhatsApp.');
+      showFormError('Error de conexi├│n. Intenta de nuevo o escr├¡benos a WhatsApp.');
       btn.disabled = false;
-      btn.textContent = 'Enviar â€” Agendar una reuniÃ³n';
+      btn.textContent = 'Enviar ÔÇö Agendar una reuni├│n';
     }
   });
 }
@@ -538,10 +538,10 @@ function initAIChatWidget() {
     // 3. Convertir URLs en enlaces seguros con acento dorado
     safe = safe.replace(/(https?:\/\/[^\s<]+)/g, "<a href='$1' target='_blank' rel='noopener noreferrer' style='color:var(--gold);text-decoration:underline;font-weight:600;'>$1</a>");
 
-    // 4. Convertir telÃ©fono de WhatsApp en enlace directo
-    safe = safe.replace(/(\+593\s*98\s*113\s*8814|098\s*113\s*8814|\+593\s*99\s*419\s*5932)/g, '<a href="https://wa.me/593981138814?text=Hola%20Angel,%20vengo%20del%20asistente%20web%20de%20Aurum%20Nova" target="_blank" rel="noopener noreferrer" style="color:var(--gold);font-weight:600;border-bottom:1px dashed var(--gold);text-decoration:none;">$1 â†—</a>');
+    // 4. Convertir tel├®fono de WhatsApp en enlace directo
+    safe = safe.replace(/(\+593\s*98\s*113\s*8814|098\s*113\s*8814|\+593\s*99\s*419\s*5932)/g, '<a href="https://wa.me/593981138814?text=Hola%20Angel,%20vengo%20del%20asistente%20web%20de%20Aurum%20Nova" target="_blank" rel="noopener noreferrer" style="color:var(--gold);font-weight:600;border-bottom:1px dashed var(--gold);text-decoration:none;">$1 Ôåù</a>');
 
-    // 5. Saltos de lÃ­nea
+    // 5. Saltos de l├¡nea
     safe = safe.replace(/\n/g, '<br>');
     return safe;
   }
@@ -608,7 +608,7 @@ function initAIChatWidget() {
 
     const text = chatInput.value.trim();
     if (!text) return;
-    if (text.length > 500) { appendMessage('Mensaje muy largo (mÃ¡x 500 caracteres).', 'bot'); return; }
+    if (text.length > 500) { appendMessage('Mensaje muy largo (m├íx 500 caracteres).', 'bot'); return; }
 
     // Sanitizar entrada
     const escapeHtml = s => s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
@@ -658,16 +658,16 @@ function initAIChatWidget() {
       } else {
         if (res.status === 401) {
           localStorage.removeItem(SESSION_STORAGE_KEY);
-          appendMessage('Tu sesiÃ³n ha expirado por seguridad. EnvÃ­a un nuevo mensaje para iniciar una conversaciÃ³n protegida.', 'bot');
+          appendMessage('Tu sesi├│n ha expirado por seguridad. Env├¡a un nuevo mensaje para iniciar una conversaci├│n protegida.', 'bot');
         } else if (res.status === 429) {
           appendMessage('Has enviado demasiados mensajes. Por favor espera un momento antes de continuar.', 'bot');
         } else {
-          appendMessage('Disculpa, no pude procesar tu mensaje. Reintenta o contÃ¡ctanos por WhatsApp.', 'bot');
+          appendMessage('Disculpa, no pude procesar tu mensaje. Reintenta o cont├íctanos por WhatsApp.', 'bot');
         }
       }
     } catch (err) {
       hideLoading();
-      appendMessage('Error de conexiÃ³n. Reintenta en unos instantes o escrÃ­benos a WhatsApp.', 'bot');
+      appendMessage('Error de conexi├│n. Reintenta en unos instantes o escr├¡benos a WhatsApp.', 'bot');
     } finally {
       chatInput.disabled = false;
       if (sendBtn) sendBtn.disabled = false;
@@ -684,7 +684,7 @@ if (document.readyState === "loading") {
   initAIChatWidget();
 }
 
-/* ---------- Smooth anchor navigation â€” ROBUSTO ---------- */
+/* ---------- Smooth anchor navigation ÔÇö ROBUSTO ---------- */
 document.querySelectorAll('a[href^="#"]').forEach(function(a) {
   a.addEventListener('click', function(e) {
     let target = a.getAttribute('data-target') || a.getAttribute('href');
@@ -703,7 +703,7 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a) {
   });
 });
 
-/* ---------- Auto-selecciÃ³n de programa en formulario de contacto ---------- */
+/* ---------- Auto-selecci├│n de programa en formulario de contacto ---------- */
 document.querySelectorAll('a[data-select-topic]').forEach(function(link) {
   link.addEventListener('click', function(e) {
     const topic = link.getAttribute('data-select-topic');
@@ -805,8 +805,8 @@ if (themeToggle) {
       iconOff.style.display = soundEnabled ? 'none' : 'block';
     }
     if (soundBtn) {
-      soundBtn.setAttribute('title', soundEnabled ? 'Sonido tÃ¡ctil activado (clic para silenciar)' : 'Sonido silenciado (clic para activar)');
-      soundBtn.setAttribute('aria-label', soundEnabled ? 'Silenciar sonidos tÃ¡ctiles' : 'Activar sonidos tÃ¡ctiles');
+      soundBtn.setAttribute('title', soundEnabled ? 'Sonido t├íctil activado (clic para silenciar)' : 'Sonido silenciado (clic para activar)');
+      soundBtn.setAttribute('aria-label', soundEnabled ? 'Silenciar sonidos t├íctiles' : 'Activar sonidos t├íctiles');
     }
   }
   updateIcons();
@@ -1009,7 +1009,7 @@ if (themeToggle) {
 })();
 
 /* =============================================
-   AURUM NOVA â€” $10k+ LUXURY 3D & TACTILE SUITE
+   AURUM NOVA ÔÇö $10k+ LUXURY 3D & TACTILE SUITE
    Awwwards / Linear-tier Interactive Physics
    ============================================= */
 

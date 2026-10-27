@@ -1,7 +1,7 @@
 
 /* =============================================
-   AURUM NOVA â€” Premium Dark/Gold Style
-   CEO Â· IA Â· Financiero Â· Escalable
+   AURUM NOVA ÔÇö Premium Dark/Gold Style
+   CEO ┬À IA ┬À Financiero ┬À Escalable
    ============================================= */
 
 :root {
@@ -119,7 +119,7 @@ body::after {
 ::selection { background: var(--gold); color: #050509; }
 
 /* =============================================
-   PREMIUM GOLD SHIMMER â€” efecto brillante dorado sutil
+   PREMIUM GOLD SHIMMER ÔÇö efecto brillante dorado sutil
    ============================================= */
 
 @keyframes shimmer-gold-1 {
@@ -670,7 +670,7 @@ nav {
   font-family: var(--mono); font-size: 0.74rem; color: var(--gold);
   display: inline-flex; align-items: center; gap: 6px; padding: 6px 0;
 }
-.project-body .more::after { content: "â†’"; transition: transform .2s; }
+.project-body .more::after { content: "ÔåÆ"; transition: transform .2s; }
 .project-body .more:hover::after { transform: translateX(4px); }
 
 /* =============================================
@@ -752,7 +752,7 @@ nav {
   margin-top: 12px; font-family: var(--mono); font-size: 0.74rem; color: var(--gold);
   display: inline-flex; align-items: center; gap: 6px; padding: 4px 0;
 }
-.blog-item .read-more::after { content: "â†’"; transition: transform .2s; }
+.blog-item .read-more::after { content: "ÔåÆ"; transition: transform .2s; }
 .blog-item .read-more:hover::after { transform: translateX(4px); }
 
 /* =============================================
@@ -1181,7 +1181,7 @@ footer {
 .glow-corner.br { bottom: -110px; right: -110px; border-radius: 50%; background: radial-gradient(circle, rgba(212, 175, 55, 0.07), transparent 70%); }
 
 /* =============================================
-   VISIÃ“N â€” banner de fondo + overlay
+   VISI├ôN ÔÇö banner de fondo + overlay
    ============================================= */
 
 #vision {
@@ -3009,7 +3009,7 @@ nav.scrolled .nav-inner {
 }
 
 /* =============================================
-   VISUAL EVOLUTION v1 â€” EXECUTIVE SENSORY SYSTEM
+   VISUAL EVOLUTION v1 ÔÇö EXECUTIVE SENSORY SYSTEM
    ============================================= */
 
 /* HUD System Badge in Hero */
@@ -3305,7 +3305,7 @@ nav.scrolled .nav-inner {
 }
 
 /* =============================================
-   AURUM NOVA â€” $10k+ LUXURY 3D & TACTILE SUITE
+   AURUM NOVA ÔÇö $10k+ LUXURY 3D & TACTILE SUITE
    Awwwards / Linear-tier Interactive Physics
    ============================================= */
 
@@ -3445,7 +3445,7 @@ nav.scrolled .nav-inner {
 }
 
 /* 6. Reduced Motion */
-/* 7. HERO BADGE â€” REFINED EXECUTIVE PILL (Obsidian & Gold) */
+/* 7. HERO BADGE ÔÇö REFINED EXECUTIVE PILL (Obsidian & Gold) */
 .hero-badge {
   display: inline-flex !important;
   align-items: center !important;
