@@ -158,7 +158,7 @@ if (menuToggle && mobileMenu) {
     mobileMenu.style.display = open ? 'flex' : 'none';
     mobileMenu.setAttribute('aria-hidden', open ? 'false' : 'true');
     menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-    menuToggle.setAttribute('aria-label', open ? 'Cerrar men├║' : 'Abrir men├║');
+    menuToggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir men├║');
     menuToggle.innerHTML = open ? closeIcon : menuIcon;
 
     if (open && firstMenuLink) {
