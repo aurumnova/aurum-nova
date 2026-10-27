@@ -1,15 +1,16 @@
 import fs from 'node:fs';
 import vm from 'node:vm';
 
-const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
-const start = html.lastIndexOf('/*', html.indexOf('Helper:'));
-const end = html.indexOf('/* ---------- Form handler');
+// Read the session helper from the external JS file
+const js = fs.readFileSync(new URL('../assets/app.js', import.meta.url), 'utf8');
+const start = js.lastIndexOf('/*', js.indexOf('Helper:'));
+const end = js.indexOf('/* ---------- Form handler');
 
 if (start < 0 || end < 0 || end <= start) {
-  throw new Error('No se encontró el bloque de sesión en index.html');
+  throw new Error('No se encontró el bloque de sesión en assets/app.js');
 }
 
-const helperCode = html.slice(start, end);
+const helperCode = js.slice(start, end);
 const store = { aurum_nova_session_id: 'an_sess_old.sig.exp' };
 const calls = [];
 let chatCalls = 0;
