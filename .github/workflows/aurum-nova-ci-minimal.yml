@@ -268,6 +268,7 @@ jobs:
           )
           print(f'  - Fragments HTML: {checked_anchors} verificados')
           EOF
+
   e2e:
     runs-on: ubuntu-latest
     steps:
@@ -298,7 +299,7 @@ jobs:
           ls -la ../index.html 2>&1 || echo "index.html not found"
           echo "=== serve.mjs ==="
           ls -la scripts/serve.mjs
-- name: Run Playwright gate
+      - name: Run Playwright gate
         working-directory: e2e
         env:
           E2E_BASE_PATH: ''
