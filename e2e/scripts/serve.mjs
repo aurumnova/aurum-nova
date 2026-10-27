@@ -1,8 +1,13 @@
 // Servidor estático mínimo y cross-platform para el sitio de AURUM NOVA.
 // Evita depender de python o de paquetes externos en CI.
 import { createServer } from 'node:http';
-import { readFile } from 'node:fs/promises';
+import { readFile, writeFile, appendFile } from 'node:fs/promises';
 import { extname, join, resolve, sep } from 'node:path';
+
+const DEBUG_LOG = join(process.cwd(), '..', 'serve-debug.log');
+async function debug(msg) {
+  try { await appendFile(DEBUG_LOG, new Date().toISOString() + ' ' + msg + '\n'); } catch {}
+}
 
 const candidates = [
   process.env.E2E_SITE_DIR,
@@ -16,9 +21,10 @@ for (const candidate of candidates) {
   try {
     await readFile(join(candidate, 'index.html'));
     root = resolve(candidate);
+    await debug(`root candidate: ${candidate} -> FOUND index.html, root=${root}`);
     break;
-  } catch {
-    // seguimos buscando
+  } catch (e) {
+    await debug(`root candidate: ${candidate} -> NOT FOUND: ${e.message}`);
   }
 }
 
@@ -26,11 +32,13 @@ if (!root) {
   console.error('[e2e] No se encontró index.html del frontend. Define E2E_SITE_DIR.');
   process.exit(1);
 }
+await debug(`Selected root: ${root}`);
 
 const port = Number(process.env.E2E_PORT || 4173);
 // GitHub Pages sirve el sitio bajo /aurum-nova; replicamos el prefijo en local
 // para que las rutas absolutas del 404.html también resuelvan.
 const basePath = process.env.E2E_BASE_PATH ?? '/aurum-nova';
+await debug(`basePath: '${basePath}'`);
 
 const mime = {
   '.html': 'text/html; charset=utf-8',
@@ -62,6 +70,7 @@ createServer(async (req, res) => {
   if (pathname.startsWith('/')) pathname = pathname.slice(1); // join() treats leading / as absolute
 
   const filePath = resolve(join(root, pathname));
+  await debug(`request: ${req.url} -> pathname=${pathname} -> filePath=${filePath} (exists=${await exists(filePath)})`);
   if (filePath !== root && !filePath.startsWith(root + sep)) {
     res.writeHead(403);
     res.end('Forbidden');
@@ -75,7 +84,8 @@ createServer(async (req, res) => {
       'Cache-Control': 'no-store',
     });
     res.end(data);
-  } catch {
+  } catch (e) {
+    await debug(`readFile error for ${filePath}: ${e.message}`);
     try {
       const fallback = await readFile(join(root, '404.html'));
       res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
@@ -88,3 +98,7 @@ createServer(async (req, res) => {
 }).listen(port, () => {
   console.log(`[e2e] sirviendo ${root} en http://localhost:${port} (base ${basePath})`);
 });
+
+async function exists(path) {
+  try { await readFile(path); return true; } catch { return false; }
+}
