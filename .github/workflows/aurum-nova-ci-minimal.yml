@@ -285,7 +285,20 @@ jobs:
       - name: Install Chromium
         working-directory: e2e
         run: npx playwright install --with-deps chromium
-      - name: Run Playwright gate
+      - name: Debug file structure
+        working-directory: e2e
+        run: |
+          echo "=== CWD ==="
+          pwd
+          echo "=== Parent directory ==="
+          ls -la ..
+          echo "=== Assets directory ==="
+          ls -la ../assets/ 2>&1 || echo "assets not found"
+          echo "=== index.html ==="
+          ls -la ../index.html 2>&1 || echo "index.html not found"
+          echo "=== serve.mjs ==="
+          ls -la scripts/serve.mjs
+- name: Run Playwright gate
         working-directory: e2e
         env:
           E2E_BASE_PATH: ''
