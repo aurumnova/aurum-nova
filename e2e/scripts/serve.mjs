@@ -59,6 +59,7 @@ createServer(async (req, res) => {
     pathname = '/';
   }
   if (pathname.endsWith('/')) pathname += 'index.html';
+  if (pathname.startsWith('/')) pathname = pathname.slice(1); // join() treats leading / as absolute
 
   const filePath = resolve(join(root, pathname));
   if (filePath !== root && !filePath.startsWith(root + sep)) {
