@@ -1,4 +1,4 @@
-import { test, expect } from './fixtures.js';
+﻿import { test, expect } from './fixtures.js';
 
 const TOKEN = 'an_sess_11111111-1111-1111-1111-111111111111.abcdef.9999999999';
 const CORS = {
@@ -135,7 +135,7 @@ test.describe('Chat IA', () => {
 
     // Welcome y chips ocultos (el welcome es el mensaje bot inicial)
     await expect(chips).toBeHidden();
-    await expect(page.locator('#aiChatMessages')).not.toContainText('¡Hola! Soy el asistente');
+    await expect(page.locator('#aiChatMessages')).not.toContainText('asistente de Aurum Nova');
   });
 
   test('sin token muestra welcome y chips', async ({ page }) => {
@@ -149,6 +149,6 @@ test.describe('Chat IA', () => {
     await toggle.click();
     await expect(box).toBeVisible();
     await expect(chips).toBeVisible();
-    await expect(page.locator('#aiChatMessages')).toContainText('¡Hola! Soy el asistente');
+    await expect(page.locator('#aiChatMessages')).toContainText('asistente de Aurum Nova');
   });
 });

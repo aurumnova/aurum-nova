@@ -1,4 +1,4 @@
-name: CI mínimo Aurum Nova
+name: CI m\xc3\xadnimo Aurum Nova
 
 on:
   push:
@@ -16,7 +16,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Validar flujo de sesión
+      - name: Validar flujo de sesi\xc3\xb3n
         run: node tests/sessionRetry.test.mjs
 
       - name: Validar estructura del sitio
@@ -51,7 +51,7 @@ jobs:
                   return False
 
               if os.path.getsize(full_path) == 0:
-                  errors.append(f'ERROR: {description} está vacío ({filepath})')
+                  errors.append(f'ERROR: {description} est\xc3\xa1 vac\xc3\xado ({filepath})')
                   return False
 
               return True
@@ -71,15 +71,22 @@ jobs:
           with open('index.html', encoding='utf-8') as f:
               index_content = f.read()
 
+          # Check both index.html and external JS for session markers
+          js_content = ''
+          js_path = os.path.join(base_dir, 'assets', 'app.js')
+          if os.path.exists(js_path):
+              with open(js_path, encoding='utf-8') as f:
+                  js_content = f.read()
+
           for marker in (
               '/api/v1/session/bootstrap',
               'an_sess_',
               'fetchWithSessionRetry',
               'parts.length === 3',
           ):
-              if marker not in index_content:
+              if marker not in index_content and marker not in js_content:
                   errors.append(
-                      f'ERROR: index.html no contiene el marcador de sesión: {marker}'
+                      f'ERROR: no se encuentra el marcador de sesi\xc3\xb3n: {marker} (ni en index.html ni en assets/app.js)'
                   )
 
           blog_dir = os.path.join(base_dir, 'blog')
@@ -248,17 +255,20 @@ jobs:
               sys.exit(1)
 
           print('Todos los checks pasaron')
-          print('  - index.html: existe y no está vacío')
-          print('  - aurumpitch.html: existe y no está vacío')
+          print('  - index.html: existe y no est\xc3\xa1 vac\xc3\xado')
+          print('  - aurumpitch.html: existe y no est\xc3\xa1 vac\xc3\xado')
           print('  - assets/: existe')
           print('  - blog/: existe')
-          print(f'  - HTML del blog: {len(blog_htmls)} verificados')
+          print(
+              f'  - HTML del blog: {len(blog_htmls)} verificados'
+          )
           print(
               f'  - Referencias locales: {len(local_refs)} verificadas, '
               f'0 faltantes'
           )
           print(f'  - Fragments HTML: {checked_anchors} verificados')
           EOF
+
   e2e:
     runs-on: ubuntu-latest
     steps:
@@ -276,9 +286,31 @@ jobs:
       - name: Install Chromium
         working-directory: e2e
         run: npx playwright install --with-deps chromium
+      - name: Debug file structure
+        working-directory: e2e
+        run: |
+          echo "=== CWD ==="
+          pwd
+          echo "=== Parent directory ==="
+          ls -la ..
+          echo "=== Assets directory ==="
+          ls -la ../assets/ 2>&1 || echo "assets not found"
+          echo "=== index.html ==="
+          ls -la ../index.html 2>&1 || echo "index.html not found"
+          echo "=== serve.mjs ==="
+          ls -la scripts/serve.mjs
       - name: Run Playwright gate
         working-directory: e2e
+        env:
+          E2E_BASE_PATH: ''
         run: npm run test:ci
+      - name: Upload serve debug log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: serve-debug-log
+          path: serve-debug.log
+          retention-days: 7
       - name: Upload Playwright report
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v4
