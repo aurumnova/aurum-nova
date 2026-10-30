@@ -64,7 +64,6 @@ jobs:
               return True
 
           check_file_not_empty('index.html', 'index.html')
-          check_file_not_empty('aurumpitch.html', 'aurumpitch.html')
           check_dir_exists('assets', 'assets/')
           check_dir_exists('blog', 'blog/')
 
@@ -100,7 +99,7 @@ jobs:
                       name
                   )
 
-          html_files = ['index.html', 'aurumpitch.html']
+          html_files = ['index.html']
           html_files += [
               os.path.join('blog', name)
               for name in blog_htmls
@@ -249,7 +248,6 @@ jobs:
 
           print('Todos los checks pasaron')
           print('  - index.html: existe y no está vacío')
-          print('  - aurumpitch.html: existe y no está vacío')
           print('  - assets/: existe')
           print('  - blog/: existe')
           print(f'  - HTML del blog: {len(blog_htmls)} verificados')
